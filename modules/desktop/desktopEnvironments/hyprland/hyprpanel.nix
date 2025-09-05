@@ -1,5 +1,7 @@
 {
   config,
+  hostName,
+  lib,
   username,
   wallpaper,
   ...
@@ -20,6 +22,7 @@
             right = [
               "volume"
               "kbinput"
+              (lib.mkIf (hostName == "Laptop") "battery")
               "network"
               "bluetooth"
               "systray"
