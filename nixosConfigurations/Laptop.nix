@@ -8,18 +8,20 @@ inputs.nixpkgs.lib.nixosSystem {
     username = "v3rm1n";
     wallpaper = "gruvbox-nix.png";
     inherit system;
-  } // inputs;
+  }
+  // inputs;
   modules = [
     ../.
     (
       { ... }:
       {
         specs = {
-          gpu.enable = false;
+          gpu.enable = true;
+          gpu.brand = "nvidia";
           boot.isDevDrive = false;
         };
         devTools.enable = true;
-        gaming.enable = false;
+        gaming.enable = true;
       }
     )
   ];
