@@ -17,8 +17,7 @@ inputs.nixpkgs.lib.nixosSystem {
       {
         specs = {
           gpu.enable = true;
-          gpu.brand = "nvidia";
-          boot.isDevDrive = false;
+          gpu.brand = "intel";
         };
         devTools.enable = true;
         gaming.enable = true;
