@@ -24,8 +24,6 @@ in
 
       boot.kernelModules = [ "nvidia-uvm" ];
 
-      nixpkgs.config.cudaSupport = true;
-
       hardware.nvidia = {
         modesetting.enable = true;
         powerManagement.enable = true;

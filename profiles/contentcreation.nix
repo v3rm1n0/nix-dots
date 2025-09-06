@@ -10,14 +10,6 @@ with lib;
 let
   cfg = config.contentcreation;
   defaultPackages = with pkgs; [
-    (wrapOBS {
-      plugins = with obs-studio-plugins; [
-        wlrobs
-        obs-vaapi
-        obs-vkcapture
-        obs-pipewire-audio-capture
-      ];
-    })
     davinci-resolve
   ];
 in
@@ -37,5 +29,16 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = defaultPackages ++ cfg.optionalPackages;
+
+    programs.obs-studio = {
+      enable = true;
+      package = (pkgs.obs-studio.override { cudaSupport = true; });
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+        obs-vaapi
+        obs-vkcapture
+        obs-pipewire-audio-capture
+      ];
+    };
   };
 }
