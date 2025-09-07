@@ -1,0 +1,28 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "type": "small"
+    },
+    "modules": [
+        {
+            "type": "os",
+            "format": "{pretty-name} {arch}"
+        },
+        {
+            "type": "wm",
+            "key": "WM",
+            "foramt": "{pretty-name}"
+        },
+        "shell",
+        "kernel",
+        "uptime",
+        {
+            "type": "packages",
+            "format": "{all}"
+        },
+        {
+            "type": "memory",
+            "key": "RAM"
+        }
+    ]
+}
