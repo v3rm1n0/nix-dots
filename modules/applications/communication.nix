@@ -8,6 +8,7 @@
       teamspeak6-client
       whatsapp-for-linux
       zoom-us
+      zulip
     ];
 
     home.file = {
