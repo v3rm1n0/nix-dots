@@ -28,4 +28,9 @@ return {
     build = ':Cord update',
     event = 'VeryLazy',
   },
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
+    priority = 49,
+  },
 }

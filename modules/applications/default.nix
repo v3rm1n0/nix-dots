@@ -6,7 +6,7 @@
     ./t4l
     ./communication.nix
     ./entertainment.nix
-    ./libreoffice.nix
+    ./office.nix
     ./media.nix
     ./productivity.nix
     ./virtualization.nix
