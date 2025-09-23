@@ -7,6 +7,7 @@
   xdg = {
     mime = {
       defaultApplications = {
+        "application/pdf" = [ "zathura.desktop" ];
         "application/x-gnome-saved-search" = [ "nemo.desktop" ];
         "image/jpeg" = [ "gthumb.desktop" ];
         "image/jpg" = [ "gthumb.desktop" ];
