@@ -2,7 +2,7 @@
 inputs.nixpkgs.lib.nixosSystem {
   specialArgs = {
     desktopEnvironment = "hyprland";
-    displayManager = "sddm";
+    displayManager = "greetd";
     hostName = "Desktop";
     systemType = "desktop";
     username = "v3rm1n";
