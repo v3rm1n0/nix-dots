@@ -1,4 +1,4 @@
-{lib, config, ... }:
+{ lib, config, ... }:
 {
   config.monitors = [
     {
@@ -8,7 +8,17 @@
       refreshRate = 180;
       x = 0;
       y = 0;
-      workspaces = [ 1 2 3 4 5 6 7 8 9 ];
+      workspaces = [
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+        8
+        9
+      ];
       workspacePrimary = 1;
       enabled = true;
     }
@@ -25,4 +35,3 @@
     }
   ];
 }
-

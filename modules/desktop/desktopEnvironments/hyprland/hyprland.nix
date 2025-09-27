@@ -1,6 +1,15 @@
-{ config, lib, username, hostName, ... }:
 {
-  imports = [ ./monitors.nix ./configs/${hostName}.nix ];
+  config,
+  lib,
+  username,
+  hostName,
+  ...
+}:
+{
+  imports = [
+    ./monitors.nix
+    ./configs/${hostName}.nix
+  ];
 
   home-manager.users.${username} = _: {
     wayland.windowManager.hyprland = {
@@ -9,7 +18,7 @@
       systemd = {
         enable = true;
         enableXdgAutostart = true;
-        variables = [ 
+        variables = [
           "--all"
           "XCURSOR_SIZE,24"
         ];
@@ -24,13 +33,21 @@
           "${m.name},${if m.enabled then "${resolution},${position},1" else "disable"}"
         ) (config.monitors);
 
-        workspace = builtins.concatLists (map (monitor:
-          builtins.map (workspace:
-            "${builtins.toString workspace}, monitor:${monitor.name}${lib.optionalString (workspace == monitor.workspacePrimary) ", default:true"}"
-          ) monitor.workspaces
-          ) config.monitors) ++ [
-          "2,split:v"
-        ];
+        workspace =
+          builtins.concatLists (
+            map (
+              monitor:
+              builtins.map (
+                workspace:
+                "${builtins.toString workspace}, monitor:${monitor.name}${
+                  lib.optionalString (workspace == monitor.workspacePrimary) ", default:true"
+                }"
+              ) monitor.workspaces
+            ) config.monitors
+          )
+          ++ [
+            "2,split:v"
+          ];
 
         "ecosystem:no_update_news" = true;
 
