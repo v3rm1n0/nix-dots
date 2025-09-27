@@ -13,7 +13,59 @@ _Declarative NixOS configuration with Flakes & Home Manager_
 
 </div>
 
----
+## Project Overview
+
+<details>
+    <summary> Flake Setup </summary>
+
+This document provides an overview of my NixOS flake configuration, including the folder structure, system management commands, and shell shortcuts.
+
+## Flake Structure
+
+My NixOS configuration is organized into a modular flake to ensure a clean and reproducible setup across multiple machines.
+
+- `default.nix`: This file imports the main modules and profiles based on the `systemType` and defines the overall structure.
+- `flake.nix`: This is the entry point of the configuration. It defines the flake inputs (`nixpkgs`, `home-manager`, `stylix`, etc.) and the NixOS configurations for `Desktop` and `Laptop`.
+- `hosts/`: Contains host-specific configurations.
+  - `Desktop/`: Configuration for the desktop machine, including hardware-specific settings.
+  - `Laptop/`: Configuration for the laptop machine, including hardware-specific settings.
+  - `common/`: Shared settings for all hosts, such as locale and environment variables.
+- `modules/`: Contains the main modular configuration files, broken down by category.
+  - `applications/`: Configurations for various applications like browsers, communication tools, and productivity software.
+  - `core/`: Core system settings, including boot, Nix settings, programs, and services.
+  - `desktop/`: Configuration for the desktop environment (Hyprland), display managers, and styling.
+  - `hardware/`: Hardware-specific configurations for audio, bluetooth, network, and peripherals.
+  - `security/`: Security-related settings for authentication, encryption, and GnuPG.
+  - `shell/`: Configurations for the shell, including Zsh and Bash, and their aliases.
+- `profiles/`: Defines different system profiles that can be enabled or disabled, such as `developer`, `gaming`, and `contentcreation`. These are imported based on the host configuration.
+- `secrets/`: This directory is used to handle secrets via `agenix`. It contains encrypted files (`.age`) and a `secrets.nix` file that lists public keys for decryption.
+- `users/`: Holds user-specific configurations, such as the `v3rm1n` user settings.
+
+## System Management
+
+The following commands are used for managing the NixOS system, as defined in `README.md` and `modules/shell/commonAliases.nix`.
+
+- `nixos-rebuild switch --flake .#Desktop`: Applies system changes.
+- `nh os switch -a` (alias `os`): Applies system changes.
+- `nh os switch -a -u` (alias `ou`): Applies system changes and updates all flake inputs.
+- `nix flake update`: Updates all flake inputs manually.
+- `nix flake check`: Validates the flake configuration.
+
+## Shell Shortcuts (Aliases)
+
+The `commonAliases.nix` file defines a set of useful shell aliases for both Bash and Zsh.
+
+- `la`: `eza -lah` (lists files with details, showing hidden files).
+- `ls`: `eza` (lists files).
+- `tree`: `eza --tree --git-ignore` (lists files in a tree format, ignoring git files).
+- `vi` and `vim`: `nvim` (opens Neovim).
+- `ff`: `fastfetch` (runs the fastfetch system information tool).
+- `ga`: `git add .` (stages all changes).
+- `gc`: `git commit -m` (commits changes with a message).
+- `gcfu`: `git commit -m 'Updated Flake'` (commits changes with a standard message).
+- `cat`: `bat` (a `cat` alternative with syntax highlighting).
+- `man`: `batman` (a `man` alternative).
+</details>
 
 ## System Information
 
@@ -23,19 +75,24 @@ _Declarative NixOS configuration with Flakes & Home Manager_
 - **Package Manager**: Nix with Flakes
 - **Configuration**: Fully declarative and reproducible
 
-### Fresh Installation
+## Installation Instructions
 
-```bash
-# Clone the repository
-git clone https://github.com/v3rm1n0/nix-dots.git
-cd nix-dots
+<details>
+    <summary>Show Instructions</summary>
+    
+  ```bash
+  # Clone the repository
+  git clone https://github.com/v3rm1n0/nix-dots.git
+  cd nix-dots
 
 # Partition and format disk with Disko
+
 sudo nix --experimental-features "nix-command flakes" run \
-  github:nix-community/disko/latest -- \
-  --mode destroy,format,mount ./disko-defaults.nix
+ github:nix-community/disko/latest -- \
+ --mode destroy,format,mount ./disko-defaults.nix
 
 # Only for low ram devices!
+
 sudo mkdir /mnt/swap
 sudo chattr +C /mnt/swap
 sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=8048 status=progress
@@ -44,8 +101,10 @@ sudo mkswap /mnt/swap/swapfile
 sudo swapon /mnt/swap/swapfile
 
 # Install NixOS
+
 sudo nixos-install --flake .#Desktop
-```
+
+````
 
 ### Existing System
 
@@ -56,7 +115,9 @@ cd nix-dots
 
 # Apply configuration
 sudo nixos-rebuild switch --flake .#Desktop
-```
+````
+
+</details>
 
 ## System Management
 
