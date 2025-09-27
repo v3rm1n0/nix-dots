@@ -8,13 +8,12 @@
 with lib;
 
 let
-  cfg = config.contentcreation;
   defaultPackages = with pkgs; [
     davinci-resolve
   ];
 in
 {
-  options.contentcreation = {
+  options.programs.content = {
     enable = mkEnableOption "Enable content creation tools";
 
     optionalPackages = mkOption {
@@ -27,8 +26,8 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = defaultPackages ++ cfg.optionalPackages;
+  config = mkIf config.programs.content.enable {
+    environment.systemPackages = defaultPackages ++ config.programs.content.optionalPackages;
 
     programs.obs-studio = {
       enable = true;

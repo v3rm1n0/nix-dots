@@ -4,11 +4,14 @@
     ./electron
     ./t4l
     ./communication.nix
-    ./entertainment.nix
-    ./office.nix
+    ./contentcreation.nix
+    ./developer.nix
+    ./emulation.nix
+    ./gaming.nix
+    ./hardware.nix
     ./media.nix
+    ./office.nix
     ./productivity.nix
-    ./virtualization.nix
-    ./wezterm.nix
+    ./terminal.nix
   ];
 }

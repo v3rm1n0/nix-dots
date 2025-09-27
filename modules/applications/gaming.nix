@@ -8,7 +8,6 @@
 with lib;
 
 let
-  cfg = config.gaming;
   defaultPackages = with pkgs; [
     (discord-canary.override {
       withOpenASAR = false;
@@ -23,7 +22,7 @@ let
 
 in
 {
-  options.gaming = {
+  options.programs.gaming = {
     enable = mkEnableOption "Gaming profile with various gaming tools";
 
     optionalPackages = mkOption {
@@ -36,8 +35,8 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = defaultPackages ++ cfg.optionalPackages;
+  config = mkIf config.programs.gaming.enable {
+    environment.systemPackages = defaultPackages ++ config.programs.gaming.optionalPackages;
 
     programs = {
       steam = {

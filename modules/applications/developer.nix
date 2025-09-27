@@ -8,7 +8,6 @@
 with lib;
 
 let
-  cfg = config.devTools;
   defaultPackages = [
     #--- Editors ---#
     pkgs.vscode
@@ -35,7 +34,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = defaultPackages ++ cfg.optionalPackages;
+  config = mkIf config.devTools.enable {
+    environment.systemPackages = defaultPackages ++ config.devTools.optionalPackages;
   };
 }

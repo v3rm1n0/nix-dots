@@ -2,7 +2,7 @@
   agenix,
   home-manager,
   stylix,
-  systemType,
+  username,
   ...
 }:
 {
@@ -10,7 +10,8 @@
     agenix.nixosModules.default
     home-manager.nixosModules.home-manager
     stylix.nixosModules.stylix
-    ./profiles/${systemType}.nix
-    ./profiles
+    ./assets
+    ./hosts
+    ./users/${username}
   ];
 }

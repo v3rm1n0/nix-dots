@@ -12,20 +12,5 @@ inputs.nixpkgs.lib.nixosSystem {
   // inputs;
   modules = [
     ../.
-    (
-      { pkgs, ... }:
-      {
-        specs = {
-          gpu.enable = true;
-          gpu.brand = "nvidia";
-        };
-        devTools.enable = true;
-        devTools.optionalPackages = [
-          pkgs.zed-editor
-        ];
-        gaming.enable = true;
-        contentcreation.enable = false;
-      }
-    )
   ];
 }
