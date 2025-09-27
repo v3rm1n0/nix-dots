@@ -10,7 +10,7 @@ with lib;
 let
   cfg = config.gaming;
   defaultPackages = with pkgs; [
-    (discord.override {
+    (discord-canary.override {
       withOpenASAR = false;
       withVencord = true;
     })
