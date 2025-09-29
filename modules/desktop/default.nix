@@ -1,12 +1,10 @@
 {
-  desktopEnvironment,
-  displayManager,
   ...
 }:
 {
   imports = [
-    ./desktopEnvironments/${desktopEnvironment}
-    ./displayManagers/${displayManager}
+    ./greetd
+    ./hyprland
     ./rofi
     ./styling
     ./xdg
