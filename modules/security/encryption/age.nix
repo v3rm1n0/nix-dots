@@ -1,9 +1,12 @@
 {
   agenix,
+  config,
   system,
-  username,
   ...
 }:
+let
+  username = config.userOptions.username;
+in 
 {
   environment.systemPackages = [
     agenix.packages."${system}".default

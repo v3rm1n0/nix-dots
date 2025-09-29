@@ -1,9 +1,11 @@
 {
-  hostName,
+  config,
   lib,
-  username,
   ...
 }:
+let
+  username = config.userOptions.username;
+in 
 {
   networking = {
     useDHCP = lib.mkDefault true;
@@ -11,7 +13,7 @@
       enable = true;
       wifi.powersave = true;
     };
-    inherit hostName;
+    hostName = config.userOptions.hostName;
     firewall = {
       allowedTCPPorts = [
         53317 # localsend

@@ -25,16 +25,30 @@
     };
   };
 
-  outputs = inputs: {
+  outputs = inputs: let
+    system = "x86_64-linux";
+  in {
     nixosConfigurations = {
-      Laptop = import ./nixosConfigurations/Laptop.nix {
-        inherit inputs;
-        system = "x86_64-linux";
+      Laptop = inputs.nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit system;
+        }
+        // inputs;
+        modules = [
+        ./.
+        ./hosts/Laptop
+        ];
       };
-      Desktop = import ./nixosConfigurations/Desktop.nix {
-        inherit inputs;
-        system = "x86_64-linux";
-      };
+      Desktop = inputs.nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit system;
+        }
+        // inputs;
+        modules = [
+          ./.
+          ./hosts/Desktop
+        ];
+      };    
     };
     formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
   };

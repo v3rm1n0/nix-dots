@@ -1,9 +1,12 @@
 {
+  config,
   lib,
   pkgs,
-  username,
   ...
 }:
+let
+  username = config.userOptions.username;
+in 
 {
   environment.systemPackages = with pkgs; [ rclone ];
 

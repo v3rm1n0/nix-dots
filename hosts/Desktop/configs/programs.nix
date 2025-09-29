@@ -1,22 +1,22 @@
 { pkgs, ... }:
 {
   imports = [
-    ./../../modules
+    ./../../../modules
   ];
 
   programs = {
     comms.enable = true;
     content.enable = false;
-    dev.enable = true;
+    dev = {
+      enable = true;
+      optionalPackages = [
+        pkgs.zed-editor
+      ];
+    };
     emulation.enable = true;
-    gaming.enable = false;
+    gaming.enable = true;
     media.enable = true;
     office.enable = true;
     terminal.enable = true;
-  };
-
-  specs = {
-    gpu.enable = true;
-    gpu.brand = "intel";
   };
 }

@@ -3,9 +3,11 @@
   lib,
   pkgs,
   spicetify-nix,
-  username,
   ...
 }:
+let
+  username = config.userOptions.username;
+in 
 {
   imports = [ spicetify-nix.nixosModules.default ];
 

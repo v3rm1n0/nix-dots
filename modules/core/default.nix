@@ -4,5 +4,6 @@
     ./nix
     ./programs
     ./services
+    ./user-settings
   ];
 }

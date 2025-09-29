@@ -1,8 +1,11 @@
 {
+  config,
   pkgs,
-  username,
   ...
 }:
+let
+  username = config.userOptions.username;
+in 
 {
   xdg = {
     mime = {

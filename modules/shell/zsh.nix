@@ -1,6 +1,7 @@
-{ pkgs, username, ... }:
+{ config, pkgs, ... }:
 let
   myAliases = import ./commonAliases.nix;
+  username = config.userOptions.username;
 in
 {
   environment.shells = with pkgs; [ zsh ];

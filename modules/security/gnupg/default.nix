@@ -1,4 +1,7 @@
-{ username, pkgs, ... }:
+{ config, pkgs, ... }:
+let
+  username = config.userOptions.username;
+in 
 {
   programs.gnupg = {
     agent.enable = true;

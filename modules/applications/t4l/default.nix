@@ -1,4 +1,7 @@
-{ pkgs, username, ... }:
+{ config, pkgs, ... }:
+let
+  username = config.userOptions.username;
+in 
 {
   environment.systemPackages = with pkgs; [
     teams-for-linux

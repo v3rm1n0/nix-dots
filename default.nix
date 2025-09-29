@@ -2,7 +2,6 @@
   agenix,
   home-manager,
   stylix,
-  username,
   ...
 }:
 {
@@ -11,7 +10,5 @@
     home-manager.nixosModules.home-manager
     stylix.nixosModules.stylix
     ./assets
-    ./hosts
-    ./users/${username}
   ];
 }

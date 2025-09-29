@@ -1,6 +1,7 @@
-{ pkgs, username, ... }:
+{ config, pkgs, ... }:
 let
   EQPath = ".config/pipewire/EQ.txt";
+  username = config.userOptions.username;
 in
 {
   services.pipewire = {

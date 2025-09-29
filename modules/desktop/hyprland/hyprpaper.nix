@@ -1,8 +1,11 @@
 {
-  username,
-  wallpaper,
+  config,
   ...
 }:
+let
+  username = config.userOptions.username;
+  wallpaper = config.userOptions.wallpaper;
+in 
 {
   home-manager.users.${username} = _: {
     services.hyprpaper = {

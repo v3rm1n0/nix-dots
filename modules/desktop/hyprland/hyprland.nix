@@ -1,14 +1,14 @@
 {
   config,
   lib,
-  username,
-  hostName,
   ...
 }:
+let
+  username = config.userOptions.username;
+in 
 {
   imports = [
     ./monitors.nix
-    ./configs/${hostName}.nix
   ];
 
   home-manager.users.${username} = _: {

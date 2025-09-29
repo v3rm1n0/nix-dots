@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ./../../modules
+    ./../../../modules
   ];
 
   programs = {
@@ -10,18 +10,12 @@
     dev = {
       enable = true;
       optionalPackages = [
-        pkgs.zed-editor
       ];
     };
-    emulation.enable = true;
+    emulation.enable = false;
     gaming.enable = true;
     media.enable = true;
     office.enable = true;
     terminal.enable = true;
-  };
-
-  specs = {
-    gpu.enable = true;
-    gpu.brand = "nvidia";
   };
 }

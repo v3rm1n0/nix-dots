@@ -2,9 +2,11 @@
   config,
   lib,
   pkgs,
-  username,
   ...
 }:
+let
+  username = config.userOptions.username;
+in 
 {
   options.programs.comms = {
     enable = lib.mkEnableOption "Enables communication module";
