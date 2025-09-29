@@ -7,7 +7,7 @@
 }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   imports = [ spicetify-nix.nixosModules.default ];
 

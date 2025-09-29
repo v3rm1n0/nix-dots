@@ -5,7 +5,7 @@
 }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   options.programs.office = {
     enable = lib.mkEnableOption "Enable the office module";

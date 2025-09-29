@@ -1,7 +1,7 @@
 { config, ... }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   users.users.${username} = {
     openssh.authorizedKeys.keys = [

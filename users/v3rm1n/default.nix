@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   programs.zsh.enable = true;
   users.users.${username} = {

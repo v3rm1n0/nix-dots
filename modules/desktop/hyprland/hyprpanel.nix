@@ -7,7 +7,7 @@ let
   username = config.userOptions.username;
   hostName = config.userOptions.hostName;
   wallpaper = config.userOptions.wallpaper;
-in 
+in
 {
   home-manager.users.${username} = {
     programs.hyprpanel = {

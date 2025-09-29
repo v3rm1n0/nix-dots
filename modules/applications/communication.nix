@@ -6,7 +6,7 @@
 }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   options.programs.comms = {
     enable = lib.mkEnableOption "Enables communication module";

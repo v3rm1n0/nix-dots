@@ -5,7 +5,7 @@
 }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   networking = {
     useDHCP = lib.mkDefault true;

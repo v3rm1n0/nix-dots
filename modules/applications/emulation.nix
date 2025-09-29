@@ -6,7 +6,7 @@
 }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   options.programs.emulation = {
     enable = lib.mkEnableOption "Enabled the emulation programs";

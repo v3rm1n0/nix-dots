@@ -1,7 +1,7 @@
 { config, ... }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   home-manager.users.${username} = {
     home.file = {

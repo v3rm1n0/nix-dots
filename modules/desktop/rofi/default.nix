@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   environment.systemPackages = [
     (pkgs.rofi.override (old: {

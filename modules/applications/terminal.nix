@@ -5,7 +5,7 @@
 }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   options.programs.terminal = {
     enable = lib.mkEnableOption "Enable terminal module";

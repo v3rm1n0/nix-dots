@@ -6,7 +6,7 @@
 }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   environment.systemPackages = with pkgs; [ rclone ];
 

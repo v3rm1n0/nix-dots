@@ -5,7 +5,7 @@
 }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   xdg = {
     mime = {

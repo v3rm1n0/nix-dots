@@ -5,7 +5,7 @@
 let
   username = config.userOptions.username;
   wallpaper = config.userOptions.wallpaper;
-in 
+in
 {
   home-manager.users.${username} = _: {
     services.hyprpaper = {
