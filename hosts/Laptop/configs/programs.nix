@@ -17,5 +17,6 @@
     media.enable = true;
     office.enable = true;
     terminal.enable = true;
+    uni.enable = true;
   };
 }

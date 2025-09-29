@@ -13,5 +13,6 @@
     ./office.nix
     ./productivity.nix
     ./terminal.nix
+    ./uni.nix
   ];
 }
