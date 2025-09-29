@@ -20,7 +20,7 @@ let
   ];
 in
 {
-  options.devTools = {
+  options.programs.dev = {
     enable = mkEnableOption "Enable developer tools";
 
     optionalPackages = mkOption {
@@ -34,7 +34,7 @@ in
     };
   };
 
-  config = mkIf config.devTools.enable {
-    environment.systemPackages = defaultPackages ++ config.devTools.optionalPackages;
+  config = mkIf config.programs.dev.enable {
+    environment.systemPackages = defaultPackages ++ config.programs.dev.optionalPackages;
   };
 }
