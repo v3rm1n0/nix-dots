@@ -1,6 +1,6 @@
 {
   imports = [
-    ./authentication
+    ./auth
     ./encryption
     ./gnupg
   ];

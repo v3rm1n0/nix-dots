@@ -1,11 +1,17 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
-  environment = {
-    systemPackages = with pkgs; [
-      bitwarden
-      #bitwarden-cli
-      #bitwarden-menu
-      proton-authenticator
-    ];
+  options.securityModule.encryption.passwords = {
+    enable = lib.mkEnableOption "Enable passwords module";
+  };
+
+  config = lib.mkIf config.securityModule.encryption.passwords.enable {
+    environment = {
+      systemPackages = with pkgs; [
+        bitwarden
+        #bitwarden-cli
+        #bitwarden-menu
+        proton-authenticator
+      ];
+    };
   };
 }
