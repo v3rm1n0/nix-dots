@@ -3,7 +3,7 @@
     ./audio
     ./peripherals
     ./bluetooth.nix
+    ./graphics.nix
     ./network.nix
-    ./nvidia.nix
   ];
 }
