@@ -17,6 +17,7 @@ let
     heroic-unwrapped
     lutris
     prismlauncher
+    revolt-desktop
     wineWowPackages.stable
   ];
 
