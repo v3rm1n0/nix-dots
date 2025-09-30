@@ -53,7 +53,7 @@ in
 
         input = {
           kb_layout = "us, de";
-          kb_options = "grp:win_space_toggle";
+          kb_options = "grp:alt_shift_toggle";
 
           follow_mouse = "1";
 
@@ -110,12 +110,10 @@ in
           "$mainMod, M, exit,"
           "$mainMod, E, exec, nemo"
           "$mainMod, V, togglefloating,"
-          "$mainMod, R, exec, wofi --show drun"
           "$mainMod, P, pseudo, # dwindle"
           "$mainMod, Q, togglesplit, # dwindle"
           "$mainMod ALT_L, L, exec, hyprlock"
-          "$mainMod, S, exec, rofi -show drun -showicons"
-          "$mainMod SHIFT, E, exec, rofi -modi emoji -show emoji"
+          "$mainMod, SPACE, exec, vicinae"
           "$mainMod, R, exec, librewolf"
 
           "$mainMod, h, movefocus, l"

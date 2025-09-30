@@ -23,6 +23,10 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vicinae = {
+      url = "github:vicinaehq/vicinae"; # tell Nixos where to get Vicinae
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

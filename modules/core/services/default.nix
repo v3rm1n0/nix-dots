@@ -9,5 +9,6 @@
     ./power-profiles-daemon.nix
     ./ssh.nix
     ./upower.nix
+    ./vicinae.nix
   ];
 }
