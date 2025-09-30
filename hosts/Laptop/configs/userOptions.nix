@@ -5,7 +5,7 @@
   ];
 
   userOptions = {
-    hostName = "Desktop";
+    hostName = "Laptop";
     username = "v3rm1n";
     wallpaper = "gruvbox-nix.png";
   };
