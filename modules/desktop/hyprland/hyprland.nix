@@ -71,6 +71,10 @@ in
           layout = "dwindle";
         };
 
+        misc = {
+          disable_hyprland_logo = true;
+        };
+
         decoration = {
           blur = {
             enabled = true;
