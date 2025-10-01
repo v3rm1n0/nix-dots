@@ -3,11 +3,12 @@
   services.greetd = {
     enable = true;
     restart = true;
-    settings = {
-      default_session = {
+    settings = rec {
+      initial_session = {
         command = "${pkgs.tuigreet}/bin/tuigreet --time --greeting 'Welcome to Wonderland' --asterisks --cmd 'uwsm start hyprland-uwsm.desktop'";
-        user = config.userOptions.username;
+        user = "${config.userOptions.username}";
       };
+      default_session = initial_session;
     };
   };
 }
