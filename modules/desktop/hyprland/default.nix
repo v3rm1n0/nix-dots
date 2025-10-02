@@ -4,6 +4,7 @@
 }:
 {
   imports = [
+    ./hypridle.nix
     ./hyprland.nix
     ./hyprpanel.nix
     ./hyprpaper.nix
