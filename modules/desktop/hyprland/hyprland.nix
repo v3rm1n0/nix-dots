@@ -60,6 +60,8 @@ in
           touchpad = {
             natural_scroll = "no";
           };
+
+          numlock_by_default = true;
         };
 
         general = {
