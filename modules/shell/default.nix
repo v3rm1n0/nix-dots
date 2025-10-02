@@ -27,6 +27,7 @@ in
     clang
     eza
     gh
+    glow
     nixd
     nixfmt-rfc-style
     unzip
