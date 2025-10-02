@@ -59,8 +59,9 @@ in
         menus.clock.weather.key = "${config.age.secrets.weatherAPI.path}";
         menus.clock.weather.location = "Viersen";
         menus.clock.weather.unit = "metric";
-        theme.menu.opacity = "85";
+        theme.bar.buttons.background_opacity = "0";
         theme.bar.floating = true;
+        theme.bar.menus.opacity = "90";
         theme.bar.outer_spacing = "0.4em";
         theme.bar.transparent = true;
         theme.font.size = "0.7rem";
