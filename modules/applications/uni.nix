@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   options.programs.uni = {
     enable = lib.mkEnableOption "Enable uni module aka tex shit";

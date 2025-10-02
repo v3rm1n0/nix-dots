@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   options.securityModule.encryption.passwords = {
     enable = lib.mkEnableOption "Enable passwords module";

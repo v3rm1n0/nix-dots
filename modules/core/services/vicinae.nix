@@ -1,8 +1,8 @@
 { config, vicinae, ... }:
 let
   username = config.userOptions.username;
-in 
-{ 
+in
+{
   home-manager.users.${username} = {
 
     imports = [ vicinae.homeManagerModules.default ];

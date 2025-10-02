@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   myAliases = import ./commonAliases.nix;
   username = config.userOptions.username;
@@ -11,7 +16,7 @@ in
   config = lib.mkIf config.shell.zsh.enable {
     environment.shells = with pkgs; [ zsh ];
     environment.systemPackages = with pkgs; [ zsh-autocomplete ];
-    
+
     home-manager.users.${username} = {
       programs.zsh = {
         enable = true;
