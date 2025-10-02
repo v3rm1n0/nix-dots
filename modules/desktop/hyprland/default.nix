@@ -6,6 +6,7 @@
   imports = [
     ./hypridle.nix
     ./hyprland.nix
+    ./hyprlock.nix
     ./hyprpanel.nix
     ./hyprpaper.nix
   ];
@@ -35,10 +36,6 @@
   };
 
   programs.uwsm = {
-    enable = true;
-  };
-
-  programs.hyprlock = {
     enable = true;
   };
 }
