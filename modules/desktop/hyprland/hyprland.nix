@@ -119,7 +119,7 @@ in
           "$mainMod, P, pseudo, # dwindle"
           "$mainMod, Q, togglesplit, # dwindle"
           "$mainMod ALT_L, L, exec, hyprlock"
-          "$mainMod, SPACE, exec, vicinae"
+          "$mainMod, SPACE, exec, vicinae toggle"
           "$mainMod, R, exec, librewolf"
 
           "$mainMod, h, movefocus, l"
