@@ -9,15 +9,12 @@ with lib;
 
 let
   defaultPackages = with pkgs; [
-    (discord-canary.override {
-      withOpenASAR = false;
-      withVencord = true;
-    })
     ed-odyssey-materials-helper
     heroic-unwrapped
     lutris
     prismlauncher
     revolt-desktop
+    vesktop
     wineWowPackages.stable
   ];
 

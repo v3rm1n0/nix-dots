@@ -183,15 +183,15 @@ in
 
         windowrulev2 = [
           # General layout rule for workspace 2
-          "workspace 2 silent, class:^(discord)$"
-          "tile, class:^(discord)$"
+          "workspace 2 silent, class:^(vesktop)$"
+          "tile, class:^(vesktop)$"
           "workspace 2 silent, title:^(Spotify Premium)$"
           "tile, title:^(Spotify Premium)$"
 
           # General layout rule for workspace 7
           "workspace 8 silent, class:^(steam)$"
         ];
-        exec-once = [ "discord" ];
+        exec-once = [ "vesktop" ];
       };
     };
   };
