@@ -5,7 +5,7 @@
   ];
 
   securityModule = {
-    auth.enableGnomeKeyringFor = "greetd";
+    auth.enableGnomeKeyringFor = "ly";
     encryption = {
       age.enable = true;
       passwords.enable = true;

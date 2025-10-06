@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   services.greetd = {
-    enable = true;
+    enable = false;
     restart = true;
     settings = rec {
       initial_session = {

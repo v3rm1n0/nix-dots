@@ -5,6 +5,7 @@
   imports = [
     ./greetd
     ./hyprland
+    ./ly
     ./rofi
     ./styling
     ./xdg

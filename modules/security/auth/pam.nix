@@ -8,7 +8,15 @@
   };
 
   config = lib.mkIf (config.securityModule.auth.enableGnomeKeyringFor != null) {
-    security.pam.services.${config.securityModule.auth.enableGnomeKeyringFor}.enableGnomeKeyring = true;
+    security.pam.services.${config.securityModule.auth.enableGnomeKeyringFor} = {
+      enableGnomeKeyring = true;
+      text = ''
+        auth     include login
+        account  include login
+        password include login
+        session  include login
+      '';
+    };
     security.pam.services.login.enableGnomeKeyring = true;
   };
 }
