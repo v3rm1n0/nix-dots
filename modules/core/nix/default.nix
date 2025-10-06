@@ -29,7 +29,7 @@ in
         color-scheme = "prefer-dark";
       };
       "org/cinnamon/desktop/applications/terminal" = {
-        exec = "ghostty";
+        exec = "wezterm";
       };
     };
   };
