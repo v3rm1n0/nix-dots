@@ -7,11 +7,11 @@ let
   username = config.userOptions.username;
 in
 {
-  options.programs.office = {
+  options.programs.productivity = {
     enable = lib.mkEnableOption "Enable the office module";
   };
 
-  config = lib.mkIf config.programs.office.enable {
+  config = lib.mkIf config.programs.productivity.enable {
     home-manager.users.${username}.programs = {
       onlyoffice.enable = true;
       zathura.enable = true;

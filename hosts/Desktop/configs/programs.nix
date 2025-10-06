@@ -16,7 +16,7 @@
     emulation.enable = true;
     gaming.enable = true;
     media.enable = true;
-    office.enable = true;
+    productivity.enable = true;
     terminal.enable = true;
     uni.enable = true;
   };
