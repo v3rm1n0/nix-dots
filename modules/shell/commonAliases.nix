@@ -7,7 +7,7 @@
   vim = "nvim";
   ff = "fastfetch";
 
-  ga = "git add .";
+  ga = "git add";
   gc = "git commit -m";
   gcfu = "git commit -m 'Updated Flake'";
 
