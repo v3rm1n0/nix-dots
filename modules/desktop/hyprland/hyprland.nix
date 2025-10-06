@@ -111,7 +111,7 @@ in
 
         "$mainMod" = "SUPER";
         bind = [
-          "$mainMod, T, exec, wezterm"
+          "$mainMod, T, exec, ghostty"
           "$mainMod, C, killactive,"
           "$mainMod, M, exit,"
           "$mainMod, E, exec, nemo"

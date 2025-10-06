@@ -3,6 +3,7 @@
     ./browsing
     ./electron
     ./t4l
+    ./terminal
     ./communication.nix
     ./contentcreation.nix
     ./developer.nix
@@ -12,7 +13,6 @@
     ./media.nix
     ./office.nix
     ./productivity.nix
-    ./terminal.nix
     ./uni.nix
   ];
 }
