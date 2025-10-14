@@ -25,10 +25,7 @@ in
       secrets = {
         weatherAPI = {
           file = ../../../secrets/weatherAPI.age;
-          owner = username;
-        };
-        rclone_conf = {
-          file = ../../../secrets/rclone_conf.age;
+          path = "/home/${username}/.config/apikey.json";
           owner = username;
         };
       };

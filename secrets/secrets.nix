@@ -3,6 +3,5 @@ let
   users = [ v3rm1n ];
 in
 {
-  "rclone_conf.age".publicKeys = users;
   "weatherAPI.age".publicKeys = users;
 }

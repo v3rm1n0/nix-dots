@@ -56,7 +56,7 @@ in
         bar.workspaces.show_numbered = true;
         bar.workspaces.workspaces = 10;
         menus.clock.time.military = true;
-        menus.clock.weather.key = "${config.age.secrets.weatherAPI.path}";
+        menus.clock.weather.key = "/home/${username}/.config/apikey.json";
         menus.clock.weather.location = "Viersen";
         menus.clock.weather.unit = "metric";
         theme.bar.buttons.background_opacity = "0";
