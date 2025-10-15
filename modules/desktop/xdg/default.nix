@@ -9,6 +9,7 @@ in
 {
   xdg = {
     mime = {
+      # TODO: Check wether the librewolf entries are still required in the future
       defaultApplications = {
         "application/pdf" = [ "zathura.desktop" ];
         "application/x-gnome-saved-search" = [ "nemo.desktop" ];
@@ -16,32 +17,41 @@ in
         "image/jpg" = [ "gthumb.desktop" ];
         "image/png" = [ "gthumb.desktop" ];
         "inode/directory" = [ "nemo.desktop" ];
+        "text/html" = [ "librewolf.desktop" ];
         "video/avi" = [ "vlc.desktop" ];
         "video/mp4" = [ "vlc.desktop" ];
         "video/x-matroska" = [ "vlc.desktop" ];
+        "x-scheme-handler/http" = [ "librewolf.desktop" ];
+        "x-scheme-handler/https" = [ "librewolf.desktop" ];
       };
-    };
-    portal = {
-      enable = true;
-      xdgOpenUsePortal = true;
-      config = {
-        common = {
-          default = [
-            "xdph"
-            "gtk"
-          ];
-          "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
-          "org.freedesktop.portal.FileChooser" = [ "xdg-desktop-portal-gtk" ];
-        };
-      };
-      extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     };
   };
 
   home-manager.users.${username} = _: {
-    xdg.userDirs = {
-      enable = true;
-      createDirectories = true;
+    xdg = {
+      userDirs = {
+        enable = true;
+        createDirectories = true;
+      };
+      portal = {
+        enable = true;
+        xdgOpenUsePortal = true;
+        config = {
+          common = {
+            default = [
+              "xdph"
+              "gtk"
+            ];
+            "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+            "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+          };
+        };
+        extraPortals = with pkgs; [
+          xdg-desktop-portal
+          xdg-desktop-portal-gtk
+          xdg-desktop-portal-hyprland
+        ];
+      };
     };
   };
 }

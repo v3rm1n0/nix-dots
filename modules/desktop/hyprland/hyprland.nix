@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -11,16 +12,29 @@ in
     ./monitors.nix
   ];
 
+  environment.variables = {
+    XDG_CURRENT_DESKTOP = "Hyprland";
+    XDG_SESSION_DESKTOP = "Hyprland";
+    GTK_USE_PORTAL = "1";
+    GDK_BACKEND = "wayland,x11";
+    MOZ_ENABLE_WAYLAND = "1";
+    MOZ_DISABLE_RDD_SANDBOX = "1";
+    QT_QPA_PLATFORM = "wayland";
+    XCURSOR_SIZE = "24";
+  };
+
   home-manager.users.${username} = _: {
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
+      portalPackage = pkgs.xdg-desktop-portal-hyprland;
       systemd = {
         enable = true;
         enableXdgAutostart = true;
         variables = [
           "--all"
-          "XCURSOR_SIZE,24"
+          "XDG_CURRENT_DESKTOP"
+          "XDG_SESSION_TYPE"
         ];
       };
       settings = {
