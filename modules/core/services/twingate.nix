@@ -1,0 +1,4 @@
+{ ... }:
+{
+  services.twingate.enable = true;
+}
