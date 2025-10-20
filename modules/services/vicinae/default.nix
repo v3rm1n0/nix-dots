@@ -6,7 +6,7 @@
 }:
 let
   username = config.userOptions.username;
-in 
+in
 {
   options.servicesModule.vicinae = {
     enable = lib.mkEnableOption "Enable vicinae service";
