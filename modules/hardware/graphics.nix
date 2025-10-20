@@ -7,7 +7,7 @@
 
 let
   inherit (lib) mkIf mkMerge;
-  cfg = config.specs;
+  cfg = config.hardwareModule;
 in
 {
   config = mkMerge [

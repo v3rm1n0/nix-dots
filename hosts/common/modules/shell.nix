@@ -1,5 +1,5 @@
 {
-  shell = {
+  config.shell = {
     zsh.enable = true;
   };
 }

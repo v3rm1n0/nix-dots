@@ -1,8 +1,8 @@
 {
   imports = [
+    ./hardware.nix
     ./monitors.nix
     ./programs.nix
-    ./specs.nix
     ./userOptions.nix
   ];
 }

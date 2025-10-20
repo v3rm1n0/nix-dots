@@ -1,5 +1,5 @@
 {
-  securityModule = {
+  config.securityModule = {
     auth.enableGnomeKeyringFor = "ly";
     encryption = {
       age.enable = true;

@@ -1,5 +1,5 @@
 {
-  programs = {
+  config.programs = {
     comms.enable = true;
     content.enable = false;
     dev.enable = true;

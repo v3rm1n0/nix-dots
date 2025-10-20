@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  programs = {
+  config.programs = {
     dev.optionalPackages = [
         pkgs.zed-editor
       ];

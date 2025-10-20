@@ -3,7 +3,7 @@
 with lib;
 
 {
-  options.specs = {
+  options.hardwareModule = {
     gpu = {
       enable = mkEnableOption "Enable GPU support";
       brand = mkOption {
