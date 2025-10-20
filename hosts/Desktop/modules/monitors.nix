@@ -1,8 +1,7 @@
-{ ... }:
 {
   config.monitors = [
     {
-      name = "eDP-1";
+      name = "DP-1";
       width = 1920;
       height = 1080;
       refreshRate = 180;
@@ -10,27 +9,29 @@
       y = 0;
       workspaces = [
         1
-        2
         3
         4
         5
         6
         7
         8
-        9
       ];
       workspacePrimary = 1;
       enabled = true;
     }
     {
-      name = "";
+      name = "HDMI-A-2";
       width = 1920;
       height = 1080;
       refreshRate = 60;
       x = 1920;
       y = 0;
-      workspaces = [ 10 ];
-      workspacePrimary = 10;
+      workspaces = [
+        2
+        9
+        10
+      ];
+      workspacePrimary = 2;
       enabled = true;
     }
   ];

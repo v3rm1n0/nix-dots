@@ -1,9 +1,4 @@
-{ ... }:
 {
-  imports = [
-    ./../../../modules
-  ];
-
   userOptions = {
     hostName = "Laptop";
     username = "v3rm1n";

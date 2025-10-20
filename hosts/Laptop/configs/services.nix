@@ -1,5 +1,0 @@
-{
-  servicesModule = {
-    tailscale.enable = true;
-  };
-}

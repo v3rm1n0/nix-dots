@@ -1,0 +1,5 @@
+{
+  shell = {
+    zsh.enable = true;
+  };
+}

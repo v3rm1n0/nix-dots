@@ -1,18 +1,8 @@
-{ pkgs, ... }:
 {
-  imports = [
-    ./../../../modules
-  ];
-
   programs = {
     comms.enable = true;
     content.enable = false;
-    dev = {
-      enable = true;
-      optionalPackages = [
-        pkgs.zed-editor
-      ];
-    };
+    dev.enable = true;
     emulation.enable = true;
     gaming.enable = true;
     media.enable = true;

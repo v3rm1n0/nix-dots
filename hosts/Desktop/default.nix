@@ -2,7 +2,7 @@
   imports = [
     ./../../users/v3rm1n
     ./../common
-    ./configs
+    ./modules
     ./hardware-configuration.nix
     ./hardware-specific.nix
   ];

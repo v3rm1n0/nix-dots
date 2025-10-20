@@ -1,9 +1,4 @@
-{ ... }:
 {
-  imports = [
-    ./../../../modules
-  ];
-
   securityModule = {
     auth.enableGnomeKeyringFor = "ly";
     encryption = {

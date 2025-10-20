@@ -10,5 +10,6 @@
     home-manager.nixosModules.home-manager
     stylix.nixosModules.stylix
     ./assets
+    ./modules
   ];
 }
