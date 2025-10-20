@@ -5,6 +5,7 @@
     ./desktop
     ./hardware
     ./security
+    ./services
     ./shell
   ];
 }
