@@ -1,3 +1,6 @@
 {
-  imports = [ ./razer ];
+  imports = [
+    ./graphics
+    ./razer
+  ];
 }

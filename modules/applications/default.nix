@@ -7,7 +7,6 @@
     ./electron
     ./emulators
     ./gaming
-    ./hardware
     ./media
     ./productivity
     ./t4l

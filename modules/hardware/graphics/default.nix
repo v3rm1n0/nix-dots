@@ -1,14 +1,11 @@
 { lib, ... }:
-
-with lib;
-
 {
   options.hardwareModule = {
     gpu = {
-      enable = mkEnableOption "Enable GPU support";
-      brand = mkOption {
-        type = types.nullOr (
-          types.enum [
+      enable = lib.mkEnableOption "Enable GPU support";
+      brand = lib.mkOption {
+        type = lib.types.nullOr (
+          lib.types.enum [
             "nvidia"
             "amd"
             "intel"
