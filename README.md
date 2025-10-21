@@ -24,22 +24,23 @@ This document provides an overview of my NixOS flake configuration, including th
 
 My NixOS configuration is organized into a modular flake to ensure a clean and reproducible setup across multiple machines.
 
-- `default.nix`: This file imports the main modules and profiles based on the `systemType` and defines the overall structure.
-- `flake.nix`: This is the entry point of the configuration. It defines the flake inputs (`nixpkgs`, `home-manager`, `stylix`, etc.) and the NixOS configurations for `Desktop` and `Laptop`.
 - `hosts/`: Contains host-specific configurations.
-  - `Desktop/`: Configuration for the desktop machine, including hardware-specific settings.
-  - `Laptop/`: Configuration for the laptop machine, including hardware-specific settings.
+  - `Desktop/`: Configuration for the desktop machine and their respective modules.
+  - `Laptop/`: Configuration for the laptop machine and their respective modules.
   - `common/`: Shared settings for all hosts, such as locale and environment variables.
 - `modules/`: Contains the main modular configuration files, broken down by category.
-  - `applications/`: Configurations for various applications like browsers, communication tools, and productivity software.
-  - `core/`: Core system settings, including boot, Nix settings, programs, and services.
-  - `desktop/`: Configuration for the desktop environment (Hyprland), display managers, and styling.
-  - `hardware/`: Hardware-specific configurations for audio, bluetooth, network, and peripherals.
+  - `applications/`: Module configurations for various applications like browsers, communication tools, and productivity software.
+  - `desktop/`: Module configuration for the desktop environment (Hyprland), display managers, and styling.
+  - `hardware/`: Hardware-module-specific configurations for peripherals.
   - `security/`: Security-related settings for authentication, encryption, and GnuPG.
+  - `services/`: Module configurations for non-system services.
   - `shell/`: Configurations for the shell, including Zsh and Bash, and their aliases.
-- `profiles/`: Defines different system profiles that can be enabled or disabled, such as `developer`, `gaming`, and `contentcreation`. These are imported based on the host configuration.
+  - `user/`: User-specific modules, such as wallpaper, hostname and username options.
 - `secrets/`: This directory is used to handle secrets via `agenix`. It contains encrypted files (`.age`) and a `secrets.nix` file that lists public keys for decryption.
+- `system/`: Contains configuration modules essential for every running NixOS instance.
 - `users/`: Holds user-specific configurations, such as the `v3rm1n` user settings.
+- `default.nix`: This file imports the main modules and defines the overall structure.
+- `flake.nix`: This is the entry point of the configuration. It defines the flake inputs (`nixpkgs`, `home-manager`, `stylix`, etc.) and the NixOS configurations for `Desktop` and `Laptop`.
 
 ## System Management
 
