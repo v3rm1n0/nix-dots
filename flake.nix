@@ -24,7 +24,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vicinae = {
-      url = "github:vicinaehq/vicinae"; # tell Nixos where to get Vicinae
+      url = "github:vicinaehq/vicinae";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

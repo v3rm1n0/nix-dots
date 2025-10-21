@@ -1,6 +1,9 @@
 {
   config.hardwareModule = {
-    gpu.enable = true;
-    gpu.brand = "nvidia";
+    gpu = {
+      enable = true;
+      brand = "nvidia";
+    };
+    razer.enable = true;
   };
 }
