@@ -11,5 +11,6 @@
     stylix.nixosModules.stylix
     ./assets
     ./modules
+    ./system
   ];
 }

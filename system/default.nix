@@ -1,9 +1,9 @@
 {
   imports = [
     ./boot
+    ./hardware
     ./nix
     ./programs
     ./services
-    ./user-settings
   ];
 }
