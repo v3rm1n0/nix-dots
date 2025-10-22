@@ -1,12 +1,11 @@
-{ lib, pkgs, ... }:
+{ helium, pkgs, system, ... }:
 {
-  environment.systemPackages = with pkgs; [
-    #brave
-    #vivaldi
+  environment.systemPackages = [
+    helium.defaultPackage.${system}
   ];
 
   programs.chromium = {
-    enable = lib.mkDefault false;
+    enable = true;
     extraOpts = {
       "AudioSandboxEnabled" = false;
       "AutofillAddressEnabled" = false;
