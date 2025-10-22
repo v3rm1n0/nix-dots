@@ -25,8 +25,6 @@ in
               "volume"
               "kbinput"
               (lib.mkIf (hostName == "Laptop") "battery")
-              "network"
-              "bluetooth"
               "systray"
               "clock"
               "notifications"
@@ -42,15 +40,13 @@ in
             right = [
               "volume"
               "kbinput"
-              "network"
-              "bluetooth"
               "systray"
               "clock"
               "notifications"
             ];
           };
         };
-        bar.clock.format = "%a %b %d %R";
+        bar.clock.format = "%H:%M";
         bar.launcher.autoDetectIcon = true;
         bar.windowtitle.icon = false;
         bar.workspaces.show_numbered = true;
