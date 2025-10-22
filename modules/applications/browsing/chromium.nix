@@ -1,4 +1,9 @@
-{ helium, pkgs, system, ... }:
+{
+  helium,
+  pkgs,
+  system,
+  ...
+}:
 {
   environment.systemPackages = [
     helium.defaultPackage.${system}
