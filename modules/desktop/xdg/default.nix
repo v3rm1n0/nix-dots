@@ -21,8 +21,6 @@ in
         "video/avi" = [ "vlc.desktop" ];
         "video/mp4" = [ "vlc.desktop" ];
         "video/x-matroska" = [ "vlc.desktop" ];
-        "x-scheme-handler/http" = [ "librewolf.desktop" ];
-        "x-scheme-handler/https" = [ "librewolf.desktop" ];
       };
     };
   };
