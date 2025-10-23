@@ -22,7 +22,11 @@ in
         autoStart = true;
         settings = {
           theme.name = "gruvbox_material_medium_dark.json";
-          window.csd = false;
+          window = {
+            csd = true;
+            opacity = 0.8;
+            rounding = 10;
+          };
         };
       };
     };
