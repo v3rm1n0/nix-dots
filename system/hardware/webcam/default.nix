@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   webcam-conf = pkgs.writeScriptBin "my-configure-webcam" ''
     # UGREEN 2K Webcam
