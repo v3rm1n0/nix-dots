@@ -6,7 +6,6 @@
 let
   username = config.userOptions.username;
   hostName = config.userOptions.hostName;
-  wallpaper = config.userOptions.wallpaper;
 in
 {
   home-manager.users.${username} = {

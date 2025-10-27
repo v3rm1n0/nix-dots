@@ -12,8 +12,10 @@ in
   home-manager.users.${username} = {
     programs.git = {
       enable = true;
-      userName = "V3RM1N";
-      userEmail = "v3rm1n0@proton.me";
+      settings.user = {
+        name = "V3RM1N";
+        email = "v3rm1n0@proton.me";
+      };
       signing = {
         key = "4998F4C236F92A36";
         signByDefault = true;
