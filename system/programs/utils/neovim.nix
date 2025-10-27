@@ -4,8 +4,16 @@
   pkgs,
   ...
 }:
+let
+  username = config.userOptions.username;
+in
 {
-  environment.systemPackages = with pkgs; [
-    neovim
-  ];
+  home-manager.users.${username} = {
+    stylix.targets.neovim.enable = false;
+    programs.neovim = {
+      enable = true;
+      extraLuaPackages = ps: [ ps.magick ];
+      extraPackages = [ pkgs.imagemagick ];
+    };
+  };
 }
