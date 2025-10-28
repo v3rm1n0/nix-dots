@@ -5,6 +5,7 @@
   ...
 }:
 let
+  dots = config.userOptions.dots;
   username = config.userOptions.username;
 in
 {
@@ -48,7 +49,7 @@ in
 
   programs.nh = {
     enable = true;
-    flake = "/home/${username}/.dotfiles"; # TODO: make dynamic
+    flake = "${dots}";
   };
 
   programs.nix-ld = {

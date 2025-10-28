@@ -12,6 +12,11 @@
       description = "The base16 scheme name for stylix.";
     };
 
+    dots = lib.mkOption {
+      type = lib.types.str;
+      description = "The absolute path to the flake location e.g. /etc/nixos.";
+    };
+
     hostName = lib.mkOption {
       type = lib.types.str;
       description = "The hostname for the system.";

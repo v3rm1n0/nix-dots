@@ -11,7 +11,6 @@ in
 {
   xdg = {
     mime = {
-      # TODO: Check wether the librewolf entries are still required in the future
       defaultApplications = {
         "application/pdf" = [ "zathura.desktop" ];
         "application/x-gnome-saved-search" = [ "nemo.desktop" ];
