@@ -12,7 +12,7 @@ in
     stylix.targets.neovim.enable = false;
     programs.neovim = {
       enable = true;
-      extraLuaPackages = ps: [ ps.magick ];
+      extraLuaPackages = ps: [ ps.magick ps.luarocks ];
       extraPackages = [ pkgs.imagemagick ];
     };
   };
