@@ -13,121 +13,442 @@ _Declarative NixOS configuration with Flakes & Home Manager_
 
 </div>
 
-## Project Overview
+## 📚 Overview
+
+A production-ready, modular NixOS configuration featuring Hyprland, Home Manager, and comprehensive system management. Built for maintainability, security, and ease of deployment across multiple machines.
+
+### ✨ Key Features
+
+- 🎨 **Unified Theming** with Stylix (Kanagawa color scheme)
+- 🔒 **Secure Boot** via Lanzaboote
+- 🔐 **Secret Management** with agenix
+- 🪟 **Hyprland** with UWSM session management
+- 🏠 **Home Manager** for declarative user environments
+- 📦 **Modular Architecture** for easy customization
+- 🗄️ **Btrfs** with automatic maintenance
+- ⚡ **Optimized** for both desktop and laptop configurations
+
+## 📁 Repository Structure
 
 <details>
-    <summary> Flake Setup </summary>
+<summary><b>Project Layout</b></summary>
 
-This document provides an overview of my NixOS flake configuration, including the folder structure, system management commands, and shell shortcuts.
+```
+.
+├── flake.nix              # Flake entry point & host definitions
+├── default.nix            # Main module imports
+├── hosts/                 # Host-specific configurations
+│   ├── Desktop/           # Desktop machine config
+│   ├── Laptop/            # Laptop machine config
+│   └── common/            # Shared host settings (locale, environment)
+├── modules/               # Feature modules
+│   ├── applications/      # Application configs (browsers, gaming, dev tools)
+│   ├── desktop/           # Desktop environment (Hyprland, styling, XDG)
+│   ├── hardware/          # Hardware-specific settings (GPU, peripherals)
+│   ├── security/          # Security configs (GPG, passwords, agenix)
+│   ├── services/          # System services (bluetooth, flatpak, vicinae)
+│   ├── shell/             # Shell configuration (zsh, bash, aliases)
+│   └── user/              # User-specific options
+├── system/                # Core system configuration
+│   ├── boot/              # Boot configuration (kernel, plymouth, secure boot)
+│   ├── hardware/          # Hardware management (bluetooth, graphics, audio)
+│   ├── nix/               # Nix settings, garbage collection, Btrfs maintenance
+│   ├── programs/          # System utilities (monitoring, tools)
+│   └── services/          # System services (SSH, power management)
+├── users/                 # User account definitions
+├── secrets/               # Encrypted secrets (agenix)
+└── assets/                # Wallpapers and static resources
+```
 
-## Flake Structure
-
-My NixOS configuration is organized into a modular flake to ensure a clean and reproducible setup across multiple machines.
-
-- `hosts/`: Contains host-specific configurations.
-  - `Desktop/`: Configuration for the desktop machine and their respective modules.
-  - `Laptop/`: Configuration for the laptop machine and their respective modules.
-  - `common/`: Shared settings for all hosts, such as locale and environment variables.
-- `modules/`: Contains the main modular configuration files, broken down by category.
-  - `applications/`: Module configurations for various applications like browsers, communication tools, and productivity software.
-  - `desktop/`: Module configuration for the desktop environment (Hyprland), display managers, and styling.
-  - `hardware/`: Hardware-module-specific configurations for peripherals.
-  - `security/`: Security-related settings for authentication, encryption, and GnuPG.
-  - `services/`: Module configurations for non-system services.
-  - `shell/`: Configurations for the shell, including Zsh and Bash, and their aliases.
-  - `user/`: User-specific modules, such as wallpaper, hostname and username options.
-- `secrets/`: This directory is used to handle secrets via `agenix`. It contains encrypted files (`.age`) and a `secrets.nix` file that lists public keys for decryption.
-- `system/`: Contains configuration modules essential for every running NixOS instance.
-- `users/`: Holds user-specific configurations, such as the `v3rm1n` user settings.
-- `default.nix`: This file imports the main modules and defines the overall structure.
-- `flake.nix`: This is the entry point of the configuration. It defines the flake inputs (`nixpkgs`, `home-manager`, `stylix`, etc.) and the NixOS configurations for `Desktop` and `Laptop`.
-
-## System Management
-
-The following commands are used for managing the NixOS system, as defined in `README.md` and `modules/shell/commonAliases.nix`.
-
-- `nixos-rebuild switch --flake .#Desktop`: Applies system changes.
-- `nh os switch -a` (alias `os`): Applies system changes.
-- `nh os switch -a -u` (alias `ou`): Applies system changes and updates all flake inputs.
-- `nix flake update`: Updates all flake inputs manually.
-- `nix flake check`: Validates the flake configuration.
-
-## Shell Shortcuts (Aliases)
-
-The `commonAliases.nix` file defines a set of useful shell aliases for both Bash and Zsh.
-
-- `la`: `eza -lah` (lists files with details, showing hidden files).
-- `ls`: `eza` (lists files).
-- `tree`: `eza --tree --git-ignore` (lists files in a tree format, ignoring git files).
-- `vi` and `vim`: `nvim` (opens Neovim).
-- `ff`: `fastfetch` (runs the fastfetch system information tool).
-- `ga`: `git add .` (stages all changes).
-- `gc`: `git commit -m` (commits changes with a message).
-- `gcfu`: `git commit -m 'Updated Flake'` (commits changes with a standard message).
-- `cat`: `bat` (a `cat` alternative with syntax highlighting).
-- `man`: `batman` (a `man` alternative).
 </details>
 
-## System Information
+## 🏗️ Architecture
 
-- **OS**: NixOS (Unstable channel)
-- **Desktop**: Hyprland with UWSM
-- **Filesystem**: Btrfs
-- **Package Manager**: Nix with Flakes
-- **Configuration**: Fully declarative and reproducible
+### Module System
 
-## Installation Instructions
+The configuration uses a **highly modular approach** with clear separation of concerns:
+
+- **Host-specific settings**: `hosts/{Desktop,Laptop}/`
+- **Feature modules**: `modules/` with enable options
+- **System essentials**: `system/` for core functionality
+- **User configurations**: Home Manager in `users/`
+
+### Configuration Options
+
+Most modules expose simple enable options:
+
+```nix
+# Example host configuration
+config = {
+  programs.gaming.enable = true;
+  programs.dev.enable = true;
+  servicesModule.tailscale.enable = true;
+
+  # Hardware configuration
+  hardwareModule.gpu = {
+    enable = true;
+    brand = "nvidia";  # or "intel", "amd"
+  };
+};
+```
+
+## 💻 System Information
+
+### Software Stack
+
+| Component          | Implementation                       |
+| ------------------ | ------------------------------------ |
+| **OS**             | NixOS Unstable                       |
+| **Display Server** | Wayland                              |
+| **Window Manager** | Hyprland with UWSM                   |
+| **Panel**          | Hyprpanel                            |
+| **Terminal**       | WezTerm                              |
+| **Shell**          | Zsh with Powerlevel10k               |
+| **Editor**         | Neovim + VSCode                      |
+| **Browser**        | LibreWolf (Desktop), Helium (Laptop) |
+| **File Manager**   | Nemo                                 |
+| **Theme**          | Stylix with Kanagawa                 |
+| **Filesystem**     | Btrfs with auto-scrub                |
+
+### Hardware Support
+
+#### Desktop Configuration
+
+- **GPU**: NVIDIA (proprietary drivers)
+- **Peripherals**: Razer devices (OpenRazer)
+- **Monitors**: Dual monitor setup (180Hz + 60Hz)
+
+#### Laptop Configuration
+
+- **GPU**: Intel integrated graphics
+- **Power Management**: power-profiles-daemon, hypridle
+- **Display**: 180Hz internal display with external monitor support
+
+## 🚀 Installation
+
+### Prerequisites
+
+- A system with UEFI boot support
+- Internet connection
+- Basic understanding of NixOS
+
+### New Installation
 
 <details>
-    <summary>Show Instructions</summary>
-    
-  ```bash
-  # Clone the repository
-  git clone https://github.com/v3rm1n0/nix-dots.git
-  cd nix-dots
+<summary><b>Fresh Install Steps</b></summary>
 
-# Partition and format disk with Disko
+1. **Boot from NixOS installation media**
 
-sudo nix --experimental-features "nix-command flakes" run \
- github:nix-community/disko/latest -- \
- --mode destroy,format,mount ./disko-defaults.nix
+2. **Clone the repository**
 
-# Only for low ram devices!
+   ```bash
+   git clone https://github.com/v3rm1n0/nix-dots.git
+   cd nix-dots
+   ```
 
-sudo mkdir /mnt/swap
-sudo chattr +C /mnt/swap
-sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=8048 status=progress
-sudo chmod 600 /mnt/swap/swapfile
-sudo mkswap /mnt/swap/swapfile
-sudo swapon /mnt/swap/swapfile
+3. **Partition and format disk with Disko**
 
-# Install NixOS
+   ```bash
+   sudo nix --experimental-features "nix-command flakes" run \
+     github:nix-community/disko/latest -- \
+     --mode destroy,format,mount ./disko-defaults.nix
+   ```
 
-sudo nixos-install --flake .#Desktop
+4. **Optional: Set up swap for low-RAM devices**
 
-````
+   ```bash
+   sudo mkdir /mnt/swap
+   sudo chattr +C /mnt/swap
+   sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=8048 status=progress
+   sudo chmod 600 /mnt/swap/swapfile
+   sudo mkswap /mnt/swap/swapfile
+   sudo swapon /mnt/swap/swapfile
+   ```
+
+5. **Install NixOS**
+
+   ```bash
+   sudo nixos-install --flake .#Desktop  # or .#Laptop
+   ```
+
+6. **Reboot and enjoy!**
+
+</details>
 
 ### Existing System
 
-```bash
-# Clone the repository
-git clone https://github.com/v3rm1n0/nix-dots.git
-cd nix-dots
+<details>
+<summary><b>Migrate Existing Installation</b></summary>
 
-# Apply configuration
-sudo nixos-rebuild switch --flake .#Desktop
-````
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/v3rm1n0/nix-dots.git
+   cd nix-dots
+   ```
+
+2. **Review and customize**
+
+   - Check `hosts/` for host-specific settings
+   - Modify `userOptions` in your host's `userOptions.nix`
+   - Adjust hardware configuration
+
+3. **Apply configuration**
+   ```bash
+   sudo nixos-rebuild switch --flake .#Desktop  # or .#Laptop
+   ```
 
 </details>
 
-## System Management
+## 🛠️ System Management
 
-| Command                                       | Description                          |
-| --------------------------------------------- | ------------------------------------ |
-| `sudo nixos-rebuild switch --flake .#Desktop` | Apply system changes                 |
-| `nixos-rebuild test --flake .#Desktop`        | Test configuration without switching |
-| `nix flake update`                            | Update all flake inputs              |
-| `nix flake check`                             | Validate flake configuration         |
+### Common Commands
+
+| Command                                    | Description                                        |
+| ------------------------------------------ | -------------------------------------------------- |
+| `os`                                       | Apply system changes (alias for `nh os switch -a`) |
+| `ou`                                       | Update flake inputs and apply changes              |
+| `nix flake update`                         | Update all flake inputs manually                   |
+| `nix flake check`                          | Validate flake configuration                       |
+| `sudo nixos-rebuild test --flake .#<host>` | Test configuration without switching               |
+| `nixos-rebuild boot --flake .#<host>`      | Build and set for next boot                        |
+
+### Maintenance
+
+#### Garbage Collection
+
+Automatic garbage collection runs daily:
+
+- Removes generations older than 10 days
+- Optimizes Nix store automatically
+
+Manual cleanup:
+
+```bash
+nix-collect-garbage -d  # Delete all old generations
+sudo nix-collect-garbage -d  # Also clean system profile
+```
+
+#### Btrfs Maintenance
+
+Automated weekly tasks:
+
+- **Scrub**: Data integrity verification
+- **Balance**: Space optimization (when on AC power)
+- **Trim**: SSD optimization
+
+Manual operations:
+
+```bash
+sudo btrfs scrub start /
+sudo btrfs balance start -dusage=75 /
+sudo fstrim -av
+```
+
+### Shell Shortcuts
+
+The following aliases are available in both Bash and Zsh:
+
+```bash
+# File navigation
+la        # List all files with details (eza -lah)
+tree      # Tree view, respecting .gitignore
+
+# Editor
+vi, vim   # Open Neovim
+
+# System info
+ff        # Display system information (fastfetch)
+
+# Git shortcuts
+ga        # Git add all (git add .)
+gc        # Git commit with message
+gcfu      # Git commit with "Updated Flake"
+
+# Better alternatives
+cat       # bat (syntax highlighting)
+man       # batman (bat manual pages)
+```
+
+## 🔐 Secret Management
+
+Secrets are managed using [agenix](https://github.com/ryantm/agenix) for secure, encrypted configuration.
+
+### Setup
+
+1. **Generate an SSH key for agenix**
+
+   ```bash
+   ssh-keygen -t ed25519 -f ~/.ssh/agenix_key
+   ```
+
+2. **Add your public key to `secrets/secrets.nix`**
+
+   ```nix
+   let
+     yourkey = "ssh-ed25519 AAAA... user@host";
+     users = [ yourkey ];
+   in
+   {
+     "secretfile.age".publicKeys = users;
+   }
+   ```
+
+3. **Create and edit secrets**
+
+   ```bash
+   cd secrets
+   agenix -e secretfile.age
+   ```
+
+4. **Reference in configuration**
+   ```nix
+   age.secrets.secretfile = {
+     file = ../secrets/secretfile.age;
+     owner = "username";
+   };
+   ```
+
+See `secrets/readme.md` for detailed instructions.
+
+## 🎨 Customization
+
+### Changing Themes
+
+Edit your host's `userOptions.nix`:
+
+```nix
+config.userOptions = {
+  colorScheme = "kanagawa";  # Any base16 scheme name
+  wallpaper = "kanagawa.png";  # File in assets/
+};
+```
+
+Available color schemes: [base16-schemes](https://github.com/tinted-theming/schemes)
+
+### Adding Applications
+
+1. Enable built-in modules:
+
+   ```nix
+   config.programs = {
+     gaming.enable = true;
+     content.enable = true;  # OBS, DaVinci Resolve
+   };
+   ```
+
+2. Add optional packages:
+   ```nix
+   config.programs.dev.optionalPackages = [
+     pkgs.jetbrains.idea-ultimate
+   ];
+   ```
+
+### Creating New Hosts
+
+1. Copy an existing host directory:
+
+   ```bash
+   cp -r hosts/Desktop hosts/NewHost
+   ```
+
+2. Update `flake.nix`:
+
+   ```nix
+   NewHost = inputs.nixpkgs.lib.nixosSystem {
+     specialArgs = { inherit system; } // inputs;
+     modules = [ ./. ./hosts/NewHost ];
+   };
+   ```
+
+3. Customize hardware and settings in `hosts/NewHost/`
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+<details>
+<summary><b>Secure Boot Issues</b></summary>
+
+If system won't boot after enabling secure boot:
+
+1. Boot into BIOS/UEFI
+2. Disable secure boot temporarily
+3. Boot into system and check:
+   ```bash
+   sudo sbctl status
+   sudo sbctl verify
+   ```
+4. If needed, re-enroll keys:
+   ```bash
+   sudo sbctl enroll-keys --microsoft
+   ```
+
+</details>
+
+<details>
+<summary><b>GPU Driver Issues</b></summary>
+
+**NVIDIA:**
+
+- Check `hardwareModule.gpu.brand = "nvidia"` is set
+- Verify in `nix-store` that nvidia driver is present
+- Check kernel logs: `journalctl -b | grep -i nvidia`
+
+**Intel:**
+
+- Ensure `hardware.graphics.extraPackages` includes Intel media drivers
+- For older GPUs, uncomment `intel-media-sdk` in `system/hardware/graphics/default.nix`
+
+</details>
+
+<details>
+<summary><b>Hyprland Not Starting</b></summary>
+
+1. Check UWSM status:
+
+   ```bash
+   systemctl --user status uwsm@hyprland-uwsm.desktop.service
+   ```
+
+2. View logs:
+
+   ```bash
+   journalctl --user -u uwsm@hyprland-uwsm.desktop.service
+   ```
+
+3. Try manual start:
+   ```bash
+   uwsm start hyprland-uwsm.desktop
+   ```
+
+</details>
+
+### Known Limitations
+
+- **Webcam configuration** requires the UGREEN 2K Webcam (or modify `system/hardware/webcam/default.nix`)
+- **Razer peripherals** require OpenRazer kernel module (Desktop only)
+- **Some electron apps** may need manual Wayland flags
+
+## 🤝 Contributing
+
+While this is a personal configuration, suggestions and improvements are welcome!
+
+- Open an issue for bugs or questions
+- Submit PRs for improvements
+- Share your own configs inspired by this setup
+
+## 📜 License
+
+MIT License - feel free to use and modify as you wish.
+
+## 📚 Learning Resources
+
+- [NixOS Manual](https://nixos.org/manual/nixos/stable/)
+- [Nix Pills](https://nixos.org/guides/nix-pills/)
+- [Home Manager Manual](https://nix-community.github.io/home-manager/)
+- [Hyprland Wiki](https://wiki.hyprland.org/)
+- [Stylix Documentation](https://stylix.danth.me/)
 
 <div align="center">
 
