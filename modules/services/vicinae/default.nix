@@ -21,7 +21,9 @@ in
         enable = true;
         autoStart = true;
         settings = {
-          theme.name = "gruvbox_material_medium_dark.json";
+          faviconService = "twenty";
+          font.normal = "Geist";
+          theme.name = "kanagawa";
           window = {
             csd = true;
             opacity = 0.8;

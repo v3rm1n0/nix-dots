@@ -6,8 +6,7 @@
     ./greetd
     ./hyprland
     ./ly
-    ./rofi
-    ./styling
+    ./stylix
     ./xdg
   ];
 

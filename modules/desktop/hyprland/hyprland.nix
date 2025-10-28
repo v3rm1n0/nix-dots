@@ -20,7 +20,6 @@ in
     MOZ_ENABLE_WAYLAND = "1";
     MOZ_DISABLE_RDD_SANDBOX = "1";
     QT_QPA_PLATFORM = "wayland";
-    XCURSOR_SIZE = "24";
   };
 
   home-manager.users.${username} = _: {
