@@ -23,9 +23,10 @@ in
         "video/avi" = [ "vlc.desktop" ];
         "video/mp4" = [ "vlc.desktop" ];
         "video/x-matroska" = [ "vlc.desktop" ];
-      } // lib.optionalAttrs librewolf {
-          "x-scheme-handler/http"  = [ "librewolf.desktop" ];
-          "x-scheme-handler/https" = [ "librewolf.desktop" ];
+      }
+      // lib.optionalAttrs librewolf {
+        "x-scheme-handler/http" = [ "librewolf.desktop" ];
+        "x-scheme-handler/https" = [ "librewolf.desktop" ];
       };
     };
   };
