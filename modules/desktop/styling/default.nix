@@ -1,7 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   colorScheme = config.userOptions.colorScheme;
-in 
+in
 {
   imports = [
     ./fonts
