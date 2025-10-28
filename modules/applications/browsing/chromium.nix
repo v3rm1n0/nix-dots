@@ -7,7 +7,7 @@
   options.programs.browsing.chromium = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = true;
+      default = false;
       description = "Enable Chromium browser.";
     };
 
@@ -40,9 +40,6 @@
         "DefaultSearchProviderEnabled" = true;
         "RestoreOnStartup" = 4; # Restore specified pages
         "RestoreOnStartupURLs" = [ "https://start.v3rm1n.dev" ];
-        #"DefaultSearchProviderName" = "Startpage";
-        #"DefaultSearchProviderSearchURL" = "https://www.startpage.com/do/search?query={searchTerms}";
-        #"DefaultSearchProviderSuggestURL" = "https://www.startpage.com/do/search?query={searchTerms}";
         "MetricsReportingEnabled" = false;
         "PasswordManagerEnabled" = false;
         "SafeBrowsingExtendedReportingEnabled" = false;
@@ -55,7 +52,7 @@
         "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
         #"ghmbeldphafepmbegfdlkpapadhbakde" # Proton Pass
         "gebbhagfogifgggkldgodflihgfeippi" # Return YouTube Dislike
-        # "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
+        #"cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
         "ponfpcnoihfmfllpaingbgckeeldkhle" # YouTube Enhancer
       ];
     };
