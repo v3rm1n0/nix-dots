@@ -1,10 +1,12 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
 let
   username = config.userOptions.username;
+  librewolf = config.programs.browsing.firefox.package == pkgs.librewolf;
 in
 {
   xdg = {
@@ -21,6 +23,9 @@ in
         "video/avi" = [ "vlc.desktop" ];
         "video/mp4" = [ "vlc.desktop" ];
         "video/x-matroska" = [ "vlc.desktop" ];
+      } // lib.optionalAttrs librewolf {
+          "x-scheme-handler/http"  = [ "librewolf.desktop" ];
+          "x-scheme-handler/https" = [ "librewolf.desktop" ];
       };
     };
   };
