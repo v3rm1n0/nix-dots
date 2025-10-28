@@ -48,7 +48,7 @@ in
 
   programs.nh = {
     enable = true;
-    flake = "/etc/nixos";
+    flake = "/home/${username}/.dotfiles"; # TODO: make dynamic
   };
 
   programs.nix-ld = {
