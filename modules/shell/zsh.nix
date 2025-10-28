@@ -52,7 +52,7 @@ in
         };
         initContent = ''
           source ~/.config/zsh/.p10k.zsh
-          POWERLEVEL9K_DISABLE_CONFIGURATION_WIZRAD=true
+          POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
           eval "$(zoxide init --cmd cd zsh)"
         '';
       };

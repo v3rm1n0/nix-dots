@@ -4,7 +4,7 @@
 {
   imports = [
     ./greetd
-    ./hyprland
+    ./hypr
     ./ly
     ./stylix
     ./xdg

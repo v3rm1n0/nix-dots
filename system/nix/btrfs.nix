@@ -1,4 +1,3 @@
-{ config, lib, ... }:
 {
   # Enable Btrfs auto-scrub weekly (for data integrity)
   services.btrfs.autoScrub = {

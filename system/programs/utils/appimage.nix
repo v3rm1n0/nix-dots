@@ -1,4 +1,3 @@
-{ config, lib, ... }:
 {
   programs.appimage = {
     enable = true;

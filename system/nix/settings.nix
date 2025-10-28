@@ -1,4 +1,3 @@
-{ config, lib, ... }:
 {
   nix.settings = {
     experimental-features = [
@@ -7,7 +6,6 @@
     ];
     trusted-users = [
       "root"
-      "choinowski"
       "v3rm1n"
     ]; # Add your username here
     extra-substituters = [
