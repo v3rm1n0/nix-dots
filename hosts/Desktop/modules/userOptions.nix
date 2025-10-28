@@ -2,6 +2,7 @@
   config.userOptions = {
     hostName = "Desktop";
     username = "v3rm1n";
-    wallpaper = "gruvbox-nix.png";
+    wallpaper = "fujisan.jpg";
+    colorScheme = "kanagawa";
   };
 }
