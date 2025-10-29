@@ -17,6 +17,9 @@
         session  include login
       '';
     };
-    security.pam.services.login.enableGnomeKeyring = true;
+    security.pam.services = {
+      login.enableGnomeKeyring = true;
+      hyprlock.enableGnomeKeyring = true;
+    };
   };
 }
