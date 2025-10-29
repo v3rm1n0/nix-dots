@@ -1,9 +1,11 @@
 { helium, system, ... }:
 {
-  config.browsing = {
-    chromium = {
-      enable = true;
-      package = helium.defaultPackage.${system};
+  config.programs = {
+    browsing = {
+      chromium = {
+        enable = true;
+        package = helium.defaultPackage.${system};
+      };
     };
   };
 }
