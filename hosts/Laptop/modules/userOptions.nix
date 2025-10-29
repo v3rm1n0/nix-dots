@@ -1,8 +1,9 @@
+{ config, ... }:
 {
   config.userOptions = {
     browser = "helium";
     colorScheme = "kanagawa";
-    dots = "/etc/nixos";
+    dots = "/home/${config.userOptions.username}/.dotfiles";
     hostName = "Laptop";
     username = "v3rm1n";
     wallpaper = "kanagawa.png";
