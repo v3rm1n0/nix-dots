@@ -1,3 +1,29 @@
+# Hyprland Window Manager Configuration
+#
+# This module configures Hyprland, a dynamic tiling Wayland compositor.
+# Hyprland provides smooth animations, dynamic tiling, and extensive customization.
+#
+# Key Features:
+#   - Dynamic tiling with dwindle layout
+#   - Vim-style navigation (hjkl)
+#   - Multi-monitor support (configured in monitors.nix)
+#   - XWayland support for legacy X11 applications
+#   - Integration with systemd and XDG portals
+#
+# Keybindings Overview:
+#   Super + T = Terminal (WezTerm)
+#   Super + R = Browser
+#   Super + E = File Manager (Nemo)
+#   Super + Space = Application Launcher (Vicinae)
+#   Super + C = Close Window
+#   Super + hjkl = Navigate Windows (Vim-style)
+#   Super + Shift + hjkl = Move Windows
+#   Super + Ctrl + hjkl = Resize Windows
+#   Super + 1-9 = Switch Workspaces
+#   Super + Shift + 1-9 = Move Window to Workspace
+#
+# See: https://wiki.hyprland.org/ for detailed documentation
+
 {
   config,
   lib,
@@ -12,13 +38,24 @@ in
     ./monitors.nix
   ];
 
+  # Environment variables for Wayland compatibility
+  # These ensure applications properly detect and use Wayland
   environment.variables = {
+    # Identify desktop environment
     XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_DESKTOP = "Hyprland";
+
+    # GTK portal support for file pickers, etc.
     GTK_USE_PORTAL = "1";
+
+    # GDK backend preference (Wayland first, X11 fallback)
     GDK_BACKEND = "wayland,x11";
+
+    # Firefox Wayland support
     MOZ_ENABLE_WAYLAND = "1";
-    MOZ_DISABLE_RDD_SANDBOX = "1";
+    MOZ_DISABLE_RDD_SANDBOX = "1"; # Required for some Firefox features on Wayland
+
+    # Qt Wayland platform plugin
     QT_QPA_PLATFORM = "wayland";
   };
 
@@ -37,6 +74,9 @@ in
         ];
       };
       settings = {
+        # Monitor configuration
+        # Dynamically generates monitor configs from the monitors.nix configuration
+        # Format: "name,resolution@refreshRate,position,scale" or "name,disable"
         monitor = map (
           m:
           let
@@ -46,6 +86,9 @@ in
           "${m.name},${if m.enabled then "${resolution},${position},1" else "disable"}"
         ) (config.monitors);
 
+        # Workspace to monitor assignment
+        # This binds specific workspaces to specific monitors
+        # Format: "workspace_id, monitor:monitor_name[, default:true]"
         workspace =
           builtins.concatLists (
             map (
@@ -59,31 +102,34 @@ in
             ) config.monitors
           )
           ++ [
-            "2,split:v"
+            "2,split:v" # Workspace 2 uses vertical split layout
           ];
 
         "ecosystem:no_update_news" = true;
 
+        # Input device configuration
         input = {
-          kb_layout = "us, de";
-          kb_options = "grp:alt_shift_toggle";
+          kb_layout = "us, de"; # US and German keyboard layouts
+          kb_options = "grp:alt_shift_toggle"; # Switch layouts with Alt+Shift
 
-          follow_mouse = "1";
+          follow_mouse = "1"; # Focus follows mouse
 
           touchpad = {
-            natural_scroll = "no";
+            natural_scroll = "no"; # Traditional scrolling direction
           };
 
           numlock_by_default = true;
         };
 
+        # General window management settings
         general = {
-          gaps_in = "3";
-          gaps_out = "3,10,10,10";
+          gaps_in = "3"; # Gap between windows
+          gaps_out = "3,10,10,10"; # Gap between windows and screen edges (top, right, bottom, left)
           border_size = "2";
+          # Border colors are managed by Stylix
           # "col.active_border" = "rgba(215,153,33,1) rgba(215,153,33,1) 45deg";
           # "col.inactive_border" = "rgba(585858aa)";
-          layout = "dwindle";
+          layout = "dwindle"; # Use dwindle tiling algorithm
         };
 
         misc = {
