@@ -13,15 +13,14 @@ in
 
   config = lib.mkIf config.programs.terminal.enable {
     home-manager.users.${username} = {
-      programs.wezterm = {
+      programs.ghostty = {
         enable = true;
         enableZshIntegration = true;
-        extraConfig = ''
-          return {
-            enable_tab_bar = false,
-            window_background_opacity = 0.5
-          }
-        '';
+        settings = {
+          background-opacity = 0.5;
+          cursor-style = "block";
+          cursor-style-blink = false;
+        };
       };
     };
   };

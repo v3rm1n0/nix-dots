@@ -9,7 +9,7 @@
 #
 # Theming coverage:
 #   - Window Manager: Hyprland, Sway, etc.
-#   - Terminals: WezTerm, Kitty, Alacritty
+#   - Terminals: Ghostty, Kitty, Alacritty
 #   - Editors: Neovim, VSCode, Helix
 #   - Shell: Bash, Zsh, Fish
 #   - GTK/Qt applications

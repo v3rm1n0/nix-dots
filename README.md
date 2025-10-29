@@ -102,7 +102,7 @@ config = {
 | **Display Server** | Wayland                              |
 | **Window Manager** | Hyprland with UWSM                   |
 | **Panel**          | Hyprpanel                            |
-| **Terminal**       | WezTerm                              |
+| **Terminal**       | Ghostty                              |
 | **Shell**          | Zsh with Powerlevel10k               |
 | **Editor**         | Neovim + VSCode                      |
 | **Browser**        | LibreWolf (Desktop), Helium (Laptop) |

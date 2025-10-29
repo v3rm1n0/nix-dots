@@ -11,7 +11,7 @@
 #   - Integration with systemd and XDG portals
 #
 # Keybindings Overview:
-#   Super + T = Terminal (WezTerm)
+#   Super + T = Terminal (Ghostty)
 #   Super + R = Browser
 #   Super + E = File Manager (Nemo)
 #   Super + Space = Application Launcher (Vicinae)
@@ -170,7 +170,7 @@ in
 
         "$mainMod" = "SUPER";
         bind = [
-          "$mainMod, T, exec, wezterm"
+          "$mainMod, T, exec, ghostty"
           "$mainMod, C, killactive,"
           "$mainMod, M, exit,"
           "$mainMod, E, exec, nemo"

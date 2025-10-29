@@ -30,7 +30,7 @@ Stylix is a NixOS module that:
    - No manual color code synchronization
 
 2. **Wide Application Support**
-   - Hyprland, kitty, WezTerm, VSCode, Firefox
+   - Hyprland, kitty, Ghostty, VSCode, Firefox
    - GTK, Qt applications
    - Terminal applications
    - Automatically adds new apps as they're supported
@@ -59,7 +59,7 @@ Stylix is a NixOS module that:
 **Without Stylix:**
 ```nix
 # Terminal colors (16 colors)
-programs.wezterm.colors = { ... };
+programs.ghostty.themes = { ... };
 
 # GTK theme
 gtk.theme = { ... };
@@ -170,7 +170,7 @@ stylix.targets.hyprland.enable = false;
 ## Supported Applications
 
 Currently themed (non-exhaustive):
-- **Terminals:** WezTerm, Kitty, Alacritty
+- **Terminals:** Ghostty, Kitty, Alacritty
 - **Editors:** Neovim, VSCode, Helix
 - **WM/DE:** Hyprland, Sway, i3
 - **Shells:** Bash, Zsh, Fish
