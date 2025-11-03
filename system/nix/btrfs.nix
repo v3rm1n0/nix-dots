@@ -25,7 +25,7 @@
       fi
 
       # Start a limited balance (data and metadata chunks >75% usage)
-      /run/current-system/sw/bin/btrfs balance start -dusage=75 -musage=75 -susage=75 -v --background --noflush /
+      /run/current-system/sw/bin/btrfs balance start -dusage=75 -musage=75 -susage=75 -v --background /
     '';
     serviceConfig = {
       Type = "oneshot";
