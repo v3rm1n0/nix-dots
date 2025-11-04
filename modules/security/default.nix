@@ -3,5 +3,6 @@
     ./auth
     ./encryption
     ./gnupg
+    ./vpn
   ];
 }
