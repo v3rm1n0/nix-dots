@@ -19,7 +19,7 @@ in
         protonmail-desktop
         signal-desktop
         teamspeak6-client
-        whatsapp-for-linux
+        wasistlos
         zoom-us
         zulip
       ];

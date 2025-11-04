@@ -44,7 +44,7 @@ in
     # Stylix will apply these fonts to all compatible applications
     fonts = {
       emoji = {
-        package = pkgs.noto-fonts-emoji;
+        package = pkgs.noto-fonts-color-emoji;
         name = "Noto Color Emoji";
       };
       monospace = {

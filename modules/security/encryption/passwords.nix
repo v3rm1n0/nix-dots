@@ -12,7 +12,7 @@
   config = lib.mkIf config.securityModule.encryption.passwords.enable {
     environment = {
       systemPackages = with pkgs; [
-        bitwarden
+        bitwarden-desktop
         proton-authenticator
       ];
     };
