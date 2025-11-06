@@ -13,6 +13,7 @@ in
     isNormalUser = true;
     initialPassword = "temp123";
     extraGroups = [
+      "docker"
       "wheel"
       "openrazer"
     ];
