@@ -65,7 +65,8 @@ in
     ];
   };
 
-  environment.systemPackages = [
-    pkgs.sbctl
+  environment.systemPackages = with pkgs; [
+    better-control
+    sbctl
   ];
 }
