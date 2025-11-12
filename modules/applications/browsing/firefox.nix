@@ -80,6 +80,10 @@
           # ─── Extensions ───────────────────────────────────────────────────────────────
           ExtensionSettings = {
             "*".installation_mode = "allowed";
+            "adnauseam@rednoise.org" = {
+              install_url = "https://addons.mozilla.org/firefox/downloads/latest/adnauseam/latest.xpi";
+              installation_mode = "force_installed";
+            };
             "addon@darkreader.org" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
               installation_mode = "normal_installed";
@@ -115,10 +119,10 @@
               installation_mode = "force_installed";
             };
             # Privacy Badger:
-            "jid1-MnnxcxisBPnSXQ@jetpack" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
-              installation_mode = "force_installed";
-            };
+            #"jid1-MnnxcxisBPnSXQ@jetpack" = {
+            #  install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
+            #  installation_mode = "force_installed";
+            #};
             # Qwant Search:
             "qwant-search-firefox@qwant.com" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/qwant-the-search-engine/latest.xpi";
@@ -130,10 +134,10 @@
               installation_mode = "normal_installed";
             };
             # uBlock Origin:
-            "uBlock0@raymondhill.net" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-              installation_mode = "force_installed";
-            };
+            #"uBlock0@raymondhill.net" = {
+            #  install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+            #  installation_mode = "force_installed";
+            #};
             # YouTube High Definition:
             "{7b1bf0b6-a1b9-42b0-b75d-252036438bdc}" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/youtube-high-definition/latest.xpi";
