@@ -61,7 +61,7 @@ in
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
-      "electron-32.3.3"
+      "jitsi-meet-1.0.8792"
     ];
   };
 
