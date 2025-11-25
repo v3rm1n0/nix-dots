@@ -23,10 +23,8 @@ in
         settings = {
           faviconService = "twenty";
           font.normal = "Geist";
-          theme.name = "kanagawa";
           window = {
             csd = true;
-            opacity = 0.8;
             rounding = 10;
           };
         };
