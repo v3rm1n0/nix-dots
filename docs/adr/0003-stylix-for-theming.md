@@ -43,8 +43,8 @@ Stylix is a NixOS module that:
 4. **Declarative Configuration**
    ```nix
    config.userOptions = {
-     colorScheme = "kanagawa";
-     wallpaper = "kanagawa.png";
+     colorScheme = "your-chosen-scheme";
+     wallpaper = "matching-wallpaper.png";
    };
    ```
    That's it! Entire system is themed.
@@ -182,13 +182,9 @@ See [Stylix documentation](https://stylix.danth.me/options/nixos.html) for full 
 ## Customization Options
 
 ### Available Schemes
-Browse at [Tinted Theming](https://github.com/tinted-theming/schemes):
-- `kanagawa` - Warm, inspired by Japanese paintings
-- `catppuccin-macchiato` - Pastel, soothing
-- `tokyo-night` - Deep, vibrant
-- `nord` - Arctic, blue-tinted
-- `gruvbox-dark-medium` - Retro groove
-- Hundreds more...
+Browse schemes at the [Tinted Theming Gallery](https://tinted-theming.github.io/base16-gallery/).
+Hundreds of schemes are available and can be used by referencing their `base16-schemes` package name.
+
 
 ### Font Configuration
 Stylix also manages fonts:

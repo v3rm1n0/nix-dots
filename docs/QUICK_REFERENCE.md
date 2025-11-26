@@ -65,19 +65,12 @@ Edit `hosts/{Desktop,Laptop}/modules/userOptions.nix`:
 
 ```nix
 config.userOptions = {
-  colorScheme = "kanagawa";  # Change this
-  wallpaper = "kanagawa.png";  # And this (in assets/)
+  colorScheme = "your-scheme-name";  # Change this
+  wallpaper = "your-wallpaper.png";  # And this (in assets/)
 };
 ```
 
-Available color schemes: https://github.com/tinted-theming/schemes
-
-Popular choices:
-- `kanagawa` - Warm, Japanese inspired
-- `catppuccin-macchiato` - Pastel, soothing
-- `tokyo-night` - Deep, vibrant
-- `gruvbox-dark-medium` - Retro groove
-- `nord` - Arctic, blue-tinted
+You can find a wide variety of schemes from the `base16-schemes` package. A good place to browse them is the [Tinted Theming Gallery](https://tinted-theming.github.io/base16-gallery/).
 
 ### Enabling/Disabling Programs
 
