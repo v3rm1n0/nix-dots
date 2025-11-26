@@ -1,4 +1,9 @@
 {
+  programs.ssh.extraConfig = ''
+    Host *
+      AddKeysToAgent yes
+      IdentityFile ~/.ssh/id_ed25519
+  '';
   services.openssh = {
     enable = true;
     ports = [ 4545 ];
