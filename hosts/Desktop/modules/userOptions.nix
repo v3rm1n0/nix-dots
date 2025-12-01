@@ -1,7 +1,7 @@
 { config, ... }:
 {
   config.userOptions = {
-    browser = "librewolf";
+    browser = "brave";
     colorScheme = "kanagawa";
     dots = "/home/${config.userOptions.username}/.dotfiles";
     hostName = "Desktop";

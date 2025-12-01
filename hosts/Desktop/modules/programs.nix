@@ -2,6 +2,10 @@
 {
   config.programs = {
     browsing = {
+      chromium = {
+        enable = true;
+        package = pkgs.brave;
+      };
       firefox = {
         enable = true;
         package = pkgs.librewolf;
