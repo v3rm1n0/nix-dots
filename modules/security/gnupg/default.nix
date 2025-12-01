@@ -24,20 +24,20 @@ in
     #];
 
     home-manager.users.${username} = _: {
-        programs.gpg.enable = true;
+      programs.gpg.enable = true;
 
-        services.gpg-agent = {
-          enable = true;
-          enableSshSupport = true;
-          pinentry.package = pkgs.pinentry-gnome3;
-          
-          defaultCacheTtlSsh = 14400;
-          maxCacheTtlSsh = 14400;
+      services.gpg-agent = {
+        enable = true;
+        enableSshSupport = true;
+        pinentry.package = pkgs.pinentry-gnome3;
 
-          sshKeys = [
-            "2EAF5EEFD4334DD0130D5158FED38D4505C78DAF"
-          ];
-        };
+        defaultCacheTtlSsh = 14400;
+        maxCacheTtlSsh = 14400;
+
+        sshKeys = [
+          "2EAF5EEFD4334DD0130D5158FED38D4505C78DAF"
+        ];
+      };
       home.file = {
         #".gnupg/gpg-agent.conf".source = ./gpg-agent.conf;
       };
