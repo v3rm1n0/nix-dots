@@ -15,6 +15,12 @@ in
   ];
 
   system = {
+    autoUpgrade = {
+      enable = true;
+      flake = "${config.userOptions.dots}";
+      flags = [ "-L" ];
+      dates = "weekly";
+    };
     systemBuilderCommands = ''
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
