@@ -18,7 +18,10 @@ in
     autoUpgrade = {
       enable = true;
       flake = "${config.userOptions.dots}";
-      flags = [ "-L" ];
+      flags = [
+        "-L"
+        "--upgrade"
+      ];
       dates = "weekly";
     };
     systemBuilderCommands = ''

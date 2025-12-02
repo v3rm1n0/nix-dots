@@ -10,7 +10,6 @@ with lib;
 let
   defaultPackages = with pkgs; [
     (discord.override {
-      withOpenASAR = true;
       withVencord = true;
     })
     ed-odyssey-materials-helper
