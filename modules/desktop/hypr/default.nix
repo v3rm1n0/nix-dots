@@ -18,7 +18,7 @@
       gthumb
       hyprpaper
       libnotify
-      nemo-with-extensions
+      nautilus
       networkmanagerapplet
       pavucontrol
       playerctl
@@ -33,6 +33,11 @@
     enable = true;
     xwayland.enable = true;
     withUWSM = true;
+  };
+
+  programs.nautilus-open-any-terminal = {
+    enable = true;
+    terminal = "ghostty";
   };
 
   programs.uwsm = {

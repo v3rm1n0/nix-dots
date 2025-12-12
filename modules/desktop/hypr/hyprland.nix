@@ -11,10 +11,10 @@
 #   - Integration with systemd and XDG portals
 #
 # Keybindings Overview:
-#   Super + T = Terminal (Ghostty)
+#   Super + T = Terminal
 #   Super + R = Browser
-#   Super + E = File Manager (Nemo)
-#   Super + Space = Application Launcher (Vicinae)
+#   Super + E = File Manager
+#   Super + Space = Application Launcher
 #   Super + C = Close Window
 #   Super + hjkl = Navigate Windows (Vim-style)
 #   Super + Shift + hjkl = Move Windows
@@ -173,7 +173,7 @@ in
           "$mainMod, T, exec, ghostty"
           "$mainMod, C, killactive,"
           "$mainMod, M, exit,"
-          "$mainMod, E, exec, nemo"
+          "$mainMod, E, exec, nautilus"
           "$mainMod, V, togglefloating,"
           "$mainMod, P, pseudo, # dwindle"
           "$mainMod, Q, togglesplit, # dwindle"

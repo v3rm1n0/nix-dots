@@ -106,7 +106,7 @@ config = {
 | **Shell**          | Zsh with Powerlevel10k               |
 | **Editor**         | Neovim + VSCode                      |
 | **Browser**        | LibreWolf (Desktop), Helium (Laptop) |
-| **File Manager**   | Nemo                                 |
+| **File Manager**   | Nautilus                                 |
 | **Theme**          | Stylix with Kanagawa                 |
 | **Filesystem**     | Btrfs with auto-scrub                |
 
