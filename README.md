@@ -19,7 +19,7 @@ A production-ready, modular NixOS configuration featuring Hyprland, Home Manager
 
 ### ✨ Key Features
 
-- 🎨 **Unified Theming** with Stylix (Kanagawa color scheme)
+- 🎨 **Unified Theming** with Stylix
 - 🔒 **Secure Boot** via Lanzaboote
 - 🔐 **Secret Management** with agenix
 - 🪟 **Hyprland** with UWSM session management
@@ -106,8 +106,8 @@ config = {
 | **Shell**          | Zsh with Powerlevel10k               |
 | **Editor**         | Neovim + VSCode                      |
 | **Browser**        | LibreWolf (Desktop), Helium (Laptop) |
-| **File Manager**   | Nautilus                                 |
-| **Theme**          | Stylix with Kanagawa                 |
+| **File Manager**   | Nautilus                             |
+| **Theme**          | Stylix                               |
 | **Filesystem**     | Btrfs with auto-scrub                |
 
 ### Hardware Support
