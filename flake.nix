@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     helium = {
-      url = "github:FKouhai/helium2nix/main";
+      url = "github:AlvaroParker/helium-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {

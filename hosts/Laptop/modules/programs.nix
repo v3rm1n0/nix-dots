@@ -4,7 +4,7 @@
     browsing = {
       chromium = {
         enable = true;
-        package = helium.defaultPackage.${system};
+        package = helium.packages.${system}.default;
       };
     };
   };
