@@ -105,7 +105,7 @@ config = {
 | **Terminal**       | Ghostty                              |
 | **Shell**          | Zsh with Powerlevel10k               |
 | **Editor**         | Neovim + VSCode                      |
-| **Browser**        | LibreWolf (Desktop), Helium (Laptop) |
+| **Browser**        | Helium |
 | **File Manager**   | Nautilus                             |
 | **Theme**          | Stylix                               |
 | **Filesystem**     | Btrfs with auto-scrub                |
