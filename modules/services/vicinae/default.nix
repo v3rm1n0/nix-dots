@@ -19,13 +19,18 @@ in
 
       services.vicinae = {
         enable = true;
-        autoStart = true;
+        systemd = {
+          enable = true;
+          autoStart = true;
+          environment = {
+            USE_LAYER_SHELL = 1;
+          };
+        };
         settings = {
-          faviconService = "twenty";
+          favicon_service = "twenty";
           font.normal = "Geist";
-          window = {
-            csd = true;
-            rounding = 10;
+          launcher_window = {
+            opacity = 0.8;
           };
         };
       };
