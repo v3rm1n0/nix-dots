@@ -11,7 +11,9 @@ let
   defaultPackages = with pkgs; [
     ed-odyssey-materials-helper
     heroic-unwrapped
-    legcord
+    (discord.override {
+      withVencord = true;
+    })
     lutris
     prismlauncher
     revolt-desktop
