@@ -47,6 +47,11 @@
             "key": "memory",
             "keyColor": "cyan"
         },
+        {
+            "type": "localip",
+            "key": "localip",
+            "keyColor": "red"
+        },
         "break"
     ]
 }
