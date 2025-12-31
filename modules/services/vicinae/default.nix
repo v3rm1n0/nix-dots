@@ -14,7 +14,7 @@ in
 
   config = lib.mkIf config.servicesModule.vicinae.enable {
     home-manager.users.${username} = {
-
+      stylix.targets.vicinae.enable = false;
       imports = [ vicinae.homeManagerModules.default ];
 
       services.vicinae = {
@@ -28,7 +28,13 @@ in
         };
         settings = {
           favicon_service = "twenty";
-          font.normal = "Geist";
+          font.normal.normal = "Geist";
+          theme = {
+            dark = {
+              name = "kanagawa";
+              icon_theme = "default";
+            };
+          };
           launcher_window = {
             opacity = 0.8;
           };
