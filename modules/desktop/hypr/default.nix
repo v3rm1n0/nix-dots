@@ -1,7 +1,11 @@
 {
+  config,
   pkgs,
   ...
 }:
+let
+  username = config.userOptions.username;
+in 
 {
   imports = [
     ./hypridle.nix
@@ -27,6 +31,10 @@
       wl-clipboard
       zenity
     ];
+  };
+
+  home-manager.users.${username} = {
+    services.hyprpolkitagent.enable = true;
   };
 
   programs.hyprland = {
