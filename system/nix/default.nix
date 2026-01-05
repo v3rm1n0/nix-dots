@@ -48,8 +48,6 @@ in
     };
   };
 
-  systemd.tpm2.enable = false;
-
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;

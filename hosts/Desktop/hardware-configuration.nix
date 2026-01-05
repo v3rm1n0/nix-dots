@@ -17,6 +17,7 @@
     "xhci_pci"
     "ahci"
     "nvme"
+    "usb_storage"
     "usbhid"
     "sd_mod"
   ];
@@ -25,29 +26,32 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/4591f298-206f-409e-b200-1f67ac777120";
+    device = "/dev/mapper/cryptroot";
     fsType = "btrfs";
     options = [ "subvol=@" ];
   };
 
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/4591f298-206f-409e-b200-1f67ac777120";
-    fsType = "btrfs";
-    options = [ "subvol=@nix" ];
-  };
+  boot.initrd.luks.devices."cryptroot".device =
+    "/dev/disk/by-uuid/4d6d7b05-ddb3-4f9b-9929-906baa59543b";
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/4591f298-206f-409e-b200-1f67ac777120";
+    device = "/dev/mapper/cryptroot";
     fsType = "btrfs";
     options = [ "subvol=@home" ];
+  };
+
+  fileSystems."/nix/store" = {
+    device = "/dev/mapper/cryptroot";
+    fsType = "btrfs";
+    options = [ "subvol=@nix" ];
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/28C2-3271";
     fsType = "vfat";
     options = [
-      "fmask=0077"
-      "dmask=0077"
+      "fmask=0022"
+      "dmask=0022"
     ];
   };
 
