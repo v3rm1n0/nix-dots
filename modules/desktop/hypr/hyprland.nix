@@ -93,9 +93,9 @@ in
           builtins.concatLists (
             map (
               monitor:
-              builtins.map (
+              map (
                 workspace:
-                "${builtins.toString workspace}, monitor:${monitor.name}${
+                "${toString workspace}, monitor:${monitor.name}${
                   lib.optionalString (workspace == monitor.workspacePrimary) ", default:true"
                 }"
               ) monitor.workspaces
