@@ -8,12 +8,17 @@ let
 in
 {
   home-manager.users.${username} = _: {
+    stylix.targets.hyprpaper.enable = false;
     services.hyprpaper = {
       enable = true;
       settings = {
         preload = [ "/home/${username}/.config/backgrounds/${wallpaper}" ];
         wallpaper = [
-          " , ~/.config/backgrounds/${wallpaper}"
+          {
+            monitor = "";
+            path = "~/.config/backgrounds/${wallpaper}";
+            fit_mode = "cover";
+          }
         ];
       };
     };
