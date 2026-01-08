@@ -13,6 +13,7 @@ in
       enable = true;
       settings = {
         preload = [ "/home/${username}/.config/backgrounds/${wallpaper}" ];
+        splash = false;
         wallpaper = [
           {
             monitor = "";
