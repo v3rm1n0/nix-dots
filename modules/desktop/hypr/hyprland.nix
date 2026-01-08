@@ -240,17 +240,29 @@ in
           "$mainMod, mouse:273, resizewindow"
         ];
 
-        windowrulev2 = [
-          # General layout rule for workspace 2
-          "workspace 2 silent, class:^(discord)$"
-          "tile, class:^(discord)$"
-          "workspace 2 silent, title:^(Spotify Premium)$"
-          "tile, title:^(Spotify Premium)$"
-
-          # General layout rule for workspace 7
-          "workspace 8 silent, class:^(steam)$"
+        # windowrulev3 or new windowrule
+        windowrule = [
+          {
+            name = "discord-ws-2";
+            workspace = "2 silent";
+            tile = "on";
+            "match:initial_class" = "^(discord)$";
+          }
+          {
+            name = "spotify-ws-2";
+            workspace = "2 silent";
+            tile = "on";
+            "match:initial_class" = "^(spotify)";
+          }
+          {
+            name = "steam-ws-8";
+            workspace = "8 silent";
+            "match:initial_class" = "^(steam)";
+          }
         ];
-        exec-once = [ "discord" ];
+        exec-once = [
+          "discord"
+        ];
       };
     };
   };
