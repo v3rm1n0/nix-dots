@@ -31,7 +31,7 @@ in
     gh
     glow
     nixd
-    nixfmt-rfc-style
+    nixfmt
     unzip
     zoxide
   ];
