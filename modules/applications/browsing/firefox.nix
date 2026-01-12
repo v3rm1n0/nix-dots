@@ -24,10 +24,11 @@
       firefox = {
         enable = lib.mkDefault true;
         package = config.programs.browsing.firefox.package;
-        languagePacks = [
-          "de"
-          "en-US"
-        ];
+        # Broken somehow?
+        # languagePacks = [
+        #   "de"
+        #   "en-US"
+        # ];
 
         # ─── About:config prefs ───────────────────────────────────────────────────────
         preferencesStatus = "locked";
@@ -80,13 +81,10 @@
           # ─── Extensions ───────────────────────────────────────────────────────────────
           ExtensionSettings = {
             "*".installation_mode = "allowed";
+            # AdNauseam:
             "adnauseam@rednoise.org" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/adnauseam/latest.xpi";
               installation_mode = "force_installed";
-            };
-            "addon@darkreader.org" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
-              installation_mode = "normal_installed";
             };
             # Bitwarden:
             "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
@@ -98,12 +96,22 @@
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/dearrow/latest.xpi";
               installation_mode = "normal_installed";
             };
-            # Facebook Container
+            # Enhancer for YouTube:
+            "enhancerforyoutube@maximerf.addons.mozilla.org" = {
+              install_url = "https://www.mrfdev.com/downloads/enhancer_for_youtube-2.0.130.1.xpi";
+              installation_mode = "normal_installed";
+            };
+            # enUS deDE bilingual dictionary:
+            "@enusplusdedebilingualdictionary" = {
+              install_url = "https://addons.mozilla.org/firefox/downloads/latest/enus-dede-bilingual-dictionary/latest.xpi";
+              installation_mode = "normal_installed";
+            };
+            # Facebook Container:
             "@contain-facebook" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/facebook-container/latest.xpi";
               installation_mode = "force_installed";
             };
-            # Google containers (not official)
+            # Google containers (not official):
             "@contain-google" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/google-container/latest.xpi";
               installation_mode = "force_installed";
@@ -113,16 +121,11 @@
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/material-icons-for-github/latest.xpi";
               installation_mode = "normal_installed";
             };
-            # Multi Account Containers
+            # Multi Account Containers:
             "@testpilot-containers" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
               installation_mode = "force_installed";
             };
-            # Privacy Badger:
-            #"jid1-MnnxcxisBPnSXQ@jetpack" = {
-            #  install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
-            #  installation_mode = "force_installed";
-            #};
             # Qwant Search:
             "qwant-search-firefox@qwant.com" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/qwant-the-search-engine/latest.xpi";
@@ -131,16 +134,6 @@
             # Return YouTube Dislike:
             "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/return-youtube-dislikes/latest.xpi";
-              installation_mode = "normal_installed";
-            };
-            # uBlock Origin:
-            #"uBlock0@raymondhill.net" = {
-            #  install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-            #  installation_mode = "force_installed";
-            #};
-            # YouTube High Definition:
-            "{7b1bf0b6-a1b9-42b0-b75d-252036438bdc}" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/youtube-high-definition/latest.xpi";
               installation_mode = "normal_installed";
             };
           };
