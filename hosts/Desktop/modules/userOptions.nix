@@ -1,7 +1,7 @@
 { config, ... }:
 {
   config.userOptions = {
-    browser = "helium";
+    browser = "librewolf";
     colorScheme = "kanagawa";
     dots = "/home/${config.userOptions.username}/.dotfiles";
     hostName = "Desktop";

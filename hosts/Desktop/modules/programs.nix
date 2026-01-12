@@ -8,7 +8,7 @@
   config.programs = {
     browsing = {
       chromium = {
-        enable = true;
+        enable = false;
         package = helium.packages.${system}.default;
       };
       firefox = {
