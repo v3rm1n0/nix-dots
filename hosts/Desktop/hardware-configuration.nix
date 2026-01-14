@@ -45,7 +45,7 @@
   fileSystems."/nix/store" = {
     device = "/dev/mapper/cryptroot";
     fsType = "btrfs";
-    options = [ "subvol=@nix" ];
+    options = [ "subvol=@nix" "compress=zstd" "noatime" ];
   };
 
   fileSystems."/boot" = {
