@@ -61,6 +61,10 @@ in
               }
               (lib.mkIf (hostName == "Laptop") { id = "Battery"; })
               {
+                id = "KeyboardLayout";
+                showIcon = false;
+              }
+              {
                 id = "Tray";
               }
               {
