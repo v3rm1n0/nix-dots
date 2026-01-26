@@ -16,6 +16,10 @@ in
         ps.luarocks
       ];
       extraPackages = [ pkgs.imagemagick ];
+
+      extraConfig = ''
+        luafile ~/.config/nvim/init-nonnix.lua
+      '';
     };
   };
 }
