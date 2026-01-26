@@ -6,6 +6,7 @@
     ./greetd
     ./hypr
     ./ly
+    ./noctalia
     ./stylix
     ./xdg
   ];

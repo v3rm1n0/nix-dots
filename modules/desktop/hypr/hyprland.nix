@@ -123,8 +123,8 @@ in
 
         # General window management settings
         general = {
-          gaps_in = "3"; # Gap between windows
-          gaps_out = "3,10,10,10"; # Gap between windows and screen edges (top, right, bottom, left)
+          gaps_in = "5"; # Gap between windows
+          gaps_out = "10"; # Gap between windows and screen edges (top, right, bottom, left)
           border_size = "2";
           # Border colors are managed by Stylix
           # "col.active_border" = "rgba(215,153,33,1) rgba(215,153,33,1) 45deg";
@@ -137,10 +137,13 @@ in
         };
 
         decoration = {
+          rounding = "20";
+          rounding_power = "2";
           blur = {
             enabled = true;
             size = "3";
-            passes = "1";
+            passes = "2";
+            vibrancy = "0.1696";
           };
           shadow = {
             enabled = true;
@@ -262,6 +265,7 @@ in
         ];
         exec-once = [
           "${config.userOptions.discordClient}"
+
         ];
       };
     };

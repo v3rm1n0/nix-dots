@@ -10,7 +10,7 @@ in
 {
   home-manager.users.${username} = {
     programs.hyprpanel = {
-      enable = true;
+      enable = false;
       settings = {
         bar.layouts = {
           "0" = {
