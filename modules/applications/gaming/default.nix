@@ -11,9 +11,6 @@ let
   defaultPackages = with pkgs; [
     ed-odyssey-materials-helper
     heroic-unwrapped
-    (discord.override {
-      withVencord = true;
-    })
     lutris
     prismlauncher
     revolt-desktop
@@ -24,6 +21,15 @@ in
 {
   options.programs.gaming = {
     enable = mkEnableOption "Gaming profile with various gaming tools";
+
+    discordPackage = mkOption {
+      type = types.nullOr types.package;
+      default = pkgs.discord;
+      example = [
+        (pkgs.discord.override {withVencord = true;})
+      ];
+      description = "The Discord package you want to use e.g. special client";
+    };
 
     optionalPackages = mkOption {
       type = types.listOf types.package;
@@ -36,7 +42,7 @@ in
   };
 
   config = mkIf config.programs.gaming.enable {
-    environment.systemPackages = defaultPackages ++ config.programs.gaming.optionalPackages;
+    environment.systemPackages = defaultPackages ++ config.programs.gaming.optionalPackages ++ [config.programs.gaming.discordPackage];
 
     programs = {
       steam = {

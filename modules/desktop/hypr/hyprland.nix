@@ -246,7 +246,7 @@ in
             name = "discord-ws-2";
             workspace = "2 silent";
             tile = "on";
-            "match:initial_class" = "^(discord)$";
+            "match:initial_class" = "^(${config.userOptions.discordClient})$";
           }
           {
             name = "spotify-ws-2";
@@ -261,7 +261,7 @@ in
           }
         ];
         exec-once = [
-          "discord"
+          "${config.userOptions.discordClient}"
         ];
       };
     };
