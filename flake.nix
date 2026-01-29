@@ -1,8 +1,9 @@
 {
-  description = "Nixos config flake";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
+
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,34 +38,5 @@
     };
   };
 
-  outputs =
-    inputs:
-    let
-      system = "x86_64-linux";
-    in
-    {
-      nixosConfigurations = {
-        Laptop = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit system;
-          }
-          // inputs;
-          modules = [
-            ./.
-            ./hosts/Laptop
-          ];
-        };
-        Desktop = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit system;
-          }
-          // inputs;
-          modules = [
-            ./.
-            ./hosts/Desktop
-          ];
-        };
-      };
-      formatter.x86_64-linux = inputs.nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
-    };
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./.);
 }

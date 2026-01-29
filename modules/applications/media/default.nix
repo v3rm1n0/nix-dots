@@ -1,15 +1,15 @@
 {
   config,
   lib,
+  inputs,
   pkgs,
-  spicetify-nix,
   ...
 }:
 let
   username = config.userOptions.username;
 in
 {
-  imports = [ spicetify-nix.nixosModules.default ];
+  imports = [ inputs.spicetify-nix.nixosModules.default ];
 
   options.programs.media = {
     enable = lib.mkEnableOption "Enables communication module";

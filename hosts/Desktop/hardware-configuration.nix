@@ -2,63 +2,70 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
-  config,
-  lib,
-  modulesPath,
-  ...
-}:
+  flake.nixosModules.hostDesktop =
+    {
+      config,
+      lib,
+      modulesPath,
+      ...
+    }:
 
-{
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+    {
+      imports = [
+        (modulesPath + "/installer/scan/not-detected.nix")
+      ];
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "nvme"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+      boot.initrd.availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "nvme"
+        "usb_storage"
+        "usbhid"
+        "sd_mod"
+      ];
+      boot.initrd.kernelModules = [ ];
+      boot.kernelModules = [ "kvm-intel" ];
+      boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
-    device = "/dev/mapper/cryptroot";
-    fsType = "btrfs";
-    options = [ "subvol=@" ];
-  };
-  
-  # Use this command to enroll the decryption key to the tpm2 m odule of your pc for automatic decryption
-  # sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+2+7+12 --wipe-slot=tpm2 <disk>
-  boot.initrd.luks.devices."cryptroot".device =
-    "/dev/disk/by-uuid/4d6d7b05-ddb3-4f9b-9929-906baa59543b";
+      fileSystems."/" = {
+        device = "/dev/mapper/cryptroot";
+        fsType = "btrfs";
+        options = [ "subvol=@" ];
+      };
 
-  fileSystems."/home" = {
-    device = "/dev/mapper/cryptroot";
-    fsType = "btrfs";
-    options = [ "subvol=@home" ];
-  };
+      # Use this command to enroll the decryption key to the tpm2 m odule of your pc for automatic decryption
+      # sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+2+7+12 --wipe-slot=tpm2 <disk>
+      boot.initrd.luks.devices."cryptroot".device =
+        "/dev/disk/by-uuid/4d6d7b05-ddb3-4f9b-9929-906baa59543b";
 
-  fileSystems."/nix/store" = {
-    device = "/dev/mapper/cryptroot";
-    fsType = "btrfs";
-    options = [ "subvol=@nix" "compress=zstd" "noatime" ];
-  };
+      fileSystems."/home" = {
+        device = "/dev/mapper/cryptroot";
+        fsType = "btrfs";
+        options = [ "subvol=@home" ];
+      };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/28C2-3271";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
-  };
+      fileSystems."/nix/store" = {
+        device = "/dev/mapper/cryptroot";
+        fsType = "btrfs";
+        options = [
+          "subvol=@nix"
+          "compress=zstd"
+          "noatime"
+        ];
+      };
 
-  swapDevices = [ ];
+      fileSystems."/boot" = {
+        device = "/dev/disk/by-uuid/28C2-3271";
+        fsType = "vfat";
+        options = [
+          "fmask=0077"
+          "dmask=0077"
+        ];
+      };
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+      swapDevices = [ ];
+
+      nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+      hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    };
 }

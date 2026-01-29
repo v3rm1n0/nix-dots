@@ -1,10 +1,10 @@
 {
-  lanzaboote,
+  inputs,
   lib,
   ...
 }:
 {
-  imports = [ lanzaboote.nixosModules.lanzaboote ];
+  imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
   config = {
     boot = {
       lanzaboote = {

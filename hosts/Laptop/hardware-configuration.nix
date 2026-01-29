@@ -2,44 +2,47 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
-  config,
-  lib,
-  modulesPath,
-  ...
-}:
+  flake.nixosModules.hostLaptop =
+    {
+      config,
+      lib,
+      modulesPath,
+      ...
+    }:
 
-{
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+    {
+      imports = [
+        (modulesPath + "/installer/scan/not-detected.nix")
+      ];
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "nvme"
-    "usb_storage"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+      boot.initrd.availableKernelModules = [
+        "xhci_pci"
+        "nvme"
+        "usb_storage"
+        "sd_mod"
+      ];
+      boot.initrd.kernelModules = [ ];
+      boot.kernelModules = [ "kvm-intel" ];
+      boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/e1dbe222-5cf7-406b-92a5-801d1ee9d77e";
-    fsType = "btrfs";
-    options = [ "subvol=@" ];
-  };
+      fileSystems."/" = {
+        device = "/dev/disk/by-uuid/e1dbe222-5cf7-406b-92a5-801d1ee9d77e";
+        fsType = "btrfs";
+        options = [ "subvol=@" ];
+      };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/266E-19E3";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
-  };
+      fileSystems."/boot" = {
+        device = "/dev/disk/by-uuid/266E-19E3";
+        fsType = "vfat";
+        options = [
+          "fmask=0077"
+          "dmask=0077"
+        ];
+      };
 
-  swapDevices = [ ];
+      swapDevices = [ ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+      nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+      hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    };
 }
