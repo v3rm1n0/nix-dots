@@ -8,14 +8,4 @@
   };
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
-
-  boot.kernelPatches = [
-    {
-     name = "fix-nova-dependency";
-     patch = null;
-     extraConfig = ''
-       RUST_FW_LOADER_ABSTRACTIONS y
-     '';
-    }
-  ];
 }
