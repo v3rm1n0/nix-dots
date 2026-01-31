@@ -81,6 +81,9 @@ in
           };
         };
         colorSchemes.predefinedScheme = "kanagawa";
+        dock = {
+          enabled = false;
+        };
         general = {
           scaleRatio = 0.9;
         };
