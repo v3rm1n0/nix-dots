@@ -14,10 +14,10 @@ in
       enable = true;
       settings.user = {
         name = "V3RM1N";
-        email = "v3rm1n0@proton.me";
+        email = "mail@v3rm1n.dev";
       };
       signing = {
-        key = "4998F4C236F92A36";
+        key = "04A465051516159B";
         signByDefault = true;
       };
     };
