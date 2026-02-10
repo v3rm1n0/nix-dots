@@ -28,6 +28,16 @@ in
         shellAliases = myAliases;
         plugins = [
           {
+            name = "tirith";
+            file = "tirith.plugin.zsh";
+            src = pkgs.fetchFromGitHub {
+              owner = "sheeki03";
+              repo = "ohmyzsh-tirith";
+              rev = "b7328455c46f8a5d3890faab4810c6ab0be8bc64";
+              sha256 = "sha256-aN2ILfpNvWq/meFBxX9Bvi5fJAtbwf57CNrozZGslsk=";
+            };
+          }
+          {
             name = "zsh-nix-shell";
             file = "nix-shell.plugin.zsh";
             src = pkgs.fetchFromGitHub {
@@ -53,6 +63,7 @@ in
         initContent = ''
           source ~/.config/zsh/.p10k.zsh
           POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+          eval "$(tirith init --shell zsh)"
           eval "$(zoxide init --cmd cd zsh)"
         '';
       };
