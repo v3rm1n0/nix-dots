@@ -32,6 +32,7 @@ in
     glow
     nixd
     nixfmt
+    tirith
     unzip
     zoxide
   ];
