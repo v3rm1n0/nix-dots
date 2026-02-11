@@ -89,7 +89,7 @@
             # Bitwarden:
             "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
-              installation_mode = "force_installed";
+              installation_mode = "normal_installed";
             };
             # DeArrow:
             "deArrow@ajay.app" = {
@@ -98,7 +98,7 @@
             };
             # Enhancer for YouTube:
             "enhancerforyoutube@maximerf.addons.mozilla.org" = {
-              install_url = "https://www.mrfdev.com/downloads/enhancer_for_youtube-2.0.130.1.xpi";
+              install_url = "https://addons.mozilla.org/firefox/downloads/latest/enhancer-for-youtube/latest.xpi";
               installation_mode = "normal_installed";
             };
             # enUS deDE bilingual dictionary:
@@ -125,6 +125,11 @@
             "@testpilot-containers" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
               installation_mode = "force_installed";
+            };
+            # Proton Pass:
+            "78272b6fa58f4a1abaac99321d503a20@proton.me" = {
+              install_url = "https://addons.mozilla.org/firefox/downloads/latest/proton-pass/latest.xpi";
+              installation_mode = "normal_installed";
             };
             # Qwant Search:
             "qwant-search-firefox@qwant.com" = {
