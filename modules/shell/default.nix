@@ -27,11 +27,13 @@ in
     bat
     bat-extras.batman
     clang
+    deadnix
     eza
     gh
     glow
     nixd
     nixfmt
+    statix
     tirith
     unzip
     zoxide
