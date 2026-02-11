@@ -1,0 +1,73 @@
+name: Update Flake Inputs
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-flake:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Install Nix
+        uses: cachix/install-nix-action@v24
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Update flake inputs
+        id: update
+        run: |
+          BRANCH_NAME="flake-update-$(date +%Y%m%d-%H%M%S)"
+          echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          
+          git checkout -b "$BRANCH_NAME"
+          nix flake update
+          
+          if git diff --quiet flake.lock; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No updates available"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            git add flake.lock
+            git commit -m "chore: update flake inputs"
+            git push origin "$BRANCH_NAME"
+          fi
+      
+      - name: Build flake
+        if: steps.update.outputs.has_changes == 'true'
+        run: |
+          nix build --show-trace
+          nix flake check --show-trace
+      
+      - name: Create Pull Request
+        if: steps.update.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr create \
+            --title "Update flake inputs - $(date +%Y-%m-%d)" \
+            --body "Automated flake input update. Build verified successfully." \
+            --base main \
+            --head "${{ steps.update.outputs.branch }}"
+      
+      - name: Enable auto-merge
+        if: steps.update.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR_NUMBER=$(gh pr list --head "${{ steps.update.outputs.branch }}" --json number --jq '.[0].number')
+          
+          gh pr merge "$PR_NUMBER" --auto --squash --delete-branch
