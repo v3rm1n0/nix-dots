@@ -51,7 +51,7 @@ jobs:
         run: |
           # This validates all outputs without building
           nix flake check --show-trace --all-systems
-      
+ 
       - name: Create Pull Request
         if: steps.update.outputs.has_changes == 'true'
         env:
@@ -59,14 +59,7 @@ jobs:
         run: |
           gh pr create \
             --title "Update flake inputs - $(date +%Y-%m-%d)" \
-            --body "Automated flake input update. Flake check passed successfully." \
+            --body "Automated flake input update. Flake check passed successfully. ✅
+                Please review and merge manually." \
             --base main \
             --head "${{ steps.update.outputs.branch }}"
-      
-      - name: Enable auto-merge
-        if: steps.update.outputs.has_changes == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          PR_NUMBER=$(gh pr list --head "${{ steps.update.outputs.branch }}" --json number --jq '.[0].number')
-          gh pr merge "$PR_NUMBER" --auto --squash --delete-branch
