@@ -3,7 +3,7 @@ name: Update Flake Inputs
 on:
   schedule:
     - cron: '0 6 * * 1'
-  workflow_dispatch: # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   update-flake:
@@ -46,10 +46,11 @@ jobs:
             git push origin "$BRANCH_NAME"
           fi
       
-      - name: Build flake
+      - name: Verify flake
         if: steps.update.outputs.has_changes == 'true'
         run: |
-          nix flake check --show-trace
+          # This validates all outputs without building
+          nix flake check --show-trace --all-systems
       
       - name: Create Pull Request
         if: steps.update.outputs.has_changes == 'true'
@@ -58,7 +59,7 @@ jobs:
         run: |
           gh pr create \
             --title "Update flake inputs - $(date +%Y-%m-%d)" \
-            --body "Automated flake input update. Build verified successfully." \
+            --body "Automated flake input update. Flake check passed successfully." \
             --base main \
             --head "${{ steps.update.outputs.branch }}"
       
@@ -68,5 +69,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           PR_NUMBER=$(gh pr list --head "${{ steps.update.outputs.branch }}" --json number --jq '.[0].number')
-          
           gh pr merge "$PR_NUMBER" --auto --squash --delete-branch
