@@ -14,7 +14,6 @@ let
     lutris
     prismlauncher
     revolt-desktop
-    wineWowPackages.stable
   ];
 
 in
@@ -26,7 +25,7 @@ in
       type = types.nullOr types.package;
       default = pkgs.discord;
       example = [
-        (pkgs.discord.override {withVencord = true;})
+        (pkgs.discord.override { withVencord = true; })
       ];
       description = "The Discord package you want to use e.g. special client";
     };
@@ -42,7 +41,10 @@ in
   };
 
   config = mkIf config.programs.gaming.enable {
-    environment.systemPackages = defaultPackages ++ config.programs.gaming.optionalPackages ++ [config.programs.gaming.discordPackage];
+    environment.systemPackages =
+      defaultPackages
+      ++ config.programs.gaming.optionalPackages
+      ++ [ config.programs.gaming.discordPackage ];
 
     programs = {
       steam = {

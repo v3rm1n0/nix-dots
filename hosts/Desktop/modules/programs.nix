@@ -19,5 +19,8 @@
     dev.optionalPackages = [
       pkgs.zed-editor
     ];
+    gaming.optionalPackages = [
+      pkgs.stoat-desktop
+    ];
   };
 }
