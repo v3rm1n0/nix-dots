@@ -1,3 +1,6 @@
+> [!WARNING]  
+> This project has been moved to [CodeBerg](https://codeberg.org/v3rm1n/nix-dots). All new updates will happen there.
+
 <div align="center">
 
 # v3rm1n's NixOS Dotfiles
