@@ -9,7 +9,6 @@
     ./gaming
     ./media
     ./productivity
-    ./t4l
     ./terminal
     ./uni
   ];

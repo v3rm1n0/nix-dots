@@ -19,9 +19,7 @@ in
         protonmail-desktop
         signal-desktop
         teamspeak6-client
-        wasistlos
         zoom-us
-        zulip
       ];
 
       home.file = {
