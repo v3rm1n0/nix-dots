@@ -6,6 +6,7 @@
 }:
 {
   config.programs = {
+    ai.enable = true;
     browsing = {
       chromium = {
         enable = false;
