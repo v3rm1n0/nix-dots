@@ -1,5 +1,6 @@
 {
   helium,
+  nix-citizen,
   pkgs,
   system,
   ...
@@ -21,6 +22,7 @@
       pkgs.zed-editor
     ];
     gaming.optionalPackages = [
+      nix-citizen.packages.${system}.rsi-launcher
       pkgs.stoat-desktop
     ];
   };
