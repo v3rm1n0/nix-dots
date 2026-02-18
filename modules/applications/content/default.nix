@@ -8,9 +8,7 @@
 with lib;
 
 let
-  defaultPackages = with pkgs; [
-    davinci-resolve
-  ];
+  defaultPackages = with pkgs; [ ];
 in
 {
   options.programs.content = {

@@ -1,5 +1,6 @@
 {
   helium,
+  lib,
   nix-citizen,
   pkgs,
   system,
@@ -18,6 +19,7 @@
         package = pkgs.librewolf;
       };
     };
+    content.enable = lib.mkForce true;
     dev.optionalPackages = [
       pkgs.zed-editor
     ];
