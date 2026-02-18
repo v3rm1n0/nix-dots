@@ -12,9 +12,12 @@ in
   home-manager.users.${username} = {
     programs.git = {
       enable = true;
-      settings.user = {
-        name = "V3RM1N";
-        email = "mail@v3rm1n.dev";
+      settings = {
+        push.autoSetupRemote = "true";
+        user = {
+          name = "V3RM1N";
+          email = "mail@v3rm1n.dev";
+        };
       };
       signing = {
         key = "04A465051516159B";
