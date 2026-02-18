@@ -30,7 +30,7 @@
     fsType = "btrfs";
     options = [ "subvol=@" ];
   };
-  
+
   # Use this command to enroll the decryption key to the tpm2 m odule of your pc for automatic decryption
   # sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+2+7+12 --wipe-slot=tpm2 <disk>
   boot.initrd.luks.devices."cryptroot".device =
@@ -45,7 +45,11 @@
   fileSystems."/nix/store" = {
     device = "/dev/mapper/cryptroot";
     fsType = "btrfs";
-    options = [ "subvol=@nix" "compress=zstd" "noatime" ];
+    options = [
+      "subvol=@nix"
+      "compress=zstd"
+      "noatime"
+    ];
   };
 
   fileSystems."/boot" = {
