@@ -110,7 +110,7 @@ in
         # Input device configuration
         input = {
           kb_layout = "us, de"; # US and German keyboard layouts
-          kb_options = "grp:alt_shift_toggle"; # Switch layouts with Alt+Shift
+          # kb_options = "grp:alt_shift_toggle"; # Switch layouts with Alt+Shift
 
           follow_mouse = "1"; # Focus follows mouse
 
@@ -171,16 +171,15 @@ in
           pseudotile = true;
         };
 
-        "$mainMod" = "SUPER";
+        "$mainMod" = "ALT_L";
         bind = [
           "$mainMod, T, exec, ghostty"
-          "$mainMod, C, killactive,"
+          "Shift_L&Alt_L, Q, killactive,"
           "$mainMod, M, exit,"
           "$mainMod, E, exec, nautilus"
           "$mainMod, V, togglefloating,"
           "$mainMod, P, pseudo, # dwindle"
-          "$mainMod, Q, togglesplit, # dwindle"
-          "$mainMod ALT_L, L, exec, hyprlock"
+          "Super_L&Alt_L, L, exec, hyprlock"
           "$mainMod, SPACE, exec, vicinae toggle"
           "$mainMod, R, exec, ${config.userOptions.browser}"
 
@@ -246,6 +245,12 @@ in
         # windowrulev3 or new windowrule
         windowrule = [
           {
+            name = "teamspeak-ws-2";
+            workspace = "2 silent";
+            tile = "on";
+            "match:initial_class" = "^(teamspeak-client)";
+          }
+          {
             name = "discord-ws-2";
             workspace = "2 silent";
             tile = "on";
@@ -264,8 +269,8 @@ in
           }
         ];
         exec-once = [
-          "${config.userOptions.discordClient}"
-
+          "TeamSpeak"
+          #"${config.userOptions.discordClient}"
         ];
       };
     };
