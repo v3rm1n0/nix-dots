@@ -16,7 +16,7 @@ in
     pulse.enable = true;
   };
   environment.systemPackages = [
-    pkgs.helvum
+    pkgs.crosspipe
   ];
   home-manager.users.${username} = _: {
     home.file = {
