@@ -1,17 +1,21 @@
 {
-  lanzaboote,
   lib,
   ...
 }:
 {
-  imports = [ lanzaboote.nixosModules.lanzaboote ];
   config = {
     boot = {
-      lanzaboote = {
-        enable = true;
-        pkiBundle = "/var/lib/sbctl";
-      };
       loader = {
+        limine = {
+          enable = true;
+          extraEntries = ''
+            /Windows
+              protocol: efi
+              path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
+          '';
+          resolution = "1920x1080x32";
+          secureBoot.enable = true;
+        };
         systemd-boot.enable = lib.mkForce false;
         efi.canTouchEfiVariables = true;
       };
