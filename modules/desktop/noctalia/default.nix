@@ -41,6 +41,11 @@ in
                 labelMode = "none";
               }
               {
+                id = "AudioVisualizer";
+                width = 100;
+                hideWhenIdle = true;
+              }
+              {
                 id = "MediaMini";
               }
             ];
