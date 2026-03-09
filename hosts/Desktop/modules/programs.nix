@@ -11,11 +11,11 @@
     ai.enable = true;
     browsing = {
       chromium = {
-        enable = false;
-        package = helium.packages.${system}.default;
+        enable = true;
+        package = pkgs.brave;
       };
       firefox = {
-        enable = true;
+        enable = false;
         package = pkgs.librewolf;
       };
     };

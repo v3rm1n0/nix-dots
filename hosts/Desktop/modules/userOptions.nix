@@ -1,7 +1,7 @@
 { config, ... }:
 {
   config.userOptions = {
-    browser = "librewolf";
+    browser = "brave";
     colorScheme = "kanagawa";
     discordClient = "equibop";
     dots = "/home/${config.userOptions.username}/.dotfiles";
