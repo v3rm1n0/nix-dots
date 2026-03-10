@@ -52,6 +52,7 @@
       extensions = [
         #"nngceckbapebfimnlniiiahkandclblb" # Bitwarden
         "enamippconapkdmgfgjchkhakpfinmaj" # DeArrow
+        "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
         "mlomiejdfkolichcflejclcbmpeaniij" # Ghostery
         "bggfcpfjbdkhfhfmkjpbhnkhnpjjeomc" # Material Icons for GitHub
         #"pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
