@@ -13,7 +13,6 @@ let
     heroic-unwrapped
     lutris
     prismlauncher
-    revolt-desktop
   ];
 
 in

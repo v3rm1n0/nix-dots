@@ -1,5 +1,4 @@
 {
-  helium,
   lib,
   nix-citizen,
   pkgs,

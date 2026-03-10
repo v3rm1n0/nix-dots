@@ -69,6 +69,10 @@ in
 
     # Color polarity (dark mode)
     polarity = "dark";
+
+    targets = {
+      limine.image.enable = false;
+    };
   };
 
   # User-level Stylix configuration (via Home Manager)

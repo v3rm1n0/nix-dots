@@ -53,9 +53,8 @@
         #"nngceckbapebfimnlniiiahkandclblb" # Bitwarden
         "enamippconapkdmgfgjchkhakpfinmaj" # DeArrow
         "mlomiejdfkolichcflejclcbmpeaniij" # Ghostery
-        "oldceeleldhonbafppcapldpdifcinji" # LanguageTool
         "bggfcpfjbdkhfhfmkjpbhnkhnpjjeomc" # Material Icons for GitHub
-        "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
+        #"pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
         "ghmbeldphafepmbegfdlkpapadhbakde" # Proton Pass
         "gebbhagfogifgggkldgodflihgfeippi" # Return YouTube Dislike
         #"cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin

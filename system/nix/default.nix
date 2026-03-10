@@ -67,9 +67,7 @@ in
 
   nixpkgs.config = {
     allowUnfree = true;
-    permittedInsecurePackages = [
-      "jitsi-meet-1.0.8792"
-    ];
+    permittedInsecurePackages = [ ];
   };
 
   environment.systemPackages = with pkgs; [

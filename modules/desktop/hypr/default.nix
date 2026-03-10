@@ -28,6 +28,7 @@ in
       playerctl
       pywal
       wl-clipboard
+      yazi
       zenity
     ];
   };

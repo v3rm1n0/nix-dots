@@ -13,9 +13,6 @@ let
     pkgs.vscode
     #--- Tools ---#
     pkgs.devenv
-    pkgs.gitkraken
-    pkgs.nodejs_latest
-    pkgs.nodePackages.prettier
     pkgs.nix-output-monitor
   ];
 in
