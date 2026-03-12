@@ -1,1 +1,2 @@
 *.nix linguist-language=Nix
+modules/shell/p10k/p10k.zsh linguist-generated=true
