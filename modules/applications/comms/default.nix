@@ -16,6 +16,7 @@ in
     home-manager.users.${username} = {
       home.packages = with pkgs; [
         #cinny-desktop
+        gajim
         protonmail-desktop
         signal-desktop
         teamspeak6-client
