@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -8,7 +9,7 @@ let
 in
 {
   home-manager.users.${username} = {
-    stylix.targets.neovim.enable = false;
+    stylix.targets.neovim.enable = lib.mkForce false;
     programs.neovim = {
       enable = true;
       defaultEditor = true;
