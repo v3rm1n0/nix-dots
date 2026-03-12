@@ -79,69 +79,73 @@
           SearchBar = "unified";
 
           # ─── Extensions ───────────────────────────────────────────────────────────────
-          ExtensionSettings = {
-            "*".installation_mode = "allowed";
-            # AdNauseam:
-            "adnauseam@rednoise.org" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/adnauseam/latest.xpi";
-              installation_mode = "force_installed";
+          ExtensionSettings =
+            let
+              moz = short: "https://addons.mozilla.org/firefox/downloads/latest/${short}/latest.xpi";
+            in
+            {
+              "*".installation_mode = "allowed";
+              # AdNauseam:
+              "adnauseam@rednoise.org" = {
+                install_url = moz "adnauseam";
+                installation_mode = "force_installed";
+              };
+              # Bitwarden:
+              "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+                install_url = moz "bitwarden-password-manager";
+                installation_mode = "normal_installed";
+              };
+              # DeArrow:
+              "deArrow@ajay.app" = {
+                install_url = moz "dearrow";
+                installation_mode = "normal_installed";
+              };
+              # Enhancer for YouTube:
+              "enhancerforyoutube@maximerf.addons.mozilla.org" = {
+                install_url = moz "enhancer-for-youtube";
+                installation_mode = "normal_installed";
+              };
+              # enUS deDE bilingual dictionary:
+              "@enusplusdedebilingualdictionary" = {
+                install_url = moz "enus-dede-bilingual-dictionary";
+                installation_mode = "normal_installed";
+              };
+              # Facebook Container:
+              "@contain-facebook" = {
+                install_url = moz "facebook-container";
+                installation_mode = "force_installed";
+              };
+              # Google containers (not official):
+              "@contain-google" = {
+                install_url = moz "google-container";
+                installation_mode = "force_installed";
+              };
+              # Meterial Icons for GitHub:
+              "{eac6e624-97fa-4f28-9d24-c06c9b8aa713}" = {
+                install_url = moz "material-icons-for-github";
+                installation_mode = "normal_installed";
+              };
+              # Multi Account Containers:
+              "@testpilot-containers" = {
+                install_url = moz "multi-account-containers";
+                installation_mode = "force_installed";
+              };
+              # Proton Pass:
+              "78272b6fa58f4a1abaac99321d503a20@proton.me" = {
+                install_url = moz "proton-pass";
+                installation_mode = "normal_installed";
+              };
+              # Qwant Search:
+              "qwant-search-firefox@qwant.com" = {
+                install_url = moz "qwant-the-search-engine";
+                installation_mode = "normal_installed";
+              };
+              # Return YouTube Dislike:
+              "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = {
+                install_url = moz "return-youtube-dislikes";
+                installation_mode = "normal_installed";
+              };
             };
-            # Bitwarden:
-            "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
-              installation_mode = "normal_installed";
-            };
-            # DeArrow:
-            "deArrow@ajay.app" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/dearrow/latest.xpi";
-              installation_mode = "normal_installed";
-            };
-            # Enhancer for YouTube:
-            "enhancerforyoutube@maximerf.addons.mozilla.org" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/enhancer-for-youtube/latest.xpi";
-              installation_mode = "normal_installed";
-            };
-            # enUS deDE bilingual dictionary:
-            "@enusplusdedebilingualdictionary" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/enus-dede-bilingual-dictionary/latest.xpi";
-              installation_mode = "normal_installed";
-            };
-            # Facebook Container:
-            "@contain-facebook" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/facebook-container/latest.xpi";
-              installation_mode = "force_installed";
-            };
-            # Google containers (not official):
-            "@contain-google" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/google-container/latest.xpi";
-              installation_mode = "force_installed";
-            };
-            # Meterial Icons for GitHub:
-            "{eac6e624-97fa-4f28-9d24-c06c9b8aa713}" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/material-icons-for-github/latest.xpi";
-              installation_mode = "normal_installed";
-            };
-            # Multi Account Containers:
-            "@testpilot-containers" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
-              installation_mode = "force_installed";
-            };
-            # Proton Pass:
-            "78272b6fa58f4a1abaac99321d503a20@proton.me" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/proton-pass/latest.xpi";
-              installation_mode = "normal_installed";
-            };
-            # Qwant Search:
-            "qwant-search-firefox@qwant.com" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/qwant-the-search-engine/latest.xpi";
-              installation_mode = "normal_installed";
-            };
-            # Return YouTube Dislike:
-            "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/return-youtube-dislikes/latest.xpi";
-              installation_mode = "normal_installed";
-            };
-          };
         };
       };
     };
