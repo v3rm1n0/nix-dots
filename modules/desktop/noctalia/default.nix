@@ -91,6 +91,7 @@ in
         };
         general = {
           scaleRatio = 0.9;
+          shadowDirection = "top_right";
         };
         location = {
           monthBeforeDay = false;
