@@ -2,11 +2,11 @@
 {
   config.userOptions = {
     browser = "brave";
-    colorScheme = "kanagawa";
+    colorScheme = "gruvbox-dark-hard";
     discordClient = "equibop";
-    dots = "/home/${config.userOptions.username}/.dotfiles";
+    dots = "/home/${config.userOptions.username}/dotfiles";
     hostName = "Desktop";
     username = "v3rm1n";
-    wallpaper = "kanagawa.png";
+    wallpaper = "rocket.png";
   };
 }
