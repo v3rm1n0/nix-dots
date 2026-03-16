@@ -10,6 +10,7 @@ in
   networking = {
     useDHCP = lib.mkDefault true;
     networkmanager = {
+      dns = "systemd-resolved";
       enable = true;
       wifi.powersave = true;
     };
@@ -21,6 +22,20 @@ in
       allowedUDPPorts = [
         53317 # localsend
       ];
+    };
+  };
+
+  services.resolved = {
+    enable = true;
+    settings = {
+      Resolve = {
+        DNSSEC = true;
+        DNSOverTLS = true;
+        DNS = [
+          "9.9.9.11"
+          "149.112.112.11"
+        ];
+      };
     };
   };
 
