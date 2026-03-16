@@ -20,9 +20,9 @@ in
       flake = "${config.userOptions.dots}";
       flags = [
         "-L"
-        "--upgrade"
       ];
       dates = "weekly";
+      upgrade = true;
     };
     systemBuilderCommands = ''
       ln -sv ${pkgs.path} $out/nixpkgs
