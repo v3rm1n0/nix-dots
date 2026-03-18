@@ -31,7 +31,7 @@ in
           font.normal.normal = "Geist";
           theme = {
             dark = {
-              name = "kanagawa";
+              name = "gruvbox-dark";
               icon_theme = "default";
             };
           };
