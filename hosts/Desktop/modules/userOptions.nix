@@ -3,7 +3,7 @@
   config.userOptions = {
     browser = "brave";
     colorScheme = "gruvbox-dark-hard";
-    discordClient = "equibop";
+    discordClient = "legcord";
     dots = "/home/${config.userOptions.username}/dotfiles";
     hostName = "Desktop";
     username = "v3rm1n";
