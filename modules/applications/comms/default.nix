@@ -15,8 +15,9 @@ in
   config = lib.mkIf config.programs.comms.enable {
     home-manager.users.${username} = {
       home.packages = with pkgs; [
-        #cinny-desktop
+        cinny-desktop
         gajim
+        mumble
         protonmail-desktop
         signal-desktop
         teamspeak6-client
