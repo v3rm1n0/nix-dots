@@ -1,10 +1,10 @@
-{ helium, system, ... }:
+{ pkgs, ... }:
 {
   config.programs = {
     browsing = {
       chromium = {
         enable = true;
-        package = helium.packages.${system}.default;
+        package = pkgs.brave;
       };
     };
   };

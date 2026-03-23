@@ -9,8 +9,6 @@ with lib;
 
 let
   defaultPackages = [
-    #--- Editors ---#
-    pkgs.vscode
     #--- Tools ---#
     pkgs.devenv
     pkgs.nix-output-monitor
