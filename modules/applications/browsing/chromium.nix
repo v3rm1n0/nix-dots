@@ -41,6 +41,7 @@
         "BraveP3AEnabled" = false;
         "BravePlaylistEnabled" = false;
         "DefaultSearchProviderEnabled" = true;
+        "DefaultSearchProviderAlternateURLs" = [ "https://search.v3rm1n.dev/?q={searchTerms}" ];
         "DnsOverHttpsMode" = "secure";
         "DnsOverHttpsTemplates" = "https://dns11.quad9.net/dns-query{?dns}";
         "RestoreOnStartup" = 4; # Restore specified pages
