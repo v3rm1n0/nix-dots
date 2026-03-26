@@ -20,6 +20,7 @@ in
         };
       };
       signing = {
+        format = "openpgp";
         key = "04A465051516159B";
         signByDefault = true;
       };
