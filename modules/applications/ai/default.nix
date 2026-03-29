@@ -22,6 +22,8 @@ in
       home.sessionVariables = {
         ANTHROPIC_BASE_URL = "http://localhost:11434";
         ANTHROPIC_AUTH_TOKEN = "ollama";
+        OLLAMA_FLASH_ATTENTION = "1";
+        OLLAMA_KV_CACHE_TYPE = "q8_0";
       };
 
       programs.claude-code.enable = true;
