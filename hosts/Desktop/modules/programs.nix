@@ -22,7 +22,7 @@
       pkgs.zed-editor
     ];
     gaming.optionalPackages = [
-      pkgs.stoat-desktop
+      #pkgs.stoat-desktop
     ];
   };
 }
