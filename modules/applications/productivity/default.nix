@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ inputs, ... }:
 {
   flake.nixosModules.applicationsProductivity =
     { config, lib, ... }:

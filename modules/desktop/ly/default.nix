@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.nixosModules.modulesDesktopLy = {
     services.displayManager.ly = {

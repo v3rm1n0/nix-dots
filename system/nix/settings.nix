@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.nixosModules.coreNixSettings = {
     nix.settings = {

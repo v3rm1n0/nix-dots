@@ -15,7 +15,7 @@
 #   - GTK/Qt applications
 #   - System UI elements (cursor, icons, fonts)
 
-{ self, inputs, ... }:
+{ inputs, ... }:
 {
   flake.nixosModules.modulesDesktopStylix =
     {

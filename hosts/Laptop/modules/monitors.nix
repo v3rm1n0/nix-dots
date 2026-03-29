@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.nixosModules.hostLaptopModulesMonitors = {
     config.monitors = [

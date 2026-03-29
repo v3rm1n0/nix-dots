@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ inputs, ... }:
 {
   flake.nixosModules.applicationsTerminal =
     { config, lib, ... }:

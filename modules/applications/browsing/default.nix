@@ -1,7 +1,7 @@
-{ self, inputs, ... }:
+{ self, ... }:
 {
   flake.nixosModules.applicationsBrowsing =
-    { pkgs, lib, ... }:
+    { ... }:
     {
       imports = [
         self.nixosModules.applicationsBrowsingChromium

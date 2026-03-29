@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.nixosModules.coreNixBtrfs = {
     # Enable Btrfs auto-scrub weekly (for data integrity)

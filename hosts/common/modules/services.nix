@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.nixosModules.hostCommonModulesServices = {
     config.servicesModule = {
