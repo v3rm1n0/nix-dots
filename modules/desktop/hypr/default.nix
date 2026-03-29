@@ -1,54 +1,60 @@
+{ self, inputs, ... }:
 {
-  config,
-  pkgs,
-  ...
-}:
-let
-  username = config.userOptions.username;
-in
-{
-  imports = [
-    ./hypridle.nix
-    ./hyprland.nix
-    ./hyprlock.nix
-    ./hyprpanel.nix
-    ./hyprpaper.nix
-  ];
+  flake.nixosModules.modulesDesktopHypr =
+    {
+      config,
+      pkgs,
+      ...
+    }:
+    let
+      username = config.userOptions.username;
+    in
+    {
+      imports = [
+        inputs.home-manager.nixosModules.home-manager
 
-  environment = {
-    systemPackages = with pkgs; [
-      brightnessctl
-      gthumb
-      hyprpaper
-      hyprshot
-      libnotify
-      nautilus
-      networkmanagerapplet
-      pavucontrol
-      playerctl
-      pywal
-      wl-clipboard
-      yazi
-      zenity
-    ];
-  };
+        self.nixosModules.modulesDesktopHyprHypridle
+        self.nixosModules.modulesDesktopHyprHyprland
+        self.nixosModules.modulesDesktopHyprHyprlock
+        self.nixosModules.modulesDesktopHyprHyprpanel
+        self.nixosModules.modulesDesktopHyprHyprpaper
+      ];
 
-  home-manager.users.${username} = {
-    services.hyprpolkitagent.enable = true;
-  };
+      environment = {
+        systemPackages = with pkgs; [
+          brightnessctl
+          gthumb
+          hyprpaper
+          hyprshot
+          libnotify
+          nautilus
+          networkmanagerapplet
+          pavucontrol
+          playerctl
+          pywal
+          wl-clipboard
+          yazi
+          zenity
+        ];
+      };
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    withUWSM = true;
-  };
+      home-manager.users.${username} = {
+        services.hyprpolkitagent.enable = true;
+      };
 
-  programs.nautilus-open-any-terminal = {
-    enable = true;
-    terminal = "ghostty";
-  };
+      programs.hyprland = {
+        enable = true;
+        xwayland.enable = true;
+        withUWSM = true;
+      };
 
-  programs.uwsm = {
-    enable = true;
-  };
+      programs.nautilus-open-any-terminal = {
+        enable = true;
+        terminal = "ghostty";
+      };
+
+      programs.uwsm = {
+        enable = true;
+      };
+    };
 }

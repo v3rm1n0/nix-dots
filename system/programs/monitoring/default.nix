@@ -1,8 +1,11 @@
+{ self, inputs, ... }:
 {
-  imports = [
-    ./btop.nix
-    ./cava.nix
-    ./fastfetch
-    ./vul.nix
-  ];
+  flake.nixosModules.coreProgramsMonitoring = {
+    imports = [
+      self.nixosModules.coreProgramsMonitoringBtop
+      self.nixosModules.coreProgramsMonitoringCava
+      self.nixosModules.coreProgramsMonitoringFastfetch
+      self.nixosModules.coreProgramsMonitoringVulnix
+    ];
+  };
 }

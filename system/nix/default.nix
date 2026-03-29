@@ -1,77 +1,83 @@
+{ self, inputs, ... }:
 {
-  config,
-  pkgs,
-  ...
-}:
-let
-  dots = config.userOptions.dots;
-  username = config.userOptions.username;
-in
-{
-  imports = [
-    ./btrfs.nix
-    ./gc.nix
-    ./settings.nix
-  ];
+  flake.nixosModules.coreNix =
+    {
+      config,
+      pkgs,
+      ...
+    }:
+    let
+      dots = config.userOptions.dots;
+      username = config.userOptions.username;
+    in
+    {
+      imports = [
+        self.nixosModules.coreNixBtrfs
+        self.nixosModules.coreNixGc
+        self.nixosModules.coreNixSettings
 
-  system = {
-    autoUpgrade = {
-      enable = true;
-      flake = "${config.userOptions.dots}";
-      flags = [
-        "-L"
+        inputs.home-manager.nixosModules.home-manager
       ];
-      dates = "weekly";
-      upgrade = true;
-    };
-    systemBuilderCommands = ''
-      ln -sv ${pkgs.path} $out/nixpkgs
-    '';
-    stateVersion = "23.11";
-  };
 
-  nix = {
-    package = pkgs.nixVersions.latest;
-    nixPath = [ "nixpkgs=/run/current-system/nixpkgs/" ];
-  };
-
-  home-manager.users.${username} = {
-    home.stateVersion = "23.11";
-    nixpkgs.config.allowUnfree = true;
-    dconf.settings = {
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
+      system = {
+        autoUpgrade = {
+          enable = true;
+          flake = "${config.userOptions.dots}";
+          flags = [
+            "-L"
+          ];
+          dates = "weekly";
+          upgrade = true;
+        };
+        systemBuilderCommands = ''
+          ln -sv ${pkgs.path} $out/nixpkgs
+        '';
+        stateVersion = "23.11";
       };
-      "org/cinnamon/desktop/applications/terminal" = {
-        exec = "ghostty";
+
+      nix = {
+        package = pkgs.nixVersions.latest;
+        nixPath = [ "nixpkgs=/run/current-system/nixpkgs/" ];
       };
+
+      home-manager.users.${username} = {
+        home.stateVersion = "23.11";
+        nixpkgs.config.allowUnfree = true;
+        dconf.settings = {
+          "org/gnome/desktop/interface" = {
+            color-scheme = "prefer-dark";
+          };
+          "org/cinnamon/desktop/applications/terminal" = {
+            exec = "ghostty";
+          };
+        };
+      };
+
+      programs.direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+      };
+
+      programs.nh = {
+        enable = true;
+        flake = "${dots}";
+      };
+
+      programs.nix-ld = {
+        enable = true;
+        libraries = (pkgs.steam-run.args.multiPkgs pkgs) ++ [
+          pkgs.stdenv.cc.cc.lib
+        ];
+      };
+
+      nixpkgs.config = {
+        allowUnfree = true;
+        permittedInsecurePackages = [ ];
+      };
+
+      environment.systemPackages = with pkgs; [
+        better-control
+        sbctl
+      ];
     };
-  };
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
-
-  programs.nh = {
-    enable = true;
-    flake = "${dots}";
-  };
-
-  programs.nix-ld = {
-    enable = true;
-    libraries = (pkgs.steam-run.args.multiPkgs pkgs) ++ [
-      pkgs.stdenv.cc.cc.lib
-    ];
-  };
-
-  nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [ ];
-  };
-
-  environment.systemPackages = with pkgs; [
-    better-control
-    sbctl
-  ];
 }

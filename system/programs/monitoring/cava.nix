@@ -1,9 +1,13 @@
+{ self, inputs, ... }:
 {
-  pkgs,
-  ...
-}:
-{
-  environment.systemPackages = with pkgs; [
-    cava
-  ];
+  flake.nixosModules.coreProgramsMonitoringCava =
+    {
+      pkgs,
+      ...
+    }:
+    {
+      environment.systemPackages = with pkgs; [
+        cava
+      ];
+    };
 }

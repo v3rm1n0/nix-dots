@@ -15,82 +15,88 @@
 #   - GTK/Qt applications
 #   - System UI elements (cursor, icons, fonts)
 
+{ self, inputs, ... }:
 {
-  config,
-  pkgs,
-  ...
-}:
-let
-  colorScheme = config.userOptions.colorScheme;
-  username = config.userOptions.username;
-in
-{
-  # System-level Stylix configuration
-  stylix = {
-    enable = true;
+  flake.nixosModules.modulesDesktopStylix =
+    {
+      config,
+      pkgs,
+      ...
+    }:
+    let
+      colorScheme = config.userOptions.colorScheme;
+      username = config.userOptions.username;
+    in
+    {
+      imports = [ inputs.home-manager.nixosModules.home-manager ];
 
-    # Base16 color scheme from the tinted-theming/schemes repository
-    # Available schemes: https://github.com/tinted-theming/schemes
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/${colorScheme}.yaml";
-
-    # Cursor theme configuration
-    cursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Ice";
-      size = 25;
-    };
-
-    # Font configuration for the entire system
-    # Stylix will apply these fonts to all compatible applications
-    fonts = {
-      emoji = {
-        package = pkgs.noto-fonts-color-emoji;
-        name = "Noto Color Emoji";
-      };
-      monospace = {
-        package = pkgs.nerd-fonts.geist-mono;
-        name = "Geist Mono";
-      };
-      sansSerif = {
-        package = pkgs.geist-font;
-        name = "Geist";
-      };
-      # Use same font for serif as sans-serif for consistency
-      serif = config.stylix.fonts.sansSerif;
-
-      # Font sizes for different UI elements
-      sizes = {
-        applications = 12; # General application text
-        desktop = 10; # Desktop environment elements
-        popups = 10; # Notification popups
-        terminal = 10; # Terminal emulator text
-      };
-    };
-
-    # Color polarity (dark mode)
-    polarity = "dark";
-
-    targets = {
-      limine.image.enable = false;
-    };
-  };
-
-  # User-level Stylix configuration (via Home Manager)
-  home-manager.users.${username} = {
-    stylix = {
-      # Icon theme configuration
-      icons = {
+      # System-level Stylix configuration
+      stylix = {
         enable = true;
-        package = pkgs.kora-icon-theme;
-        dark = "kora";
+
+        # Base16 color scheme from the tinted-theming/schemes repository
+        # Available schemes: https://github.com/tinted-theming/schemes
+        base16Scheme = "${pkgs.base16-schemes}/share/themes/${colorScheme}.yaml";
+
+        # Cursor theme configuration
+        cursor = {
+          package = pkgs.bibata-cursors;
+          name = "Bibata-Modern-Ice";
+          size = 25;
+        };
+
+        # Font configuration for the entire system
+        # Stylix will apply these fonts to all compatible applications
+        fonts = {
+          emoji = {
+            package = pkgs.noto-fonts-color-emoji;
+            name = "Noto Color Emoji";
+          };
+          monospace = {
+            package = pkgs.nerd-fonts.geist-mono;
+            name = "Geist Mono";
+          };
+          sansSerif = {
+            package = pkgs.geist-font;
+            name = "Geist";
+          };
+          # Use same font for serif as sans-serif for consistency
+          serif = config.stylix.fonts.sansSerif;
+
+          # Font sizes for different UI elements
+          sizes = {
+            applications = 12; # General application text
+            desktop = 10; # Desktop environment elements
+            popups = 10; # Notification popups
+            terminal = 10; # Terminal emulator text
+          };
+        };
+
+        # Color polarity (dark mode)
+        polarity = "dark";
+
+        targets = {
+          limine.image.enable = false;
+        };
       };
 
-      # Application transparency (0.0 = fully transparent, 1.0 = opaque)
-      # Applied to compatible applications like terminals
-      opacity.applications = 0.8;
+      # User-level Stylix configuration (via Home Manager)
+      home-manager.users.${username} = {
+        stylix = {
+          # Icon theme configuration
+          icons = {
+            enable = true;
+            package = pkgs.kora-icon-theme;
+            dark = "kora";
+          };
 
-      # Ensure user-level theme matches system polarity
-      polarity = "dark";
+          # Application transparency (0.0 = fully transparent, 1.0 = opaque)
+          # Applied to compatible applications like terminals
+          opacity.applications = 0.8;
+
+          # Ensure user-level theme matches system polarity
+          polarity = "dark";
+        };
+      };
     };
-  };
 }

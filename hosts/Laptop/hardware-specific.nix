@@ -1,4 +1,8 @@
-{ pkgs, ... }:
+{ self, inputs, ... }:
 {
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  flake.nixosModules.hostLaptopHardwareSpecific =
+    { pkgs, ... }:
+    {
+      boot.kernelPackages = pkgs.linuxPackages_zen;
+    };
 }

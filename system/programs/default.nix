@@ -1,6 +1,9 @@
+{ self, inputs, ... }:
 {
-  imports = [
-    ./monitoring
-    ./utils
-  ];
+  flake.nixosModules.corePrograms = {
+    imports = [
+      self.nixosModules.coreProgramsMonitoring
+      self.nixosModules.coreProgramsUtils
+    ];
+  };
 }

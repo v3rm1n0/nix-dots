@@ -1,45 +1,49 @@
+{ self, inputs, ... }:
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-
-let
-  inherit (lib) mkIf mkMerge;
-  cfg = config.hardwareModule;
-in
-{
-  config = mkMerge [
+  flake.nixosModules.coreHardwareGraphics =
     {
-      hardware.graphics = {
-        enable = true;
-        enable32Bit = true;
-      };
-    }
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
 
-    # NVIDIA specifics
-    (mkIf (cfg.gpu.enable && cfg.gpu.brand == "nvidia") {
-      services.xserver.videoDrivers = [ "nvidia" ];
+    let
+      inherit (lib) mkIf mkMerge;
+      cfg = config.hardwareModule;
+    in
+    {
+      config = mkMerge [
+        {
+          hardware.graphics = {
+            enable = true;
+            enable32Bit = true;
+          };
+        }
 
-      boot.kernelModules = [ "nvidia-uvm" ];
+        # NVIDIA specifics
+        (mkIf (cfg.gpu.enable && cfg.gpu.brand == "nvidia") {
+          services.xserver.videoDrivers = [ "nvidia" ];
 
-      hardware.nvidia = {
-        modesetting.enable = true;
-        powerManagement.enable = true;
-        powerManagement.finegrained = false;
-        open = true;
-        nvidiaSettings = true;
-        #package = config.boot.kernelPackages.nvidiaPackages.stable;
-      };
-    })
+          boot.kernelModules = [ "nvidia-uvm" ];
 
-    # Intel specifics
-    (mkIf (cfg.gpu.enable && cfg.gpu.brand == "intel") {
-      hardware.graphics.extraPackages = with pkgs; [
-        vpl-gpu-rt
-        # intel-media-sdk  # uncomment for older Gen (pre-Xe) iGPUs
+          hardware.nvidia = {
+            modesetting.enable = true;
+            powerManagement.enable = true;
+            powerManagement.finegrained = false;
+            open = true;
+            nvidiaSettings = true;
+            #package = config.boot.kernelPackages.nvidiaPackages.stable;
+          };
+        })
+
+        # Intel specifics
+        (mkIf (cfg.gpu.enable && cfg.gpu.brand == "intel") {
+          hardware.graphics.extraPackages = with pkgs; [
+            vpl-gpu-rt
+            # intel-media-sdk  # uncomment for older Gen (pre-Xe) iGPUs
+          ];
+        })
       ];
-    })
-  ];
+    };
 }

@@ -1,3 +1,6 @@
+{ self, inputs, ... }:
 {
-  services.gvfs.enable = true;
+  flake.nixosModules.coreServicesGvfs = {
+    services.gvfs.enable = true;
+  };
 }

@@ -1,27 +1,33 @@
+{ self, inputs, ... }:
 {
-  config,
-  lib,
-  pkgs,
-  spicetify-nix,
-  ...
-}:
-let
-  username = config.userOptions.username;
-in
-{
-  imports = [ spicetify-nix.nixosModules.default ];
+  flake.nixosModules.applicationsMedia =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      username = config.userOptions.username;
+    in
+    {
+      imports = [
+        inputs.spicetify-nix.nixosModules.default
+        inputs.home-manager.nixosModules.home-manager
+      ];
 
-  options.programs.media = {
-    enable = lib.mkEnableOption "Enables communication module";
-  };
+      options.programs.media = {
+        enable = lib.mkEnableOption "Enables communication module";
+      };
 
-  config = lib.mkIf config.programs.media.enable {
-    programs.spicetify = {
-      enable = true;
+      config = lib.mkIf config.programs.media.enable {
+        programs.spicetify = {
+          enable = true;
+        };
+
+        home-manager.users.${username}.home.packages = with pkgs; [
+          vlc
+        ];
+      };
     };
-
-    home-manager.users.${username}.home.packages = with pkgs; [
-      vlc
-    ];
-  };
 }

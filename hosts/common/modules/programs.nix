@@ -1,17 +1,21 @@
-{ pkgs, ... }:
+{ self, inputs, ... }:
 {
-  config.programs = {
-    comms.enable = true;
-    content.enable = false;
-    dev.enable = true;
-    emulation.enable = true;
-    gaming = {
-      enable = true;
-      discordPackage = pkgs.legcord;
+  flake.nixosModules.hostCommonModulesPrograms =
+    { pkgs, ... }:
+    {
+      config.programs = {
+        comms.enable = true;
+        content.enable = false;
+        dev.enable = true;
+        emulation.enable = true;
+        gaming = {
+          enable = true;
+          discordPackage = pkgs.legcord;
+        };
+        media.enable = true;
+        productivity.enable = true;
+        terminal.enable = true;
+        uni.enable = true;
+      };
     };
-    media.enable = true;
-    productivity.enable = true;
-    terminal.enable = true;
-    uni.enable = true;
-  };
 }

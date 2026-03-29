@@ -1,6 +1,10 @@
-{ pkgs, ... }:
+{ self, inputs, ... }:
 {
-  environment.systemPackages = [
-    pkgs.protonvpn-gui
-  ];
+  flake.nixosModules.modulesSecurityVpn =
+    { pkgs, ... }:
+    {
+      environment.systemPackages = [
+        pkgs.protonvpn-gui
+      ];
+    };
 }

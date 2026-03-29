@@ -1,10 +1,14 @@
+{ self, inputs, ... }:
 {
-  pkgs,
-  ...
-}:
-{
-  environment.systemPackages = with pkgs; [
-    btop
-    resources
-  ];
+  flake.nixosModules.coreProgramsMonitoringBtop =
+    {
+      pkgs,
+      ...
+    }:
+    {
+      environment.systemPackages = with pkgs; [
+        btop
+        resources
+      ];
+    };
 }

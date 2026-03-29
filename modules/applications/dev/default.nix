@@ -1,35 +1,39 @@
+{ self, inputs, ... }:
 {
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+  flake.nixosModules.applicationsDev =
+    {
+      lib,
+      config,
+      pkgs,
+      ...
+    }:
 
-with lib;
+    with lib;
 
-let
-  defaultPackages = [
-    #--- Tools ---#
-    pkgs.devenv
-    pkgs.nix-output-monitor
-  ];
-in
-{
-  options.programs.dev = {
-    enable = mkEnableOption "Enable developer tools";
-
-    optionalPackages = mkOption {
-      type = types.listOf types.package;
-      default = [ ];
-      example = [
-        pkgs.nodejs_latest
-        pkgs.gitkraken
+    let
+      defaultPackages = [
+        #--- Tools ---#
+        pkgs.devenv
+        pkgs.nix-output-monitor
       ];
-      description = "List of optional packages to install alongside the default ones.";
-    };
-  };
+    in
+    {
+      options.programs.dev = {
+        enable = mkEnableOption "Enable developer tools";
 
-  config = mkIf config.programs.dev.enable {
-    environment.systemPackages = defaultPackages ++ config.programs.dev.optionalPackages;
-  };
+        optionalPackages = mkOption {
+          type = types.listOf types.package;
+          default = [ ];
+          example = [
+            pkgs.nodejs_latest
+            pkgs.gitkraken
+          ];
+          description = "List of optional packages to install alongside the default ones.";
+        };
+      };
+
+      config = mkIf config.programs.dev.enable {
+        environment.systemPackages = defaultPackages ++ config.programs.dev.optionalPackages;
+      };
+    };
 }

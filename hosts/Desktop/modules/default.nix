@@ -1,8 +1,11 @@
+{ self, inputs, ... }:
 {
-  imports = [
-    ./hardware.nix
-    ./monitors.nix
-    ./programs.nix
-    ./userOptions.nix
-  ];
+  flake.nixosModules.hostDesktopModules = {
+    imports = [
+      self.nixosModules.hostDesktopModulesHardware
+      self.nixosModules.hostDesktopModulesMonitors
+      self.nixosModules.hostDesktopModulesPrograms
+      self.nixosModules.hostDesktopModulesUserOptions
+    ];
+  };
 }

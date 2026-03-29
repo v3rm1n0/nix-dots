@@ -1,7 +1,12 @@
+{ self, inputs, ... }:
 {
-  imports = [
-    ./chromium.nix
-    ./firefox.nix
-    ./tor.nix
-  ];
+  flake.nixosModules.applicationsBrowsing =
+    { pkgs, lib, ... }:
+    {
+      imports = [
+        self.nixosModules.applicationsBrowsingChromium
+        self.nixosModules.applicationsBrowsingFirefox
+        self.nixosModules.applicationsBrowsingTor
+      ];
+    };
 }

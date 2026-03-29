@@ -1,27 +1,35 @@
+{ self, inputs, ... }:
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-let
-  username = config.userOptions.username;
-in
-{
-  home-manager.users.${username} = {
-    stylix.targets.neovim.enable = lib.mkForce false;
-    programs.neovim = {
-      enable = true;
-      defaultEditor = true;
-      extraLuaPackages = ps: [
-        ps.magick
-        ps.luarocks
+  flake.nixosModules.coreProgramsUtilsNeovim =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      username = config.userOptions.username;
+    in
+    {
+      imports = [
+        inputs.home-manager.nixosModules.home-manager
+        inputs.stylix.nixosModules.stylix
       ];
-      extraPackages = [ pkgs.imagemagick ];
+      home-manager.users.${username} = {
+        stylix.targets.neovim.enable = lib.mkForce false;
+        programs.neovim = {
+          enable = true;
+          defaultEditor = true;
+          extraLuaPackages = ps: [
+            ps.magick
+            ps.luarocks
+          ];
+          extraPackages = [ pkgs.imagemagick ];
 
-      extraConfig = ''
-        luafile ~/.config/nvim/init-nonnix.lua
-      '';
+          extraConfig = ''
+            luafile ~/.config/nvim/init-nonnix.lua
+          '';
+        };
+      };
     };
-  };
 }

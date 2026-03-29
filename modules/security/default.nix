@@ -1,8 +1,11 @@
+{ self, inputs, ... }:
 {
-  imports = [
-    ./auth
-    ./encryption
-    ./gnupg
-    ./vpn
-  ];
+  flake.nixosModules.modulesSecurity = {
+    imports = [
+      self.nixosModules.modulesSecurityAuth
+      self.nixosModules.modulesSecurityEncryption
+      self.nixosModules.modulesSecurityGnupg
+      self.nixosModules.modulesSecurityVpn
+    ];
+  };
 }

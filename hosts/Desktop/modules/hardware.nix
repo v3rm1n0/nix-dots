@@ -1,9 +1,12 @@
+{ self, inputs, ... }:
 {
-  config.hardwareModule = {
-    gpu = {
-      enable = true;
-      brand = "nvidia";
+  flake.nixosModules.hostDesktopModulesHardware = {
+    config.hardwareModule = {
+      gpu = {
+        enable = true;
+        brand = "nvidia";
+      };
+      razer.enable = true;
     };
-    razer.enable = true;
   };
 }
