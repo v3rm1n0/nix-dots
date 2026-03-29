@@ -1,3 +1,6 @@
+{ self, inputs, ... }:
 {
-  security.rtkit.enable = true;
+  flake.nixosModules.coreServicesRtkit = {
+    security.rtkit.enable = true;
+  };
 }

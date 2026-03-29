@@ -1,5 +1,8 @@
+{ self, inputs, ... }:
 {
-  services.gnome.gnome-keyring = {
-    enable = true;
+  flake.nixosModules.coreServicesGnome = {
+    services.gnome.gnome-keyring = {
+      enable = true;
+    };
   };
 }

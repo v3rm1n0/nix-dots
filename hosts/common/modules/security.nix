@@ -1,9 +1,11 @@
+{ self, inputs, ... }:
 {
-  config.securityModule = {
-    encryption = {
-      age.enable = true;
-      passwords.enable = true;
+  flake.nixosModules.hostCommonModulesSecurity = {
+    config.securityModule = {
+      encryption = {
+        passwords.enable = true;
+      };
+      gpg.enable = true;
     };
-    gpg.enable = true;
   };
 }

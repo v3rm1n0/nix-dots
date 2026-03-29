@@ -1,14 +1,17 @@
+{ self, inputs, ... }:
 {
-  programs.ssh.extraConfig = ''
-    Host *
-      AddKeysToAgent yes
-      IdentityFile ~/.ssh/id_ed25519
-  '';
-  services.openssh = {
-    enable = true;
-    ports = [ 4545 ];
-    settings.PasswordAuthentication = false;
-    settings.KbdInteractiveAuthentication = false;
-    settings.X11Forwarding = true;
+  flake.nixosModules.coreServicesSsh = {
+    programs.ssh.extraConfig = ''
+      Host *
+        AddKeysToAgent yes
+        IdentityFile ~/.ssh/id_ed25519
+    '';
+    services.openssh = {
+      enable = true;
+      ports = [ 4545 ];
+      settings.PasswordAuthentication = false;
+      settings.KbdInteractiveAuthentication = false;
+      settings.X11Forwarding = true;
+    };
   };
 }

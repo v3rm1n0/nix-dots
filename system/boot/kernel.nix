@@ -1,6 +1,9 @@
+{ self, inputs, ... }:
 {
-  boot.kernelParams = [
-    "psmouse.synaptics_intertouch=0"
-    "quiet"
-  ];
+  flake.nixosModules.coreBootKernel = {
+    boot.kernelParams = [
+      "psmouse.synaptics_intertouch=0"
+      "quiet"
+    ];
+  };
 }

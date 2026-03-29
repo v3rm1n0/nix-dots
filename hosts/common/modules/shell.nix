@@ -1,5 +1,8 @@
+{ self, inputs, ... }:
 {
-  config.shell = {
-    zsh.enable = true;
+  flake.nixosModules.hostCommonModulesShell = {
+    config.shell = {
+      zsh.enable = true;
+    };
   };
 }

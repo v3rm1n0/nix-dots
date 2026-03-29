@@ -1,7 +1,10 @@
+{ self, inputs, ... }:
 {
-  config.servicesModule = {
-    blueman.enable = true;
-    flatpak.enable = true;
-    vicinae.enable = true;
+  flake.nixosModules.hostCommonModulesServices = {
+    config.servicesModule = {
+      blueman.enable = true;
+      flatpak.enable = true;
+      vicinae.enable = true;
+    };
   };
 }

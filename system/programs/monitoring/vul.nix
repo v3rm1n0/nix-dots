@@ -1,9 +1,13 @@
+{ self, inputs, ... }:
 {
-  pkgs,
-  ...
-}:
-{
-  environment.systemPackages = with pkgs; [
-    vulnix
-  ];
+  flake.nixosModules.coreProgramsMonitoringVulnix =
+    {
+      pkgs,
+      ...
+    }:
+    {
+      environment.systemPackages = with pkgs; [
+        vulnix
+      ];
+    };
 }

@@ -1,63 +1,66 @@
+{ self, inputs, ... }:
 {
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+  flake.nixosModules.applicationsGaming =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    with lib;
 
-with lib;
-
-let
-  defaultPackages = with pkgs; [
-    ed-odyssey-materials-helper
-    heroic-unwrapped
-    lutris
-    prismlauncher
-  ];
-
-in
-{
-  options.programs.gaming = {
-    enable = mkEnableOption "Gaming profile with various gaming tools";
-
-    discordPackage = mkOption {
-      type = types.nullOr types.package;
-      default = pkgs.discord;
-      example = [
-        (pkgs.discord.override { withVencord = true; })
+    let
+      defaultPackages = with pkgs; [
+        ed-odyssey-materials-helper
+        heroic-unwrapped
+        lutris
+        prismlauncher
       ];
-      description = "The Discord package you want to use e.g. special client";
-    };
 
-    optionalPackages = mkOption {
-      type = types.listOf types.package;
-      default = [ ];
-      example = [
-        pkgs.discord
-      ];
-      description = "List of additional optional packages for gaming";
-    };
-  };
+    in
+    {
+      options.programs.gaming = {
+        enable = mkEnableOption "Gaming profile with various gaming tools";
 
-  config = mkIf config.programs.gaming.enable {
-    environment.systemPackages =
-      defaultPackages
-      ++ config.programs.gaming.optionalPackages
-      ++ [ config.programs.gaming.discordPackage ];
+        discordPackage = mkOption {
+          type = types.nullOr types.package;
+          default = pkgs.discord;
+          example = [
+            (pkgs.discord.override { withVencord = true; })
+          ];
+          description = "The Discord package you want to use e.g. special client";
+        };
 
-    programs = {
-      steam = {
-        enable = true;
-        protontricks.enable = true;
+        optionalPackages = mkOption {
+          type = types.listOf types.package;
+          default = [ ];
+          example = [
+            pkgs.discord
+          ];
+          description = "List of additional optional packages for gaming";
+        };
       };
-      gamemode.enable = true;
+
+      config = mkIf config.programs.gaming.enable {
+        environment.systemPackages =
+          defaultPackages
+          ++ config.programs.gaming.optionalPackages
+          ++ [ config.programs.gaming.discordPackage ];
+
+        programs = {
+          steam = {
+            enable = true;
+            protontricks.enable = true;
+          };
+          gamemode.enable = true;
+        };
+
+        hardware.steam-hardware.enable = true;
+
+        services.udev.extraRules = ''
+          # Grant user access to Thrustmaster T.16000M joysticks for gaming
+          SUBSYSTEM=="hidraw", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b10a", TAG+="uaccess"
+        '';
+      };
     };
-
-    hardware.steam-hardware.enable = true;
-
-    services.udev.extraRules = ''
-      # Grant user access to Thrustmaster T.16000M joysticks for gaming
-      SUBSYSTEM=="hidraw", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b10a", TAG+="uaccess"
-    '';
-  };
 }

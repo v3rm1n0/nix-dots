@@ -1,3 +1,6 @@
+{ self, inputs, ... }:
 {
-  services.upower.enable = true;
+  flake.nixosModules.coreServicesUpower = {
+    services.upower.enable = true;
+  };
 }

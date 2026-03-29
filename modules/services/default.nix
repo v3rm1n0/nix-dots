@@ -1,8 +1,10 @@
+{ self, inputs, ... }:
 {
-  imports = [
-    ./blueman
-    ./flatpak
-    ./tailscale
-    ./vicinae
-  ];
+  flake.nixosModules.modulesServices = {
+    imports = [
+      self.nixosModules.modulesServicesBlueman
+      self.nixosModules.modulesServicesFlatpak
+      self.nixosModules.modulesServicesVicinae
+    ];
+  };
 }

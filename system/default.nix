@@ -1,9 +1,13 @@
+{ self, inputs, ... }:
 {
-  imports = [
-    ./boot
-    ./hardware
-    ./nix
-    ./programs
-    ./services
-  ];
+
+  flake.nixosModules.core = {
+    imports = [
+      self.nixosModules.coreBoot
+      self.nixosModules.coreHardware
+      self.nixosModules.coreNix
+      self.nixosModules.corePrograms
+      self.nixosModules.coreServices
+    ];
+  };
 }

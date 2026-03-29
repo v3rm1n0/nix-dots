@@ -1,11 +1,16 @@
-{ pkgs, ... }:
+{ self, inputs, ... }:
 {
-  boot.initrd = {
-    availableKernelModules = [
-      "usb_storage"
-    ];
-    systemd.enable = true;
-  };
 
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  flake.nixosModules.hostDesktopHardwareSpecific =
+    { pkgs, ... }:
+    {
+      boot.initrd = {
+        availableKernelModules = [
+          "usb_storage"
+        ];
+        systemd.enable = true;
+      };
+
+      boot.kernelPackages = pkgs.linuxPackages_zen;
+    };
 }

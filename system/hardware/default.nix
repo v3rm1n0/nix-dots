@@ -1,10 +1,14 @@
+{ self, inputs, ... }:
 {
-  imports = [
-    ./bluetooth
-    ./graphics
-    ./network
-    ./pipewire
-    ./printing
-    ./webcam
-  ];
+
+  flake.nixosModules.coreHardware = {
+    imports = [
+      self.nixosModules.coreHardwareBluetooth
+      self.nixosModules.coreHardwareGraphics
+      self.nixosModules.coreHardwareNetwork
+      self.nixosModules.coreHardwarePipewire
+      self.nixosModules.coreHardwarePrinting
+      self.nixosModules.coreHardwareWebcam
+    ];
+  };
 }

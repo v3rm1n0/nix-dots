@@ -1,6 +1,9 @@
+{ self, inputs, ... }:
 {
-  programs.appimage = {
-    enable = true;
-    binfmt = true;
+  flake.nixosModules.coreProgramsUtilsAppimage = {
+    programs.appimage = {
+      enable = true;
+      binfmt = true;
+    };
   };
 }
