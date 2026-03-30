@@ -19,7 +19,7 @@
 
       config = lib.mkIf config.shell.zsh.enable {
         environment.shells = with pkgs; [ zsh ];
-        environment.systemPackages = with pkgs; [ zsh-autocomplete ];
+        environment.systemPackages = with pkgs; [ fzf ];
 
         home-manager.users.${username} = {
           programs.zsh = {
@@ -69,6 +69,7 @@
               POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
               eval "$(tirith init --shell zsh)"
               eval "$(zoxide init --cmd cd zsh)"
+              source <(fzf --zsh)
             '';
           };
         };
