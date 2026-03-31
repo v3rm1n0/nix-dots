@@ -24,32 +24,37 @@ In NixOS, a module is a Nix file that:
 
 ### Module Structure
 
-Every module in this configuration follows this pattern:
+Every module in this configuration uses the **flake-parts nixosModules pattern**. Each file is wrapped in a flake-parts module that registers it as a named NixOS module:
 
 ```nix
-{ lib, config, pkgs, ... }:
+# The outer function receives flake-parts args (unused here, hence _)
+_: {
+  # Register this as a named NixOS module in the flake
+  flake.nixosModules.myUniqueName =
+    { lib, config, pkgs, ... }:
 
-with lib;
+    let
+      cfg = config.programs.myFeature;
+    in
+    {
+      # Define what can be configured
+      options.programs.myFeature = {
+        enable = lib.mkEnableOption "Enable my feature";
 
-let
-  cfg = config.programs.myFeature;
-in
-{
-  # Define what can be configured
-  options.programs.myFeature = {
-    enable = mkEnableOption "Enable my feature";
+        # Additional options...
+      };
 
-    # Additional options...
-  };
+      # Define the actual configuration when enabled
+      config = lib.mkIf cfg.enable {
+        environment.systemPackages = [ pkgs.mypackage ];
 
-  # Define the actual configuration when enabled
-  config = mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.mypackage ];
-
-    # Additional configuration...
-  };
+        # Additional configuration...
+      };
+    };
 }
 ```
+
+The `flake.nixosModules.<name>` key must be **unique across the entire repository**. Use a name derived from the file's path (e.g., `modulesApplicationsMyapp`, `hostDesktopModulesPrograms`).
 
 ## Module Categories
 
@@ -60,66 +65,44 @@ User-facing applications and tools.
 
 **Examples:** browsers, development tools, gaming, productivity apps
 
-**Naming:** `programs.<feature>`
-
-**Purpose:** Install and configure end-user applications
+**Naming convention:** `programs.<feature>`
 
 ### `modules/desktop/`
 Desktop environment components.
 
 **Examples:** Hyprland, Stylix, login managers, XDG portals
 
-**Naming:** Various (WM-specific, theming)
-
-**Purpose:** Configure the graphical environment
-
 ### `modules/hardware/`
-Hardware-specific support.
+Hardware-specific option definitions.
 
-**Examples:** GPU drivers, Razer peripherals, graphics configuration
+**Examples:** GPU options, Razer peripheral support
 
-**Naming:** `hardwareModule.<feature>`
-
-**Purpose:** Enable and configure hardware support
+**Naming convention:** `hardwareModule.<feature>`
 
 ### `modules/security/`
 Security-related features.
 
-**Examples:** GPG, agenix, password managers, authentication
-
-**Naming:** Various (security-specific)
-
-**Purpose:** Security tools and encryption
+**Examples:** GPG, password managers, authentication, VPN
 
 ### `modules/services/`
 User-level services.
 
-**Examples:** Bluetooth, Flatpak, Tailscale, custom services
+**Examples:** Bluetooth, Flatpak, custom services
 
-**Naming:** `servicesModule.<feature>`
-
-**Purpose:** Background services and daemons
+**Naming convention:** `servicesModule.<feature>`
 
 ### `modules/shell/`
 Shell configuration.
 
 **Examples:** Zsh, Bash, aliases, prompts
 
-**Naming:** Shell-specific
-
-**Purpose:** Configure command-line environment
-
 ### `modules/user/`
-User options system.
+User options system — defines the `userOptions` interface used throughout.
 
-**Purpose:** Define user-configurable options (username, theme, etc.)
+### `core/`
+Core system configuration (always enabled, not gated by options).
 
-### `system/`
-Core system configuration (not optional features).
-
-**Examples:** Boot, hardware, Nix settings, system services
-
-**Purpose:** Essential system functionality
+**Examples:** Boot, hardware drivers, Nix settings, system services
 
 ## Creating a New Module
 
@@ -128,147 +111,122 @@ Core system configuration (not optional features).
 Ask yourself:
 - Is this an application users interact with? → `modules/applications/`
 - Is this part of the desktop environment? → `modules/desktop/`
-- Does this enable hardware? → `modules/hardware/`
+- Does this define hardware options? → `modules/hardware/`
 - Is this a security feature? → `modules/security/`
 - Is this a background service? → `modules/services/`
 - Is this shell-related? → `modules/shell/`
-- Is this core system functionality? → `system/` (and it's probably always enabled)
+- Is this core system functionality? → `core/` (probably always enabled)
 
 ### Step 2: Create Module File
 
 ```bash
-# Example: Creating a new browser module
-mkdir -p modules/applications/browsing/brave
-touch modules/applications/browsing/brave/default.nix
+mkdir -p modules/applications/myapp
+# Write modules/applications/myapp/default.nix
 ```
+
+`import-tree` will discover it automatically — no manual import needed.
 
 ### Step 3: Write Module
 
 ```nix
-# modules/applications/browsing/brave/default.nix
-{ lib, config, pkgs, ... }:
+# modules/applications/myapp/default.nix
+_: {
+  flake.nixosModules.modulesApplicationsMyapp =
+    { lib, config, pkgs, ... }:
 
-with lib;
+    let
+      cfg = config.programs.myapp;
+    in
+    {
+      options.programs.myapp = {
+        enable = lib.mkEnableOption "Enable MyApp";
 
-let
-  cfg = config.programs.browsing.brave;
-in
-{
-  options.programs.browsing.brave = {
-    enable = mkEnableOption "Enable Brave browser";
+        package = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.myapp;
+          description = "The MyApp package to use.";
+        };
+      };
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.brave;
-      description = "The Brave package to use";
-    };
-  };
+      config = lib.mkIf cfg.enable {
+        environment.systemPackages = [ cfg.package ];
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = [ cfg.package ];
-
-    # Optional: Home Manager configuration
-    home-manager.users.${config.userOptions.username} = {
-      programs.brave = {
-        enable = true;
-        # Browser-specific settings...
+        # Optional: Home Manager configuration
+        home-manager.users.${config.userOptions.username} = {
+          programs.myapp.enable = true;
+        };
       };
     };
-  };
 }
 ```
 
-### Step 4: Add Import
-
-Add your module to the parent `default.nix`:
+### Step 4: Enable in Host Config
 
 ```nix
-# modules/applications/browsing/default.nix
-{
-  imports = [
-    ./firefox.nix
-    ./chromium.nix
-    ./brave  # Add your new module
-  ];
-}
+# hosts/{host}/modules/programs.nix
+programs.myapp.enable = true;
 ```
 
-### Step 5: Enable in Host Config
-
-```nix
-# hosts/Desktop/modules/programs.nix
-{
-  config.programs.browsing.brave.enable = true;
-}
-```
-
-### Step 6: Test
+### Step 5: Test
 
 ```bash
 # Check syntax
 nix flake check
 
 # Build without switching
-sudo nixos-rebuild build --flake .#Desktop
+sudo nixos-rebuild build --flake .#{host}
 
 # Test (temporary activation)
-sudo nixos-rebuild test --flake .#Desktop
+sudo nixos-rebuild test --flake .#{host}
 
 # If working, make permanent
-sudo nixos-rebuild switch --flake .#Desktop
+sudo nixos-rebuild switch --flake .#{host}
 ```
 
 ## Module Patterns
 
 ### Pattern 1: Simple Package Installation
 
-For modules that just install packages:
-
 ```nix
-{ lib, config, pkgs, ... }:
+_: {
+  flake.nixosModules.modulesApplicationsMyapp =
+    { lib, config, pkgs, ... }:
+    {
+      options.programs.myapp.enable = lib.mkEnableOption "Enable MyApp";
 
-with lib;
-
-{
-  options.programs.myapp.enable = mkEnableOption "Enable MyApp";
-
-  config = mkIf config.programs.myapp.enable {
-    environment.systemPackages = [ pkgs.myapp ];
-  };
+      config = lib.mkIf config.programs.myapp.enable {
+        environment.systemPackages = [ pkgs.myapp ];
+      };
+    };
 }
 ```
 
 ### Pattern 2: Package List with Optional Additions
 
-For modules with default packages and optional extras:
-
 ```nix
-{ lib, config, pkgs, ... }:
+_: {
+  flake.nixosModules.modulesApplicationsMyfeature =
+    { lib, config, pkgs, ... }:
 
-with lib;
+    let
+      cfg = config.programs.myfeature;
+      defaultPackages = [ pkgs.core-tool pkgs.important-tool ];
+    in
+    {
+      options.programs.myfeature = {
+        enable = lib.mkEnableOption "Enable my feature";
 
-let
-  cfg = config.programs.myfeature;
+        optionalPackages = lib.mkOption {
+          type = lib.types.listOf lib.types.package;
+          default = [ ];
+          description = "Additional packages to install alongside the defaults.";
+        };
+      };
 
-  defaultPackages = [
-    pkgs.core-tool
-    pkgs.important-tool
-  ];
-in
-{
-  options.programs.myfeature = {
-    enable = mkEnableOption "Enable my feature";
-
-    optionalPackages = mkOption {
-      type = types.listOf types.package;
-      default = [ ];
-      description = "Additional packages to install";
+      config = lib.mkIf cfg.enable {
+        environment.systemPackages = defaultPackages ++ cfg.optionalPackages;
+      };
     };
-  };
-
-  config = mkIf cfg.enable {
-    environment.systemPackages = defaultPackages ++ cfg.optionalPackages;
-  };
 }
 ```
 
@@ -282,30 +240,29 @@ programs.myfeature = {
 
 ### Pattern 3: Configurable Package
 
-For modules where the package itself can be changed:
-
 ```nix
-{ lib, config, pkgs, ... }:
+_: {
+  flake.nixosModules.modulesApplicationsMyapp =
+    { lib, config, pkgs, ... }:
 
-with lib;
+    let
+      cfg = config.programs.myapp;
+    in
+    {
+      options.programs.myapp = {
+        enable = lib.mkEnableOption "Enable MyApp";
 
-let
-  cfg = config.programs.myapp;
-in
-{
-  options.programs.myapp = {
-    enable = mkEnableOption "Enable MyApp";
+        package = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.myapp;
+          description = "The MyApp package to use.";
+        };
+      };
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.myapp;
-      description = "The MyApp package to use";
+      config = lib.mkIf cfg.enable {
+        environment.systemPackages = [ cfg.package ];
+      };
     };
-  };
-
-  config = mkIf cfg.enable {
-    environment.systemPackages = [ cfg.package ];
-  };
 }
 ```
 
@@ -313,86 +270,100 @@ Usage:
 ```nix
 programs.myapp = {
   enable = true;
-  package = pkgs.myapp-beta;  # Use different version
+  package = pkgs.myapp-beta;
 };
 ```
 
 ### Pattern 4: Home Manager Integration
 
-For modules that configure both system and user:
-
 ```nix
-{ lib, config, pkgs, ... }:
+_: {
+  flake.nixosModules.modulesApplicationsMyapp =
+    { lib, config, pkgs, ... }:
 
-with lib;
+    let
+      cfg = config.programs.myapp;
+      username = config.userOptions.username;
+    in
+    {
+      options.programs.myapp = {
+        enable = lib.mkEnableOption "Enable MyApp";
 
-let
-  cfg = config.programs.myapp;
-  username = config.userOptions.username;
-in
-{
-  options.programs.myapp = {
-    enable = mkEnableOption "Enable MyApp";
+        settings = lib.mkOption {
+          type = lib.types.attrs;
+          default = { };
+          description = "MyApp configuration settings.";
+        };
+      };
 
-    settings = mkOption {
-      type = types.attrs;
-      default = { };
-      description = "MyApp configuration settings";
-    };
-  };
+      config = lib.mkIf cfg.enable {
+        environment.systemPackages = [ pkgs.myapp ];
 
-  config = mkIf cfg.enable {
-    # System-level config
-    environment.systemPackages = [ pkgs.myapp ];
-
-    # User-level config via Home Manager
-    home-manager.users.${username} = {
-      programs.myapp = {
-        enable = true;
-        settings = cfg.settings;
+        home-manager.users.${username} = {
+          programs.myapp = {
+            enable = true;
+            settings = cfg.settings;
+          };
+        };
       };
     };
-  };
 }
 ```
 
-### Pattern 5: Conditional Features
-
-For modules with optional sub-features:
+### Pattern 5: Module with Multiple Sub-features
 
 ```nix
-{ lib, config, pkgs, ... }:
+_: {
+  flake.nixosModules.modulesApplicationsMyapp =
+    { lib, config, pkgs, ... }:
 
-with lib;
+    let
+      cfg = config.programs.myapp;
+    in
+    {
+      options.programs.myapp = {
+        enable = lib.mkEnableOption "Enable MyApp";
+        enableExtensions = lib.mkEnableOption "Enable extensions";
+        enableSync = lib.mkEnableOption "Enable sync feature";
+      };
 
-let
-  cfg = config.programs.myapp;
-in
-{
-  options.programs.myapp = {
-    enable = mkEnableOption "Enable MyApp";
+      config = lib.mkMerge [
+        (lib.mkIf cfg.enable {
+          environment.systemPackages = [ pkgs.myapp ];
+        })
 
-    enableExtensions = mkEnableOption "Enable extensions";
+        (lib.mkIf (cfg.enable && cfg.enableExtensions) {
+          environment.systemPackages = [ pkgs.myapp-extensions ];
+        })
 
-    enableSync = mkEnableOption "Enable sync feature";
-  };
+        (lib.mkIf (cfg.enable && cfg.enableSync) {
+          services.myapp-sync.enable = true;
+        })
+      ];
+    };
+}
+```
 
-  config = mkMerge [
-    # Always enabled if module is enabled
-    (mkIf cfg.enable {
-      environment.systemPackages = [ pkgs.myapp ];
-    })
+### Pattern 6: Module with External Flake Inputs
 
-    # Only if extensions enabled
-    (mkIf (cfg.enable && cfg.enableExtensions) {
-      environment.systemPackages = [ pkgs.myapp-extensions ];
-    })
+When a module needs inputs from the flake (e.g., a flake-provided Home Manager module):
 
-    # Only if sync enabled
-    (mkIf (cfg.enable && cfg.enableSync) {
-      services.myapp-sync.enable = true;
-    })
-  ];
+```nix
+{ inputs, self, ... }: {
+  flake.nixosModules.modulesDesktopMyWM =
+    { config, pkgs, ... }:
+
+    let
+      username = config.userOptions.username;
+    in
+    {
+      imports = [
+        inputs.home-manager.nixosModules.home-manager
+        self.nixosModules.someOtherModule
+      ];
+
+      # ... rest of module
+    };
 }
 ```
 
@@ -423,7 +394,7 @@ let
   gpuEnabled = config.hardwareModule.gpu.enable;
 in
 {
-  config = mkIf (gpuEnabled && gpuBrand == "nvidia") {
+  config = lib.mkIf (gpuEnabled && gpuBrand == "nvidia") {
     # NVIDIA-specific configuration
   };
 }
@@ -431,29 +402,25 @@ in
 
 ### Monitor Configuration
 
-Monitors are configured in `config.monitors`:
+Monitors are configured in `config.monitors` (defined per host):
 
 ```nix
 let
   monitors = config.monitors;
 in
 {
-  # Example: Generate monitor configs
-  config.services.my-service.monitors = map (m: {
-    name = m.name;
-    width = m.width;
-    height = m.height;
-  }) monitors;
+  # Example: use monitor names
+  services.my-service.monitors = map (m: m.name) monitors;
 }
 ```
 
 ### Styling via Stylix
 
-Stylix provides colors automatically. Access base16 colors if needed:
+Stylix applies colors automatically. Access base16 colors if needed:
 
 ```nix
 let
-  inherit (config.lib.stylix.colors) base00 base01 base0A;
+  inherit (config.lib.stylix.colors) base00 base0A;
 in
 ```
 
@@ -462,219 +429,162 @@ in
 ### Example 1: Simple Application Module
 
 ```nix
-# modules/applications/media/vlc.nix
-{ lib, config, pkgs, ... }:
+# modules/applications/media/vlc/default.nix
+_: {
+  flake.nixosModules.modulesApplicationsMediaVlc =
+    { lib, config, pkgs, ... }:
+    {
+      options.programs.media.vlc.enable =
+        lib.mkEnableOption "Enable VLC media player";
 
-with lib;
-
-{
-  options.programs.media.vlc.enable = mkEnableOption "Enable VLC media player";
-
-  config = mkIf config.programs.media.vlc.enable {
-    environment.systemPackages = [ pkgs.vlc ];
-  };
+      config = lib.mkIf config.programs.media.vlc.enable {
+        environment.systemPackages = [ pkgs.vlc ];
+      };
+    };
 }
 ```
 
-### Example 2: Complex Service Module
+### Example 2: Service Module
 
 ```nix
 # modules/services/syncthing/default.nix
-{ lib, config, pkgs, ... }:
+_: {
+  flake.nixosModules.modulesServicesSyncthing =
+    { lib, config, ... }:
 
-with lib;
+    let
+      cfg = config.servicesModule.syncthing;
+      username = config.userOptions.username;
+    in
+    {
+      options.servicesModule.syncthing = {
+        enable = lib.mkEnableOption "Enable Syncthing file sync";
 
-let
-  cfg = config.servicesModule.syncthing;
-  username = config.userOptions.username;
-in
-{
-  options.servicesModule.syncthing = {
-    enable = mkEnableOption "Enable Syncthing file sync";
+        dataDir = lib.mkOption {
+          type = lib.types.str;
+          default = "/home/${username}/Sync";
+          description = "Directory to sync.";
+        };
+      };
 
-    dataDir = mkOption {
-      type = types.str;
-      default = "/home/${username}/Sync";
-      description = "Directory to sync";
+      config = lib.mkIf cfg.enable {
+        services.syncthing = {
+          enable = true;
+          user = username;
+          dataDir = cfg.dataDir;
+        };
+      };
     };
-
-    openFirewall = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Open firewall ports for Syncthing";
-    };
-  };
-
-  config = mkIf cfg.enable {
-    services.syncthing = {
-      enable = true;
-      user = username;
-      dataDir = cfg.dataDir;
-      openDefaultPorts = cfg.openFirewall;
-    };
-  };
 }
 ```
 
-### Example 3: Hardware Module with Multiple Options
+### Example 3: Hardware Module
 
 ```nix
-# modules/hardware/webcam/default.nix
-{ lib, config, pkgs, ... }:
+# modules/hardware/custom/default.nix
+_: {
+  flake.nixosModules.modulesHardwareCustom =
+    { lib, ... }:
+    {
+      options.hardwareModule.myDevice = {
+        enable = lib.mkEnableOption "Enable my device support";
 
-with lib;
-
-let
-  cfg = config.hardwareModule.webcam;
-in
-{
-  options.hardwareModule.webcam = {
-    enable = mkEnableOption "Enable webcam support";
-
-    brand = mkOption {
-      type = types.enum [ "logitech" "generic" ];
-      default = "generic";
-      description = "Webcam brand for specific optimizations";
+        model = lib.mkOption {
+          type = lib.types.enum [ "modelA" "modelB" ];
+          default = "modelA";
+          description = "Device model for specific optimizations.";
+        };
+      };
     };
-
-    autoFocus = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Enable autofocus support";
-    };
-  };
-
-  config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      v4l-utils
-      (mkIf (cfg.brand == "logitech") pkgs.logitech-camera-utils)
-    ];
-
-    boot.kernelModules = [ "v4l2loopback" ];
-  };
 }
 ```
 
 ## Best Practices
 
-### 1. Use mkEnableOption
+### 1. Always Use the flake-parts Wrapper
 
-Always use `mkEnableOption` for the main enable option:
+Every `.nix` file must use the outer `_: { flake.nixosModules.<name> = ...; }` structure:
+
+```nix
+# Correct
+_: {
+  flake.nixosModules.myModule =
+    { lib, config, pkgs, ... }:
+    { ... };
+}
+
+# Wrong — import-tree won't register this correctly
+{ lib, config, pkgs, ... }:
+{ ... }
+```
+
+### 2. Use Unique Module Names
+
+Derive names from the file path to avoid collisions:
+- `modules/applications/gaming/default.nix` → `modulesApplicationsGaming`
+- `core/nix/btrfs.nix` → `coreNixBtrfs`
+
+### 3. Use `lib.mkEnableOption`
 
 ```nix
 # Good
-enable = mkEnableOption "Enable my feature";
+enable = lib.mkEnableOption "Enable my feature";
 
 # Avoid
-enable = mkOption {
-  type = types.bool;
-  default = false;
-  description = "Enable my feature";
+enable = lib.mkOption { type = lib.types.bool; default = false; };
+```
+
+### 4. Provide Sensible Defaults
+
+```nix
+package = lib.mkOption {
+  type = lib.types.package;
+  default = pkgs.myapp;
+  description = "Package to use.";
 };
 ```
 
-### 2. Provide Sensible Defaults
+### 5. Document Options
 
 ```nix
-package = mkOption {
-  type = types.package;
-  default = pkgs.myapp;  # Provide default
-  description = "Package to use";
-};
-```
-
-### 3. Document Options
-
-```nix
-optionalPackages = mkOption {
-  type = types.listOf types.package;
+optionalPackages = lib.mkOption {
+  type = lib.types.listOf lib.types.package;
   default = [ ];
-  example = [ pkgs.extra-tool ];
+  example = lib.literalExpression "[ pkgs.extra-tool ]";
   description = ''
     Additional packages to install alongside the defaults.
-    These extend the functionality without replacing core packages.
   '';
 };
 ```
 
-### 4. Use Types Correctly
+### 6. Use Types Correctly
 
 ```nix
-# Strings
-type = types.str;
-
-# Numbers
-type = types.int;
-
-# Booleans
-type = types.bool;
-
-# Packages
-type = types.package;
-
-# Lists of packages
-type = types.listOf types.package;
-
-# Enums (limited choices)
-type = types.enum [ "option1" "option2" "option3" ];
-
-# Nullable types
-type = types.nullOr types.str;
-
-# Attribute sets
-type = types.attrs;
+type = lib.types.str;                           # Strings
+type = lib.types.int;                           # Integers
+type = lib.types.bool;                          # Booleans
+type = lib.types.package;                       # Packages
+type = lib.types.listOf lib.types.package;      # List of packages
+type = lib.types.enum [ "opt1" "opt2" ];        # Enum
+type = lib.types.nullOr lib.types.str;          # Nullable string
+type = lib.types.attrs;                         # Attribute set
 ```
 
-### 5. Avoid Imperative Commands
+### 7. Prefer Declarative Over Imperative
 
 ```nix
-# Avoid
-config = mkIf cfg.enable {
-  system.activationScripts.setup = ''
-    mkdir -p /some/path
-    touch /some/file
-  '';
-};
-
-# Prefer declarative
-config = mkIf cfg.enable {
+# Prefer
+config = lib.mkIf cfg.enable {
   systemd.tmpfiles.rules = [
     "d /some/path 0755 root root -"
-    "f /some/file 0644 root root -"
   ];
 };
-```
 
-### 6. One Feature Per Module
-
-Don't combine unrelated features:
-
-```nix
 # Avoid
-options.programs.miscTools = {
-  enable = mkEnableOption "Enable misc tools";
-  # browser, editor, terminal all in one?
-};
-
-# Prefer
-options.programs.browser.enable = mkEnableOption "Enable browser";
-options.programs.editor.enable = mkEnableOption "Enable editor";
-options.programs.terminal.enable = mkEnableOption "Enable terminal";
-```
-
-### 7. Make Packages Configurable
-
-Allow users to override packages:
-
-```nix
-package = mkOption {
-  type = types.package;
-  default = pkgs.firefox;
-  description = "Firefox package to use";
-};
-
-config = mkIf cfg.enable {
-  environment.systemPackages = [ cfg.package ];  # Use configurable package
+config = lib.mkIf cfg.enable {
+  system.activationScripts.setup = ''
+    mkdir -p /some/path
+  '';
 };
 ```
 
@@ -689,28 +599,23 @@ config = mkIf cfg.enable {
 
 2. **Build Only:**
    ```bash
-   sudo nixos-rebuild build --flake .#Desktop
+   sudo nixos-rebuild build --flake .#{host}
    ```
 
 3. **Test Configuration:**
    ```bash
-   sudo nixos-rebuild test --flake .#Desktop
+   sudo nixos-rebuild test --flake .#{host}
    ```
-   System will use new config but won't add to bootloader.
 
-4. **Check if Feature Works:**
+4. **Verify Feature:**
    ```bash
-   # For programs
    which myapp
-   myapp --version
-
-   # For services
    systemctl status my-service
    ```
 
 5. **Make Permanent:**
    ```bash
-   sudo nixos-rebuild switch --flake .#Desktop
+   sudo nixos-rebuild switch --flake .#{host}
    ```
 
 6. **Rollback if Needed:**
@@ -720,54 +625,52 @@ config = mkIf cfg.enable {
 
 ### Testing Checklist
 
-- [ ] Module builds successfully
+- [ ] Module builds successfully with `nix flake check`
 - [ ] Packages are installed when enabled
 - [ ] Services start correctly (if applicable)
 - [ ] Configuration files are generated correctly
-- [ ] Module works with both Desktop and Laptop hosts
+- [ ] Module works with different hosts
 - [ ] Disabling module removes everything cleanly
-- [ ] No secrets or personal info in module
-- [ ] Documentation is updated
+- [ ] `flake.nixosModules.<name>` is unique
 
 ## Troubleshooting
 
 ### Module Not Loading
 
-**Check imports:**
+Check that the module name is referenced in the host's `default.nix`:
 ```bash
-nix-instantiate --eval -E '(import <nixpkgs/nixos> {}).config.programs.myFeature'
+grep -r "myModuleName" hosts/
 ```
 
-If "undefined", module isn't imported.
+Check that `import-tree` can discover the file (must be `.nix` and in a scanned directory).
 
 ### Option Conflicts
 
 **Error:** "The option `X` is defined multiple times"
 
-**Fix:** Use `mkDefault` for defaults, `mkForce` to override:
+**Fix:** Use `lib.mkDefault` for defaults, `lib.mkForce` to override:
 ```nix
-programs.myapp.setting = mkDefault "default-value";
-programs.myapp.setting = mkForce "override-value";
+programs.myapp.setting = lib.mkDefault "default-value";
+# or
+programs.myapp.setting = lib.mkForce "override-value";
 ```
 
 ### Type Errors
 
 **Error:** "value is a X while a Y was expected"
 
-**Fix:** Check option type matches provided value:
+Match the option type to the provided value:
 ```nix
-# If option is types.str
-programs.myapp.setting = "string";  # Good
-programs.myapp.setting = 123;  # Bad
+# types.str → use a string
+programs.myapp.setting = "string-value";
 
-# If option is types.int
-programs.myapp.count = 123;  # Good
-programs.myapp.count = "123";  # Bad
+# types.int → use a number
+programs.myapp.count = 5;
 ```
 
 ## Further Reading
 
 - [NixOS Module System Documentation](https://nixos.org/manual/nixos/stable/#sec-writing-modules)
-- [Nixpkgs Manual - Module System](https://nixos.org/manual/nixpkgs/stable/#module-system)
+- [flake-parts Documentation](https://flake.parts/)
 - [Architecture Documentation](./ARCHITECTURE.md)
 - [Contributing Guide](../CONTRIBUTING.md)

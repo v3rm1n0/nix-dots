@@ -10,7 +10,7 @@ NixOS configurations can be managed using traditional channels or the newer Flak
 
 ## Decision
 
-We will use Nix Flakes for this configuration.
+We will use Nix Flakes for this configuration, combined with **flake-parts** for structuring flake outputs and **import-tree** for automatic module discovery.
 
 ## Rationale
 
@@ -36,6 +36,10 @@ We will use Nix Flakes for this configuration.
    - Reduces binary cache misses
    - Simpler dependency resolution
 
+### flake-parts + import-tree
+
+Using **flake-parts** allows each module file to contribute to the flake outputs (`flake.nixosModules.*`) directly, rather than relying on a top-level aggregation file. **import-tree** automatically discovers all `.nix` files in configured directories, eliminating manual import management.
+
 ### Disadvantages (Accepted)
 
 1. **Still Experimental**
@@ -45,7 +49,7 @@ We will use Nix Flakes for this configuration.
 
 2. **Learning Curve**
    - Different mental model than channels
-   - Requires understanding of flake outputs
+   - Requires understanding of flake outputs and flake-parts conventions
    - More complex for beginners
 
 ## Alternatives Considered
@@ -67,11 +71,13 @@ We will use Nix Flakes for this configuration.
 - Easy to test new package versions without channel updates
 - Can use community flakes directly (Stylix, Home Manager, etc.)
 - Lock file makes rollbacks reliable
+- `import-tree` removes the need to manually maintain import lists
 
 ### Negative
 - Users must enable experimental features
 - Some documentation assumes channel-based setup
 - Slightly more complex initial setup
+- Each module file must use the flake-parts wrapper pattern
 
 ### Neutral
 - Commits must update `flake.lock` when dependencies change
@@ -84,21 +90,48 @@ We will use Nix Flakes for this configuration.
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    stylix = {
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # ... other inputs
   };
 
-  outputs = inputs: {
-    nixosConfigurations = {
-      Desktop = inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit system; } // inputs;
-        modules = [ ./. ./hosts/Desktop ];
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      { ... }:
+      {
+        imports = [
+          (inputs.import-tree ./assets)
+          (inputs.import-tree ./core)
+          (inputs.import-tree ./hosts)
+          (inputs.import-tree ./modules)
+          (inputs.import-tree ./users)
+        ];
+      }
+    );
+}
+```
+
+Each module file contributes to the flake via the flake-parts module system:
+
+```nix
+# modules/applications/myapp/default.nix
+_: {
+  flake.nixosModules.modulesApplicationsMyapp =
+    { lib, config, pkgs, ... }:
+    {
+      options.programs.myapp.enable = lib.mkEnableOption "Enable MyApp";
+      config = lib.mkIf config.programs.myapp.enable {
+        environment.systemPackages = [ pkgs.myapp ];
       };
     };
-  };
 }
 ```
 

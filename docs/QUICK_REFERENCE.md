@@ -7,7 +7,6 @@ Quick reference for common operations and tasks in this NixOS configuration.
 - [System Management](#system-management)
 - [Configuration Changes](#configuration-changes)
 - [Module Management](#module-management)
-- [Secret Management](#secret-management)
 - [Maintenance](#maintenance)
 - [Troubleshooting](#troubleshooting)
 - [Git Operations](#git-operations)
@@ -18,25 +17,25 @@ Quick reference for common operations and tasks in this NixOS configuration.
 
 ```bash
 # Apply changes and make bootable
-sudo nixos-rebuild switch --flake .#Desktop
+sudo nixos-rebuild switch --flake .#{host}
 
-# Apply changes temporarily (not bootable)
-sudo nixos-rebuild test --flake .#Desktop
+# Apply changes temporarily (not added to bootloader)
+sudo nixos-rebuild test --flake .#{host}
 
 # Build only (don't apply)
-sudo nixos-rebuild build --flake .#Desktop
+sudo nixos-rebuild build --flake .#{host}
 
 # Build and set for next boot only
-sudo nixos-rebuild boot --flake .#Desktop
+sudo nixos-rebuild boot --flake .#{host}
 ```
 
 ### Using Aliases
 
-```bash
-# Defined in modules/shell/commonAliases.nix
+If you have configured shell aliases (see `modules/shell/commonAliases.nix`):
 
-os              # Switch with nh (nh os switch -a)
-ou              # Update and switch (update + apply)
+```bash
+os    # Quick rebuild (alias for nixos-rebuild switch)
+ou    # Update flake inputs + rebuild
 ```
 
 ### Generation Management
@@ -54,40 +53,39 @@ sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch
 
 # Delete old generations
 sudo nix-env --delete-generations old --profile /nix/var/nix/profiles/system
-sudo nix-env --delete-generations 14d --profile /nix/var/nix/profiles/system  # Older than 14 days
+sudo nix-env --delete-generations 14d --profile /nix/var/nix/profiles/system
 ```
 
 ## Configuration Changes
 
 ### Changing Theme
 
-Edit `hosts/{Desktop,Laptop}/modules/userOptions.nix`:
+Edit `hosts/{host}/modules/userOptions.nix`:
 
 ```nix
 config.userOptions = {
-  colorScheme = "your-scheme-name";  # Change this
-  wallpaper = "your-wallpaper.png";  # And this (in assets/)
+  colorScheme = "your-scheme-name";  # base16 scheme name
+  wallpaper = "your-wallpaper.png";  # file in assets/wallpapers/
 };
 ```
 
-You can find a wide variety of schemes from the `base16-schemes` package. A good place to browse them is the [Tinted Theming Gallery](https://tinted-theming.github.io/base16-gallery/).
+Browse available schemes at the [Tinted Theming Gallery](https://tinted-theming.github.io/base16-gallery/).
 
 ### Enabling/Disabling Programs
 
-Edit `hosts/{Desktop,Laptop}/modules/programs.nix`:
+Edit `hosts/{host}/modules/programs.nix`:
 
 ```nix
 {
   config = {
     programs = {
-      gaming.enable = true;        # Enable
-      content.enable = false;      # Disable
-      dev.enable = true;           # Enable
+      gaming.enable = true;
+      content.enable = false;
+      dev.enable = true;
     };
 
-    # Add optional packages to a module
     programs.dev.optionalPackages = [
-      pkgs.jetbrains.idea-ultimate
+      pkgs.some-tool
     ];
   };
 }
@@ -95,40 +93,39 @@ Edit `hosts/{Desktop,Laptop}/modules/programs.nix`:
 
 ### Adding Packages
 
-#### One-time Install (Temporary)
+#### One-time (Temporary)
 ```bash
 nix shell nixpkgs#package-name
 ```
 
-#### To User Profile
+#### Via a Module's optionalPackages
 ```nix
-# In hosts/Desktop/modules/programs.nix
+# In hosts/{host}/modules/programs.nix
 programs.dev.optionalPackages = [
   pkgs.package-name
 ];
 ```
 
-#### System-wide
+#### System-wide (in a module)
 ```nix
-# In appropriate module
 environment.systemPackages = [ pkgs.package-name ];
 ```
 
 ### Changing Wallpaper
 
-1. Add image to `assets/`
-2. Update `hosts/{Desktop,Laptop}/modules/userOptions.nix`:
+1. Add image to `assets/wallpapers/`
+2. Update `hosts/{host}/modules/userOptions.nix`:
    ```nix
    config.userOptions.wallpaper = "new-wallpaper.png";
    ```
-3. Rebuild: `sudo nixos-rebuild switch --flake .#Desktop`
+3. Rebuild
 
 ## Module Management
 
 ### Enable a Module
 
 ```nix
-# In hosts/Desktop/modules/programs.nix
+# In hosts/{host}/modules/programs.nix
 programs.feature.enable = true;
 ```
 
@@ -137,70 +134,20 @@ programs.feature.enable = true;
 ```bash
 # 1. Create file
 mkdir -p modules/applications/myapp
-touch modules/applications/myapp/default.nix
+# Write modules/applications/myapp/default.nix
 
-# 2. Add import in parent default.nix
-# modules/applications/default.nix
-imports = [ ./myapp ];
+# 2. Write the module using the flake-parts wrapper pattern
+# (see MODULE_GUIDE.md)
 
-# 3. Write module (see MODULE_GUIDE.md)
+# 3. Enable in host config
+# programs.myapp.enable = true;
 
-# 4. Enable in host config
-programs.myapp.enable = true;
-
-# 5. Test
+# 4. Test
 nix flake check
-sudo nixos-rebuild test --flake .#Desktop
+sudo nixos-rebuild test --flake .#{host}
 ```
 
-## Secret Management
-
-### List Secrets
-
-```bash
-cd secrets
-ls *.age
-```
-
-### Create New Secret
-
-```bash
-cd secrets
-
-# 1. Add to secrets.nix
-# "newsecret.age".publicKeys = users;
-
-# 2. Create and edit
-agenix -e newsecret.age
-
-# 3. Reference in config
-age.secrets.newsecret = {
-  file = ../secrets/newsecret.age;
-  owner = config.userOptions.username;
-};
-
-# 4. Use in configuration
-config.age.secrets.newsecret.path
-```
-
-### Edit Existing Secret
-
-```bash
-cd secrets
-agenix -e secretname.age
-
-# Or with explicit key
-agenix -e secretname.age -i ~/.ssh/id_ed25519
-```
-
-### Rekey All Secrets
-
-After adding/removing keys in `secrets/secrets.nix`:
-
-```bash
-cd secrets
-agenix --rekey
-```
+No manual import step — `import-tree` discovers new files automatically.
 
 ## Maintenance
 
@@ -213,26 +160,25 @@ nix flake update
 # Update specific input
 nix flake update nixpkgs
 
-# Update and rebuild
-ou  # alias for update + switch
+# Update and rebuild (using alias)
+ou
 ```
 
 ### Garbage Collection
 
 ```bash
-# Automatic (configured to run daily)
-# Removes generations >10 days old
-
-# Manual: Remove old generations
+# Manual: remove unreachable store paths
 nix-collect-garbage -d
 
-# Manual: Remove and optimize
+# Manual: also remove system generations
 sudo nix-collect-garbage -d
 nix store optimise
 
-# Check space saved
+# Check space
 df -h /nix
 ```
+
+Garbage collection is also automated (see `core/nix/gc.nix`).
 
 ### Btrfs Maintenance
 
@@ -251,26 +197,18 @@ sudo btrfs scrub status /
 # Manual balance (space optimization)
 sudo btrfs balance start -dusage=75 /
 
-# Defragment specific directory
-sudo btrfs filesystem defragment -r /home
-
 # Trim SSD
 sudo fstrim -av
 ```
 
+Scrub, balance, and trim run automatically weekly via `core/nix/btrfs.nix`.
+
 ### Monitor Disk Usage
 
 ```bash
-# Overall usage
 df -h
-
-# Nix store size
 du -sh /nix/store
-
-# Largest packages
 nix path-info -rsSh /run/current-system | sort -hk2 | tail -20
-
-# Disk usage by generation
 nix-env --list-generations --profile /nix/var/nix/profiles/system
 ```
 
@@ -282,43 +220,23 @@ nix-env --list-generations --profile /nix/var/nix/profiles/system
 # Check flake syntax
 nix flake check
 
-# Show more details
-nix flake show
-
-# Try with more verbosity
-sudo nixos-rebuild switch --flake .#Desktop --show-trace
+# Try with full trace
+sudo nixos-rebuild switch --flake .#{host} --show-trace
 ```
 
 ### Service Not Starting
 
 ```bash
-# Check service status
 systemctl status service-name
-
-# View logs
-journalctl -u service-name
-
-# View recent logs (follow)
 journalctl -u service-name -f
-
-# View boot logs
 journalctl -b
-
-# View logs since last boot
-journalctl -b -1
 ```
 
 ### Application Not Found
 
 ```bash
-# Check if installed
 which app-name
-
-# Search available packages
 nix search nixpkgs app-name
-
-# Check what current system provides
-ls -l /run/current-system/sw/bin/
 ```
 
 ### Configuration Errors
@@ -327,39 +245,27 @@ ls -l /run/current-system/sw/bin/
 # Rollback immediately
 sudo nixos-rebuild switch --rollback
 
-# Boot previous generation
-# (Select at boot menu)
-
-# Check what changed
-nixos-rebuild switch --flake .#Desktop --dry-run
+# Or select previous generation at boot menu
 ```
 
 ### Hyprland Issues
 
 ```bash
-# Check if running
-ps aux | grep hyprland
-
 # Check logs
 journalctl --user -u hyprland
 
-# Restart (from TTY)
-sudo systemctl restart display-manager
-
 # Check UWSM status
 systemctl --user status uwsm@hyprland-uwsm.desktop.service
+
+# Restart display manager (from TTY)
+sudo systemctl restart display-manager
 ```
 
 ### Network Issues
 
 ```bash
-# Check status
 systemctl status NetworkManager
-
-# Restart network
 sudo systemctl restart NetworkManager
-
-# View network logs
 journalctl -u NetworkManager
 ```
 
@@ -368,19 +274,10 @@ journalctl -u NetworkManager
 ### Commit Configuration Changes
 
 ```bash
-# Check status
 git status
-
-# View changes
 git diff
-
-# Stage all changes
-git add .
-
-# Commit with message
-git commit -m "feat: add XYZ feature"
-
-# Push to remote
+git add path/to/changed/files
+git commit -m "feat: describe what you changed"
 git push
 ```
 
@@ -396,107 +293,43 @@ refactor: reorganize module structure
 chore: update dependencies
 ```
 
-### Branches
-
-```bash
-# Create new branch
-git checkout -b feature/new-feature
-
-# Switch branches
-git checkout main
-
-# Merge branch
-git merge feature/new-feature
-
-# Delete branch
-git branch -d feature/new-feature
-```
-
-## Useful Commands Reference
+## Useful Commands
 
 ### System Information
 
 ```bash
-# NixOS version
 nixos-version
-
-# Hardware info
 lshw -short
-lspci
-lsusb
-
-# CPU info
 lscpu
-
-# Memory info
 free -h
-
-# Disk info
 lsblk
-df -h
-
-# System info (fastfetch)
-ff
-```
-
-### File Operations
-
-```bash
-# List files (eza)
-ls          # Basic list
-la          # All files with details (eza -lah)
-tree        # Tree view
-
-# File search
-find . -name "pattern"
-fd pattern  # Better find
-
-# Content search
-grep -r "pattern" .
-rg pattern  # Better grep (ripgrep)
-```
-
-### Process Management
-
-```bash
-# List processes
-ps aux
-htop
-
-# Kill process
-kill PID
-killall process-name
-
-# Check port usage
-sudo lsof -i :PORT
-sudo netstat -tulpn | grep PORT
+ff    # fastfetch system summary
 ```
 
 ### Package Information
 
 ```bash
-# Search for package
 nix search nixpkgs package-name
-
-# Show package info
 nix eval nixpkgs#package-name.meta.description
-
-# Check package version
 nix eval nixpkgs#package-name.version
-
-# Where is package installed
 which package-name
+```
+
+### Process Management
+
+```bash
+ps aux
+htop
+kill PID
+sudo lsof -i :PORT
 ```
 
 ## Quick Fixes
 
-### "No space left on device"
+### "No space left on device" (Btrfs metadata full)
 
 ```bash
-# On Btrfs (metadata full)
 sudo btrfs balance start -dusage=50 /
-
-# General cleanup
 sudo nix-collect-garbage -d
 ```
 
@@ -504,13 +337,12 @@ sudo nix-collect-garbage -d
 
 1. Select previous generation at boot menu
 2. Boot into working system
-3. Check what changed: `journalctl -b -1`
+3. Check logs: `journalctl -b -1`
 4. Fix issue or rollback: `sudo nixos-rebuild switch --rollback`
 
-### Locked Flake
+### Locked/broken flake
 
 ```bash
-# If nix flake update fails
 rm flake.lock
 nix flake update
 ```
@@ -519,44 +351,25 @@ nix flake update
 
 ```bash
 # From TTY (Ctrl+Alt+F2)
-systemctl --user restart hyprland
-
-# Or restart display manager
 sudo systemctl restart display-manager
 ```
 
 ## Configuration Locations
 
 ```
-~/.dotfiles/                          # This repository
+~/dotfiles/                           # This repository
   ├── flake.nix                       # Flake definition
-  ├── hosts/Desktop/                  # Desktop configuration
+  ├── hosts/{host}/                   # Host configuration
   │   └── modules/
   │       ├── programs.nix            # Enabled programs
-  │       └── userOptions.nix         # Theme, wallpaper, etc.
+  │       └── userOptions.nix         # Theme, wallpaper, user settings
   ├── modules/                        # Feature modules
-  ├── system/                         # Core system config
-  └── secrets/                        # Encrypted secrets
+  ├── core/                           # Core system config
+  └── assets/                         # Wallpapers and logos
 
-/etc/nixos/                           # Symlinks to config
 /run/current-system/                  # Current system closure
 /nix/var/nix/profiles/system          # System profile
 /home/$USER/.config/                  # User configs (managed by Home Manager)
-```
-
-## Environment Variables
-
-Important environment variables set in this config:
-
-```bash
-# In modules/desktop/hypr/hyprland.nix
-XDG_CURRENT_DESKTOP=Hyprland
-MOZ_ENABLE_WAYLAND=1
-QT_QPA_PLATFORM=wayland
-
-# Check current variables
-printenv
-env | grep VARIABLE
 ```
 
 ## Resources
@@ -564,6 +377,7 @@ env | grep VARIABLE
 - [NixOS Manual](https://nixos.org/manual/nixos/stable/)
 - [Home Manager Manual](https://nix-community.github.io/home-manager/)
 - [Hyprland Wiki](https://wiki.hyprland.org/)
+- [Stylix Documentation](https://stylix.danth.me/)
 - [Architecture Documentation](./ARCHITECTURE.md)
 - [Module Guide](./MODULE_GUIDE.md)
 - [Contributing](../CONTRIBUTING.md)
