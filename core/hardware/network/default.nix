@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.coreHardwareNetwork =
     {
       config,
@@ -7,7 +6,7 @@
       ...
     }:
     let
-      username = config.userOptions.username;
+      inherit (config.userOptions) username;
     in
     {
       networking = {
@@ -17,7 +16,7 @@
           enable = true;
           wifi.powersave = true;
         };
-        hostName = config.userOptions.hostName;
+        inherit (config.userOptions) hostName;
         firewall = {
           allowedTCPPorts = [
             53317 # localsend

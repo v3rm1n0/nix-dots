@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.modulesDesktopHyprMonitors =
     { lib, ... }:
     let
@@ -35,7 +34,7 @@
                 example = 0;
               };
               workspaces = mkOption {
-                type = types.listOf (types.int);
+                type = types.listOf types.int;
                 example = [
                   1
                   2

@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.hostCommonModulesServices = {
     config.servicesModule = {
       blueman.enable = true;

@@ -8,7 +8,7 @@
       ...
     }:
     let
-      username = config.userOptions.username;
+      inherit (config.userOptions) username;
     in
     {
       imports = [

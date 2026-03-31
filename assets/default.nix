@@ -4,7 +4,7 @@
   flake.nixosModules.assets =
     { config, ... }:
     let
-      username = config.userOptions.username;
+      inherit (config.userOptions) username;
     in
     {
       imports = [ inputs.home-manager.nixosModules.home-manager ];

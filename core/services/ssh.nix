@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.coreServicesSsh = {
     programs.ssh.extraConfig = ''
       Host *

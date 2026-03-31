@@ -34,7 +34,7 @@
       ...
     }:
     let
-      username = config.userOptions.username;
+      inherit (config.userOptions) username;
     in
     {
       imports = [
@@ -88,7 +88,7 @@
                 position = "${toString m.x}x${toString m.y}}";
               in
               "${m.name},${if m.enabled then "${resolution},${position},1" else "disable"}"
-            ) (config.monitors);
+            ) config.monitors;
 
             # Workspace to monitor assignment
             # This binds specific workspaces to specific monitors

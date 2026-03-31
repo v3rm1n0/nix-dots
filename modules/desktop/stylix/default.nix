@@ -24,8 +24,8 @@
       ...
     }:
     let
-      colorScheme = config.userOptions.colorScheme;
-      username = config.userOptions.username;
+      inherit (config.userOptions) colorScheme;
+      inherit (config.userOptions) username;
     in
     {
       imports = [ inputs.home-manager.nixosModules.home-manager ];

@@ -7,8 +7,8 @@
       ...
     }:
     let
-      username = config.userOptions.username;
-      hostName = config.userOptions.hostName;
+      inherit (config.userOptions) username;
+      inherit (config.userOptions) hostName;
     in
     {
       imports = [ inputs.home-manager.nixosModules.home-manager ];

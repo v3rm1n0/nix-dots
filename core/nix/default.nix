@@ -7,8 +7,8 @@
       ...
     }:
     let
-      dots = config.userOptions.dots;
-      username = config.userOptions.username;
+      inherit (config.userOptions) dots;
+      inherit (config.userOptions) username;
     in
     {
       imports = [

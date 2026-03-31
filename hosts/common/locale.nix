@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.hostCommonLocale = {
     console.keyMap = "us";
     time.timeZone = "Europe/Berlin";

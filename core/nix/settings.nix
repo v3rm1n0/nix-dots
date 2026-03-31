@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.coreNixSettings = {
     nix.settings = {
       experimental-features = [

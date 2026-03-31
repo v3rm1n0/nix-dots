@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.hostLaptopModulesHardware = {
     config.hardwareModule = {
       gpu.enable = true;

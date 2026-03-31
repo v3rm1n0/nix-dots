@@ -17,8 +17,7 @@
 #   };
 #
 # These options are then accessible throughout all modules via `config.userOptions.*`
-{ ... }:
-{
+_: {
 
   flake.nixosModules.modulesUser =
     { lib, ... }:

@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.hostDesktopModulesHardware = {
     config.hardwareModule = {
       gpu = {

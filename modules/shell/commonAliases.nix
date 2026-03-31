@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.lib.commonAliases = {
     la = "eza -lah";
     ls = "eza";

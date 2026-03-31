@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.modulesDesktopLy = {
     services.displayManager.ly = {
       enable = true;

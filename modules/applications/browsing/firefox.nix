@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.applicationsBrowsingFirefox =
     { config, lib, ... }:
     {
@@ -22,7 +21,7 @@
         programs = {
           firefox = {
             enable = lib.mkDefault true;
-            package = config.programs.browsing.firefox.package;
+            inherit (config.programs.browsing.firefox) package;
             # Broken somehow?
             # languagePacks = [
             #   "de"

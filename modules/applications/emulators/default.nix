@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.applicationsEmulators =
     {
       config,
@@ -8,7 +7,7 @@
       ...
     }:
     let
-      username = config.userOptions.username;
+      inherit (config.userOptions) username;
     in
     {
       options.programs.emulation = {
