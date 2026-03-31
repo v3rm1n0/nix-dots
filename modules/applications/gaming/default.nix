@@ -21,31 +21,18 @@
     {
       options.programs.gaming = {
         enable = mkEnableOption "Gaming profile with various gaming tools";
-
-        discordPackage = mkOption {
-          type = types.nullOr types.package;
-          default = pkgs.discord;
-          example = [
-            (pkgs.discord.override { withVencord = true; })
-          ];
-          description = "The Discord package you want to use e.g. special client";
-        };
-
         optionalPackages = mkOption {
           type = types.listOf types.package;
           default = [ ];
           example = [
-            pkgs.discord
+            pkgs.lunar-client
           ];
           description = "List of additional optional packages for gaming";
         };
       };
 
       config = mkIf config.programs.gaming.enable {
-        environment.systemPackages =
-          defaultPackages
-          ++ config.programs.gaming.optionalPackages
-          ++ [ config.programs.gaming.discordPackage ];
+        environment.systemPackages = defaultPackages ++ config.programs.gaming.optionalPackages;
 
         programs = {
           steam = {

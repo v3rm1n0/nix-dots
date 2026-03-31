@@ -258,7 +258,7 @@
                 name = "discord-ws-2";
                 workspace = "2 silent";
                 tile = "on";
-                "match:initial_class" = "^(${config.userOptions.discordClient})$";
+                "match:initial_class" = "^(equibop)$";
               }
               {
                 name = "spotify-ws-2";
@@ -274,7 +274,6 @@
             ];
             exec-once = [
               "TeamSpeak"
-              #"${config.userOptions.discordClient}"
             ];
           };
         };

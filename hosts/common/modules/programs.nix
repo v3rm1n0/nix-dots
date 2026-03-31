@@ -10,7 +10,6 @@
         emulation.enable = true;
         gaming = {
           enable = true;
-          discordPackage = pkgs.legcord;
         };
         media.enable = true;
         productivity.enable = true;

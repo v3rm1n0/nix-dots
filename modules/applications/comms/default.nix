@@ -1,4 +1,4 @@
-{ ... }:
+{ self, ... }:
 {
   flake.nixosModules.applicationsComms =
     {
@@ -11,6 +11,10 @@
       username = config.userOptions.username;
     in
     {
+      imports = [
+        self.nixosModules.applicationsCommsDiscord
+      ];
+
       options.programs.comms = {
         enable = lib.mkEnableOption "Enables communication module";
       };
