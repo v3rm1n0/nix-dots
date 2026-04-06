@@ -39,6 +39,7 @@ _: {
             protontricks.enable = true;
           };
           gamemode.enable = true;
+          gamescope.enable = true;
         };
 
         hardware.steam-hardware.enable = true;
