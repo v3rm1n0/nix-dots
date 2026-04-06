@@ -1,4 +1,5 @@
-_: {
+{ inputs, ... }:
+{
   flake.nixosModules.hostDesktopModulesPrograms =
     {
       lib,
@@ -11,10 +12,10 @@ _: {
         browsing = {
           chromium = {
             enable = true;
-            package = pkgs.brave;
+            package = inputs.helium.defaultPackage.${pkgs.stdenv.hostPlatform.system};
           };
           firefox = {
-            enable = false;
+            enable = true;
             package = pkgs.librewolf;
           };
         };

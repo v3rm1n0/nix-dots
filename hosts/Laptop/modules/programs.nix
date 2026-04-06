@@ -1,4 +1,5 @@
-_: {
+{ inputs, ... }:
+{
   flake.nixosModules.hostLaptopModulesPrograms =
     { pkgs, ... }:
     {
@@ -6,7 +7,7 @@ _: {
         browsing = {
           chromium = {
             enable = true;
-            package = pkgs.brave;
+            package = inputs.helium.defaultPackage.${pkgs.stdenv.hostPlatform.system};
           };
         };
       };
