@@ -229,6 +229,9 @@
               # Make a screenshot
               "$mainMod SHIFT, s, exec, hyprshot -m region"
 
+              # Make a screenshot of a monitor
+              "$mainMod SHIFT, Home, exec, hyprshot -m output"
+
               # Audio Controlls
               ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
               ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
