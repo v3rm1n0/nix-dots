@@ -3,7 +3,7 @@ _: {
     { pkgs, ... }:
     {
       environment.systemPackages = [
-        pkgs.protonvpn-gui
+        pkgs.proton-vpn
       ];
     };
 }
