@@ -393,6 +393,38 @@
         "type": "github"
       }
     },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1775579569,
+        "narHash": "sha256-/m3yyS/EnXqoPGBJYVy4jTOsirdgsEZ3JdN2gGkBr14=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "dfd9566f82a6e1d55c30f861879186440614696e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_5": {
+      "locked": {
+        "lastModified": 1773734432,
+        "narHash": "sha256-IF5ppUWh6gHGHYDbtVUyhwy/i7D261P7fWD1bPefOsw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "cda48547b432e8d3b18b4180ba07473762ec8558",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "noctalia": {
       "inputs": {
         "nixpkgs": [
@@ -472,7 +504,9 @@
         "nixpkgs": "nixpkgs_3",
         "noctalia": "noctalia",
         "spicetify-nix": "spicetify-nix",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "wrapper-modules": "wrapper-modules",
+        "wrappers": "wrappers"
       }
     },
     "spicetify-nix": {
@@ -672,6 +706,42 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "wrapper-modules": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1776143651,
+        "narHash": "sha256-uwZ18kmkX8cdF7gTxPNhtBTrNt4jx6Pqp8HoyupG2NQ=",
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "rev": "40559c09c6496aef6677115d99a7c942349a799b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "type": "github"
+      }
+    },
+    "wrappers": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_5"
+      },
+      "locked": {
+        "lastModified": 1775600302,
+        "narHash": "sha256-2fgKImv78CXIcfo1RsY7EI4uMZ84x/MggA5rrusYc7c=",
+        "owner": "Lassulus",
+        "repo": "wrappers",
+        "rev": "9d8397d8ef1ac35763085f3338589f558128f7db",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Lassulus",
+        "repo": "wrappers",
         "type": "github"
       }
     }

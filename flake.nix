@@ -21,6 +21,8 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wrappers.url = "github:Lassulus/wrappers";
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
   };
 
   outputs =
