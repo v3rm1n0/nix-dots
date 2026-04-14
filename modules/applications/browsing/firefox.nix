@@ -84,10 +84,10 @@ _: {
                 {
                   "*".installation_mode = "allowed";
                   # AdNauseam:
-                  "adnauseam@rednoise.org" = {
-                    install_url = moz "adnauseam";
-                    installation_mode = "force_installed";
-                  };
+                  # "adnauseam@rednoise.org" = {
+                  #   install_url = moz "adnauseam";
+                  #   installation_mode = "force_installed";
+                  # };
                   # Bitwarden:
                   "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
                     install_url = moz "bitwarden-password-manager";
@@ -133,15 +133,15 @@ _: {
                     install_url = moz "proton-pass";
                     installation_mode = "normal_installed";
                   };
-                  # Qwant Search:
-                  "qwant-search-firefox@qwant.com" = {
-                    install_url = moz "qwant-the-search-engine";
-                    installation_mode = "normal_installed";
-                  };
                   # Return YouTube Dislike:
                   "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = {
                     install_url = moz "return-youtube-dislikes";
                     installation_mode = "normal_installed";
+                  };
+                  # uBlock Origin
+                  "uBlock0@raymondhill.net" = {
+                    install_url = moz "ublock-origin";
+                    installation_mode = "force_installed";
                   };
                 };
             };
