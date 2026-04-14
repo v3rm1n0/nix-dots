@@ -1,4 +1,4 @@
-{ ... }:
+_:
 let
   luaModule =
     { pkgs, ... }:
@@ -23,8 +23,8 @@ let
     };
 in
 {
-  flake.nixosModules.neovim.lua = luaModule;
-  flake.nixosModules.neovim.nix = nixModule;
+  flake.modules.neovim.lua = luaModule;
+  flake.modules.neovim.nix = nixModule;
 
   # Use let-bound references instead of self.modules.neovim.* to avoid
   # circular evaluation through the flake.modules.neovim attrset
