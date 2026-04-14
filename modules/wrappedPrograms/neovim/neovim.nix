@@ -49,12 +49,19 @@
             pkgs.ffmpeg-full
             pkgs.imagemagick
             pkgs.wl-clipboard
+            pkgs.luarocks
           ];
 
           specs.init = {
             data = null;
             before = [ "MAIN_INIT" ];
             config = "require('init')";
+          };
+
+          specs.plugins = {
+            data = [
+              pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+            ];
           };
         };
       };
