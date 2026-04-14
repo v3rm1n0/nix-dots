@@ -11,7 +11,7 @@
         ai.enable = true;
         browsing = {
           chromium = {
-            enable = true;
+            enable = false;
             package = inputs.helium.defaultPackage.${pkgs.stdenv.hostPlatform.system};
           };
           firefox = {
