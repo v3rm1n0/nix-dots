@@ -276,6 +276,7 @@
               }
             ];
             exec-once = [
+              "noctalia-shell"
               "TeamSpeak"
             ];
           };
