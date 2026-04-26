@@ -13,6 +13,7 @@
 
       config = lib.mkIf config.programs.productivity.enable {
         home-manager.users.${username}.programs = {
+          obsidian.enable = true;
           onlyoffice.enable = true;
           zathura.enable = true;
         };
