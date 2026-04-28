@@ -10,4 +10,4 @@ COST=$(echo "$input" | jq -r '.cost.total_cost_usd')
 TOTAL_TOKENS=$((INPUT_TOKENS + OUTPUT_TOKENS))
 PERCENT_USED=$((TOTAL_TOKENS * 100 / CONTEXT_SIZE))
 
-printf "[%s] Context: %d%% | $%.2f" "$MODEL" "$PERCENT_USED" "$COST"
+printf "[%s] Context: %d%% | \$%s" "$MODEL" "$PERCENT_USED" "$(LC_NUMERIC=C printf '%.2f' "$COST")"
