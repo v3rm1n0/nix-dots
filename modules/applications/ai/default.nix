@@ -21,7 +21,35 @@ _: {
         };
 
         home-manager.users.${username} = {
-          programs.claude-code.enable = true;
+          home.packages = with pkgs; [
+            jq
+          ];
+          programs.claude-code = {
+            enable = true;
+            settings = {
+              extraKnownMarketplaces = {
+                superpowers-marketplace = {
+                  source = {
+                    source = "github";
+                    repo = "obra/superpowers-marketplace";
+                  };
+                };
+              };
+
+              enabledPlugins = {
+                "superpowers@claude-plugins-official" = true;
+              };
+              statusLine = {
+                command = "~/.claude/statusline.sh";
+                padding = 0;
+                type = "command";
+              };
+            };
+          };
+          home.file.".claude/statusline.sh" = {
+            source = ./statusline.sh;
+            executable = true;
+          };
         };
       };
     };
