@@ -12,7 +12,6 @@ _: {
       defaultPackages = with pkgs; [
         ed-odyssey-materials-helper
         heroic-unwrapped
-        lutris
         prismlauncher
       ];
 
