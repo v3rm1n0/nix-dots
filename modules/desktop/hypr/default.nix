@@ -23,15 +23,18 @@
       environment = {
         systemPackages = with pkgs; [
           brightnessctl
+          grim
           gthumb
           hyprpaper
-          hyprshot
           libnotify
           nautilus
           networkmanagerapplet
           pavucontrol
           playerctl
           pywal
+          satty
+          slurp
+          wayfreeze
           wl-clipboard
           yazi
           zenity

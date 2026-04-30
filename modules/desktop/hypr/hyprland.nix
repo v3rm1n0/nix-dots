@@ -227,11 +227,10 @@
               "$mainMod, mouse_up, workspace, e-1"
 
               # Make a screenshot
-              "$mainMod SHIFT, s, exec, hyprshot -m region"
+              ''$mainMod SHIFT, s, exec, wayfreeze & sleep 0.2 && grim -g "$(slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy; kill %1''
 
               # Make a screenshot of a monitor
-              "$mainMod SHIFT, Home, exec, hyprshot -m output"
-
+              ''$mainMod SHIFT, Home, exec, grim -g "$(hyprctl monitors -j | jq -r '.[] | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy''
               # Audio Controlls
               ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
               ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
