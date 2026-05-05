@@ -17,7 +17,7 @@
       ];
 
       options.programs.media = {
-        enable = lib.mkEnableOption "Enables communication module";
+        enable = lib.mkEnableOption "Enables media module";
       };
 
       config = lib.mkIf config.programs.media.enable {
