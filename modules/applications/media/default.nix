@@ -25,11 +25,26 @@
           enable = true;
         };
 
-        home-manager.users.${username}.home.packages = with pkgs; [
-          freetube
-          librepods
-          vlc
-        ];
+        home-manager.users.${username} = {
+          programs.mpv = {
+            enable = true;
+            config = {
+              fullscreen = true;
+              ytdl-format = "bestvideo+bestaudio/best";
+            };
+            scripts = [
+              pkgs.mpvScripts.modernz
+              pkgs.mpvScripts.sponsorblock-minimal
+              pkgs.mpvScripts.thumbfast
+            ];
+          };
+
+          home.packages = with pkgs; [
+            freetube
+            librepods
+            vlc
+          ];
+        };
       };
     };
 }
