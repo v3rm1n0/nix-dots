@@ -16,7 +16,6 @@
         self.nixosModules.modulesDesktopHyprHypridle
         self.nixosModules.modulesDesktopHyprHyprland
         self.nixosModules.modulesDesktopHyprHyprlock
-        self.nixosModules.modulesDesktopHyprHyprpanel
         self.nixosModules.modulesDesktopHyprHyprpaper
       ];
 
