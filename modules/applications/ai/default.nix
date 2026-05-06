@@ -41,14 +41,9 @@ _: {
               };
               statusLine = {
                 command = "~/.claude/statusline.sh";
-                padding = 0;
                 type = "command";
               };
             };
-          };
-          home.file.".claude/statusline.sh" = {
-            source = ./statusline.sh;
-            executable = true;
           };
         };
       };
