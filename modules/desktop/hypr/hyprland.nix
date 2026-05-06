@@ -57,7 +57,6 @@
 
         # Firefox Wayland support
         MOZ_ENABLE_WAYLAND = "1";
-        MOZ_DISABLE_RDD_SANDBOX = "1"; # Required for some Firefox features on Wayland
 
         # Qt Wayland platform plugin
         QT_QPA_PLATFORM = "wayland";
@@ -85,7 +84,7 @@
               m:
               let
                 resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
-                position = "${toString m.x}x${toString m.y}}";
+                position = "${toString m.x}x${toString m.y}";
               in
               "${m.name},${if m.enabled then "${resolution},${position},1" else "disable"}"
             ) config.monitors;
