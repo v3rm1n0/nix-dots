@@ -8,7 +8,7 @@ _: {
       trusted-users = [
         "root"
         "v3rm1n"
-      ]; # Add your username here
+      ];
       extra-substituters = [
         "https://devenv.cachix.org"
         "https://zed-industries.cachix.org"
