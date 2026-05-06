@@ -24,6 +24,7 @@
           "openrazer"
         ];
       };
+      users.mutableUsers = true;
       users.defaultUserShell = pkgs.zsh;
     };
 }
