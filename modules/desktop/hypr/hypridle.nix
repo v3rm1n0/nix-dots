@@ -19,13 +19,15 @@
               };
               listener = [
                 {
-                  timeout = 400;
-                  on-timeout = "hyprlock";
-                }
-                {
-                  timeout = 180;
+                  # Turn off screen after 5 min of idle (battery)
+                  timeout = 300;
                   on-timeout = "hyprctl dispatch dpms off";
                   on-resume = "hyprctl dispatch dpms on";
+                }
+                {
+                  # Lock 2 min after screen off
+                  timeout = 420;
+                  on-timeout = "hyprlock";
                 }
               ];
             };
