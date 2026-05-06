@@ -7,7 +7,6 @@
       self.nixosModules.coreServicesNmapplet
       self.nixosModules.coreServicesPowerProfiles
       self.nixosModules.coreServicesRtkit
-      self.nixosModules.coreServicesSsh
       self.nixosModules.coreServicesUpower
     ];
   };
