@@ -4,7 +4,7 @@
     modules = [
       self.nixosModules.assets
 
-      self.nixosModules.usersV3rm1n
+      self.nixosModules.users
 
       self.nixosModules.core
       self.nixosModules.modules
