@@ -43,6 +43,7 @@
       home-manager.users.${username} = {
         home.stateVersion = "23.11";
         nixpkgs.config.allowUnfree = true;
+        gtk.gtk4.theme = null;
         dconf.settings = {
           "org/gnome/desktop/interface" = {
             color-scheme = "prefer-dark";
