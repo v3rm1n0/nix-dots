@@ -1,4 +1,5 @@
-_: {
+{ inputs, ... }:
+{
   flake.nixosModules.applicationsAi =
     {
       config,
@@ -21,8 +22,8 @@ _: {
         };
 
         home-manager.users.${username} = {
-          home.packages = with pkgs; [
-            jq
+          home.packages = (with pkgs; [ jq ]) ++ [
+            inputs.nixpkgs-ccusage.legacyPackages.${pkgs.stdenv.hostPlatform.system}.ccusage
           ];
           programs.claude-code = {
             enable = true;
