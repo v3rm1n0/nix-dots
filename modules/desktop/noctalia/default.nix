@@ -1,10 +1,9 @@
-{ inputs, ... }:
+{ self, inputs, ... }:
 {
   flake.nixosModules.modulesDesktopNoctalia =
     {
       config,
       pkgs,
-      self,
       ...
     }:
     let
