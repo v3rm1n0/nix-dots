@@ -4,11 +4,11 @@
     {
       config,
       lib,
-      pkgs,
       ...
     }:
     let
       inherit (config.userOptions) username;
+      inherit (config.lib.stylix) colors;
 
       toHyprValue =
         v:
@@ -95,6 +95,8 @@
           gaps_out = "10";
           border_size = "2";
           layout = "dwindle";
+          "col.active_border" = "rgb(${colors.base0D})";
+          "col.inactive_border" = "rgb(${colors.base03})";
         };
 
         misc.disable_hyprland_logo = true;
