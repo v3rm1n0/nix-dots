@@ -1,4 +1,4 @@
-{ inputs, self, ... }:
+{ inputs, ... }:
 {
   flake.nixosModules.applicationsCommsDiscord =
     { config, lib, ... }:
@@ -6,10 +6,13 @@
       inherit (config.userOptions) username;
     in
     {
-      home-manager.users.${username} = {
-        imports = [ inputs.nixcord.homeModules.nixcord ];
+      imports = [ inputs.nixcord.nixosModules.nixcord ];
+
+      config = lib.mkIf config.programs.comms.enable {
         programs.nixcord = {
           enable = true;
+          user = username;
+          homeDirectory = "/home/${username}";
           discord.enable = lib.mkDefault false;
           equibop.enable = lib.mkDefault true;
           config = {

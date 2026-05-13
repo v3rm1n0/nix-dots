@@ -1,16 +1,10 @@
-{ inputs, ... }:
-{
+_: {
   flake.nixosModules.applicationsElectron =
     { config, ... }:
     let
       inherit (config.userOptions) username;
     in
     {
-      imports = [ inputs.home-manager.nixosModules.home-manager ];
-      home-manager.users.${username} = {
-        home.file = {
-          ".config/electron-flags.conf".source = ./electron-flags.conf;
-        };
-      };
+      hjem.users.${username}.files.".config/electron-flags.conf".source = ./electron-flags.conf;
     };
 }

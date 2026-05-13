@@ -11,39 +11,32 @@
       inherit (config.userOptions) username;
     in
     {
-      imports = [
-        inputs.spicetify-nix.nixosModules.default
-        inputs.home-manager.nixosModules.home-manager
-      ];
+      imports = [ inputs.spicetify-nix.nixosModules.default ];
 
-      options.programs.media = {
-        enable = lib.mkEnableOption "Enables media module";
-      };
+      options.programs.media.enable = lib.mkEnableOption "Enables media module";
 
       config = lib.mkIf config.programs.media.enable {
-        programs.spicetify = {
-          enable = true;
-        };
+        programs.spicetify.enable = true;
 
-        home-manager.users.${username} = {
-          programs.mpv = {
-            enable = true;
-            config = {
-              fullscreen = true;
-              ytdl-format = "bestvideo+bestaudio/best";
-            };
-            scripts = [
-              pkgs.mpvScripts.modernz
-              pkgs.mpvScripts.sponsorblock-minimal
-              pkgs.mpvScripts.thumbfast
-            ];
-          };
+        environment.systemPackages = [ pkgs.mpv ];
 
-          home.packages = with pkgs; [
+        hjem.users.${username} = {
+          packages = with pkgs; [
             freetube
             librepods
             vlc
+            mpvScripts.modernz
+            mpvScripts.sponsorblock-minimal
+            mpvScripts.thumbfast
           ];
+
+          files.".config/mpv/mpv.conf".text = ''
+            fullscreen=yes
+            ytdl-format=bestvideo+bestaudio/best
+            script=${pkgs.mpvScripts.modernz}/share/mpv/scripts/modernz.lua
+            script=${pkgs.mpvScripts.sponsorblock-minimal}/share/mpv/scripts/sponsorblock_minimal.lua
+            script=${pkgs.mpvScripts.thumbfast}/share/mpv/scripts/thumbfast.lua
+          '';
         };
       };
     };

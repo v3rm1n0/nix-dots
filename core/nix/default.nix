@@ -8,24 +8,19 @@
     }:
     let
       inherit (config.userOptions) dots;
-      inherit (config.userOptions) username;
     in
     {
       imports = [
         self.nixosModules.coreNixBtrfs
         self.nixosModules.coreNixGc
         self.nixosModules.coreNixSettings
-
-        inputs.home-manager.nixosModules.home-manager
       ];
 
       system = {
         autoUpgrade = {
           enable = true;
           flake = "${config.userOptions.dots}";
-          flags = [
-            "-L"
-          ];
+          flags = [ "-L" ];
           dates = "weekly";
           upgrade = true;
         };
@@ -38,20 +33,6 @@
       nix = {
         package = pkgs.nixVersions.latest;
         nixPath = [ "nixpkgs=/run/current-system/nixpkgs/" ];
-      };
-
-      home-manager.users.${username} = {
-        home.stateVersion = "23.11";
-        nixpkgs.config.allowUnfree = true;
-        gtk.gtk4.theme = null;
-        dconf.settings = {
-          "org/gnome/desktop/interface" = {
-            color-scheme = "prefer-dark";
-          };
-          "org/cinnamon/desktop/applications/terminal" = {
-            exec = "ghostty";
-          };
-        };
       };
 
       programs.direnv = {

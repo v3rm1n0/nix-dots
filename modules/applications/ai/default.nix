@@ -11,9 +11,7 @@
       inherit (config.userOptions) username;
     in
     {
-      options.programs.ai = {
-        enable = lib.mkEnableOption "Enables ai module";
-      };
+      options.programs.ai.enable = lib.mkEnableOption "Enables ai module";
 
       config = lib.mkIf config.programs.ai.enable {
         services.ollama = {
@@ -21,13 +19,15 @@
           package = pkgs.ollama-cuda;
         };
 
-        home-manager.users.${username} = {
-          home.packages = (with pkgs; [ jq ]) ++ [
+        hjem.users.${username} = {
+          packages = (with pkgs; [ jq ]) ++ [
             inputs.nixpkgs-ccusage.legacyPackages.${pkgs.stdenv.hostPlatform.system}.ccusage
           ];
-          programs.claude-code = {
-            enable = true;
-            settings = {
+
+          files.".claude/settings.json" = {
+            generator = lib.generators.toJSON { };
+            value = {
+              "$schema" = "https://json.schemastore.org/claude-code-settings.json";
               extraKnownMarketplaces = {
                 superpowers-marketplace = {
                   source = {
@@ -36,7 +36,6 @@
                   };
                 };
               };
-
               enabledPlugins = {
                 "superpowers@claude-plugins-official" = true;
               };

@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+_: {
   flake.nixosModules.coreProgramsUtilsRipgrep =
     {
       config,
@@ -10,19 +9,11 @@
       inherit (config.userOptions) username;
     in
     {
-      imports = [ inputs.home-manager.nixosModules.home-manager ];
-      environment.sessionVariables = {
-        RIPGREP_CONFIG_PATH = "$HOME/.ripgreprc";
-      };
-      environment.systemPackages = with pkgs; [
-        ripgrep
-      ];
-
-      home-manager.users.${username} = {
-        home.file.".ripgreprc".text = ''
-          --glob=!.git/*
-          --glob=!flake.lock
-        '';
-      };
+      environment.sessionVariables.RIPGREP_CONFIG_PATH = "$HOME/.ripgreprc";
+      environment.systemPackages = [ pkgs.ripgrep ];
+      hjem.users.${username}.files.".ripgreprc".text = ''
+        --glob=!.git/*
+        --glob=!flake.lock
+      '';
     };
 }

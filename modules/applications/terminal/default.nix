@@ -1,28 +1,27 @@
-{ inputs, ... }:
-{
+_: {
   flake.nixosModules.applicationsTerminal =
-    { config, lib, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       inherit (config.userOptions) username;
     in
     {
-      imports = [ inputs.home-manager.nixosModules.home-manager ];
-      options.programs.terminal = {
-        enable = lib.mkEnableOption "Enable terminal module";
-      };
+      options.programs.terminal.enable = lib.mkEnableOption "Enable terminal module";
 
       config = lib.mkIf config.programs.terminal.enable {
-        home-manager.users.${username} = {
-          programs.ghostty = {
-            enable = true;
-            enableZshIntegration = true;
-            settings = {
-              background-opacity = 0.5;
-              cursor-style = "block";
-              cursor-style-blink = false;
-            };
-          };
-        };
+        environment.systemPackages = [ pkgs.ghostty ];
+
+        hjem.users.${username}.files.".config/ghostty/config".text = ''
+          background-opacity = 0.5
+          cursor-style = block
+          cursor-style-blink = false
+          shell-integration = zsh
+          font-size = 10
+        '';
       };
     };
 }

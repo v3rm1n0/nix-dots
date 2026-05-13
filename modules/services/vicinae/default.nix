@@ -1,46 +1,42 @@
-{ inputs, ... }:
-{
-
+_: {
   flake.nixosModules.modulesServicesVicinae =
     {
       config,
       lib,
+      pkgs,
       ...
     }:
     let
       inherit (config.userOptions) username;
     in
     {
-      imports = [
-        inputs.home-manager.nixosModules.home-manager
-      ];
-
-      options.servicesModule.vicinae = {
-        enable = lib.mkEnableOption "Enable vicinae service";
-      };
+      options.servicesModule.vicinae.enable = lib.mkEnableOption "Enable vicinae service";
 
       config = lib.mkIf config.servicesModule.vicinae.enable {
-        home-manager.users.${username} = {
-          stylix.targets.vicinae.enable = false;
+        environment.systemPackages = [ pkgs.vicinae ];
 
-          programs.vicinae = {
-            enable = true;
-            systemd = {
-              enable = true;
-              autoStart = true;
-            };
-            settings = {
+        hjem.users.${username} = {
+          files.".config/vicinae/settings.json" = {
+            generator = lib.generators.toJSON { };
+            value = {
               favicon_service = "twenty";
               font.normal.normal = "Geist";
-              theme = {
-                dark = {
-                  name = "gruvbox-dark";
-                  icon_theme = "default";
-                };
+              theme.dark = {
+                name = "gruvbox-dark";
+                icon_theme = "default";
               };
-              launcher_window = {
-                opacity = 0.8;
-              };
+              launcher_window.opacity = 0.8;
+            };
+          };
+
+          systemd.services.vicinae = {
+            description = "Vicinae application launcher";
+            after = [ "graphical-session.target" ];
+            partOf = [ "graphical-session.target" ];
+            wantedBy = [ "graphical-session.target" ];
+            serviceConfig = {
+              ExecStart = "${pkgs.vicinae}/bin/vicinae";
+              Restart = "on-failure";
             };
           };
         };

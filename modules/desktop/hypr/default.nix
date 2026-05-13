@@ -11,37 +11,40 @@
     in
     {
       imports = [
-        inputs.home-manager.nixosModules.home-manager
-
         self.nixosModules.modulesDesktopHyprHypridle
         self.nixosModules.modulesDesktopHyprHyprland
         self.nixosModules.modulesDesktopHyprHyprlock
         self.nixosModules.modulesDesktopHyprHyprpaper
       ];
 
-      environment = {
-        systemPackages = with pkgs; [
-          brightnessctl
-          grim
-          gthumb
-          hyprpaper
-          libnotify
-          nautilus
-          networkmanagerapplet
-          pavucontrol
-          playerctl
-          pywal
-          satty
-          slurp
-          wayfreeze
-          wl-clipboard
-          yazi
-          zenity
-        ];
-      };
+      environment.systemPackages = with pkgs; [
+        brightnessctl
+        grim
+        gthumb
+        hyprpaper
+        libnotify
+        nautilus
+        networkmanagerapplet
+        pavucontrol
+        playerctl
+        pywal
+        satty
+        slurp
+        wayfreeze
+        wl-clipboard
+        yazi
+        zenity
+      ];
 
-      home-manager.users.${username} = {
-        services.hyprpolkitagent.enable = true;
+      hjem.users.${username}.systemd.services.hyprpolkitagent = {
+        description = "Hyprland Polkit Authentication Agent";
+        after = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
+        serviceConfig = {
+          ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
+          Restart = "on-failure";
+        };
       };
 
       programs.hyprland = {
@@ -55,8 +58,6 @@
         terminal = "ghostty";
       };
 
-      programs.uwsm = {
-        enable = true;
-      };
+      programs.uwsm.enable = true;
     };
 }

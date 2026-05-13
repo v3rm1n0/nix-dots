@@ -7,27 +7,24 @@
       ...
     }:
     let
-      inherit (config.userOptions) username;
-      inherit (config.userOptions) hostName;
-      inherit (config.userOptions) wallpaper;
+      inherit (config.userOptions) username hostName wallpaper;
     in
     {
-      imports = [ inputs.home-manager.nixosModules.home-manager ];
-      home-manager.users.${username} = {
-        imports = [
-          inputs.noctalia.homeModules.default
-        ];
+      imports = [ inputs.noctalia.nixosModules.default ];
 
-        home.file.".cache/noctalia/wallpapers.json" = {
+      hjem.users.${username} = {
+        files.".cache/noctalia/wallpapers.json" = {
           text = builtins.toJSON {
             defaultWallpaper = "/home/${username}/.config/backgrounds/${wallpaper}";
           };
         };
 
-        programs.noctalia-shell = {
-          enable = true;
-          settings = {
+        files.".config/noctalia/config.json" = {
+          generator = lib.generators.toJSON { };
+          value = {
+            settingsVersion = 63;
             bar = {
+              barType = "floating";
               density = "compact";
               position = "top";
               showCapsule = false;
@@ -37,8 +34,8 @@
                     id = "ControlCenter";
                     useDistroLogo = true;
                   }
+                  { id = "SystemMonitor"; }
                   {
-                    #hideUnoccupied = false;
                     id = "Workspace";
                     labelMode = "none";
                   }
@@ -47,36 +44,24 @@
                     width = 100;
                     hideWhenIdle = true;
                   }
-                  {
-                    id = "MediaMini";
-                  }
+                  { id = "MediaMini"; }
                 ];
                 center = [
-                  {
-                    id = "ActiveWindow";
-                  }
+                  { id = "ActiveWindow"; }
                 ];
                 right = [
-                  {
-                    id = "Volume";
-                  }
-                  {
-                    id = "Network";
-                  }
-                  {
-                    id = "Bluetooth";
-                  }
-                  (lib.mkIf (hostName == "Laptop") { id = "Battery"; })
+                  { id = "Volume"; }
+                  { id = "Network"; }
+                  { id = "Bluetooth"; }
+                ]
+                ++ lib.optional (hostName == "Laptop") { id = "Battery"; }
+                ++ [
                   {
                     id = "KeyboardLayout";
                     showIcon = false;
                   }
-                  {
-                    id = "Tray";
-                  }
-                  {
-                    id = "NotificationHistory";
-                  }
+                  { id = "Tray"; }
+                  { id = "NotificationHistory"; }
                   {
                     formatHorizontal = "HH:mm";
                     formatVertical = "HH mm";
@@ -88,9 +73,7 @@
               };
             };
             colorSchemes.predefinedScheme = "kanagawa";
-            dock = {
-              enabled = false;
-            };
+            dock.enabled = false;
             general = {
               scaleRatio = 0.9;
               shadowDirection = "top_right";
@@ -100,7 +83,6 @@
               name = "Viersen, Germany";
             };
           };
-          # this may also be a string or a path to a JSON file.
         };
       };
     };

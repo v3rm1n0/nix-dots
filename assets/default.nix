@@ -1,18 +1,14 @@
-{ inputs, ... }:
+{ ... }:
 {
-
   flake.nixosModules.assets =
     { config, ... }:
     let
       inherit (config.userOptions) username;
     in
     {
-      imports = [ inputs.home-manager.nixosModules.home-manager ];
-      home-manager.users.${username} = _: {
-        home.file = {
-          ".config/backgrounds".source = ./wallpapers;
-          ".config/nixlogo.png".source = ./logo/nix-snowflake.png;
-        };
+      hjem.users.${username}.files = {
+        ".config/backgrounds".source = ./wallpapers;
+        ".config/nixlogo.png".source = ./logo/nix-snowflake.png;
       };
     };
 }

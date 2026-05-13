@@ -1,6 +1,5 @@
 { inputs, ... }:
 {
-
   flake.nixosModules.usersV3rm1n =
     {
       config,
@@ -11,7 +10,8 @@
       inherit (config.userOptions) username;
     in
     {
-      imports = [ inputs.home-manager.nixosModules.home-manager ];
+      imports = [ inputs.hjem.nixosModules.hjem ];
+
       programs.zsh.enable = true;
       users.users.${username} = {
         shell = pkgs.zsh;
@@ -23,5 +23,7 @@
           "openrazer"
         ];
       };
+
+      hjem.users.${username}.enable = true;
     };
 }

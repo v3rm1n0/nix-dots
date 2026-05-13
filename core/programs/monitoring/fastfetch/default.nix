@@ -1,18 +1,11 @@
-{ inputs, ... }:
-{
+_: {
   flake.nixosModules.coreProgramsMonitoringFastfetch =
     { config, pkgs, ... }:
     let
       inherit (config.userOptions) username;
     in
     {
-      imports = [ inputs.home-manager.nixosModules.home-manager ];
       environment.systemPackages = with pkgs; [ fastfetch ];
-
-      home-manager.users.${username} = _: {
-        home.file = {
-          ".config/fastfetch/config.jsonc".source = ./config.jsonc;
-        };
-      };
+      hjem.users.${username}.files.".config/fastfetch/config.jsonc".source = ./config.jsonc;
     };
 }

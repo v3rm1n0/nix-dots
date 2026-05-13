@@ -1,16 +1,7 @@
-{ inputs, ... }:
-{
+_: {
   flake.nixosModules.modulesDesktopHyprHyprlock =
-    { config, ... }:
-    let
-      inherit (config.userOptions) username;
-    in
+    { pkgs, ... }:
     {
-      imports = [ inputs.home-manager.nixosModules.home-manager ];
-      home-manager.users.${username} = {
-        programs.hyprlock = {
-          enable = true;
-        };
-      };
+      environment.systemPackages = [ pkgs.hyprlock ];
     };
 }
