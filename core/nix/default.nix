@@ -42,7 +42,7 @@
 
       programs.nh = {
         enable = true;
-        flake = "${dots}";
+        package = self.packages.${pkgs.stdenv.hostPlatform.system}.nh;
       };
 
       programs.nix-ld = {
