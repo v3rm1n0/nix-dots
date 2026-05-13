@@ -1,11 +1,10 @@
-_: {
+{ self, ... }:
+{
   flake.nixosModules.coreProgramsMonitoringFastfetch =
-    { config, pkgs, ... }:
-    let
-      inherit (config.userOptions) username;
-    in
+    { pkgs, ... }:
     {
-      environment.systemPackages = with pkgs; [ fastfetch ];
-      hjem.users.${username}.files.".config/fastfetch/config.jsonc".source = ./config.jsonc;
+      environment.systemPackages = [
+        self.packages.${pkgs.stdenv.hostPlatform.system}.fastfetch
+      ];
     };
 }
