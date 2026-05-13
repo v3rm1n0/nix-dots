@@ -35,8 +35,9 @@ _: {
             partOf = [ "graphical-session.target" ];
             wantedBy = [ "graphical-session.target" ];
             serviceConfig = {
-              ExecStart = "${pkgs.vicinae}/bin/vicinae";
+              ExecStart = "${pkgs.vicinae}/bin/vicinae server";
               Restart = "on-failure";
+              Environment = "PATH=/run/wrappers/bin:/home/${username}/.nix-profile/bin:/etc/profiles/per-user/${username}/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
             };
           };
         };
