@@ -40,11 +40,6 @@
         nix-direnv.enable = true;
       };
 
-      programs.nh = {
-        enable = true;
-        package = self.packages.${pkgs.stdenv.hostPlatform.system}.nh;
-      };
-
       programs.nix-ld = {
         enable = true;
         libraries = (pkgs.steam-run.args.multiPkgs pkgs) ++ [

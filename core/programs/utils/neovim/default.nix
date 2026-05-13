@@ -2,7 +2,6 @@
 {
   flake.nixosModules.coreProgramsUtilsNeovim =
     {
-      lib,
       pkgs,
       ...
     }:
