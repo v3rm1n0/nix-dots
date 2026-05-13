@@ -9,7 +9,7 @@
         settings = {
           logo = {
             type = "kitty-direct";
-            source = "~/.config/nixlogo.png";
+            source = builtins.toString (inputs.self + "/assets/logo/nix-snowflake.png");
             width = 18;
             height = 8;
             padding = {
