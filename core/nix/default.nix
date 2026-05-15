@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ self, ... }:
 {
   flake.nixosModules.coreNix =
     {
@@ -6,9 +6,6 @@
       pkgs,
       ...
     }:
-    let
-      inherit (config.userOptions) dots;
-    in
     {
       imports = [
         self.nixosModules.coreNixBtrfs
