@@ -19,7 +19,7 @@ _: {
           background-opacity = 0.5
           cursor-style = block
           cursor-style-blink = false
-          shell-integration = zsh
+          shell-integration = detect
           font-size = 10
         '';
       };

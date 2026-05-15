@@ -1,10 +1,11 @@
 { self, ... }:
 {
   flake.nixosModules.modulesShell =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       imports = [
         self.nixosModules.modulesShellBash
+        self.nixosModules.modulesShellFish
         self.nixosModules.modulesShellP10k
         self.nixosModules.modulesShellZsh
       ];
