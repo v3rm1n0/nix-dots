@@ -8,6 +8,7 @@ _: {
     }:
     let
       inherit (config.userOptions) username;
+      inherit (config.lib.stylix) colors;
     in
     {
       options.programs.terminal.enable = lib.mkEnableOption "Enable terminal module";
@@ -21,6 +22,11 @@ _: {
           cursor-style-blink = false
           shell-integration = detect
           font-size = 10
+          background = #${colors.base00}
+          foreground = #${colors.base05}
+          cursor-color = #${colors.base05}
+          selection-background = #${colors.base02}
+          selection-foreground = #${colors.base05}
         '';
       };
     };
