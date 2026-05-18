@@ -26,7 +26,7 @@
       workspaceLine =
         monitor: workspace:
         "hl.workspace_rule({ workspace = \"${toString workspace}\", monitor = \"${monitor.name}\"${
-          lib.optionalString (workspace == monitor.workspacePrimary) ", default_workspace = true"
+          lib.optionalString (workspace == monitor.workspacePrimary) ", default = true"
         } })";
 
       workspacesLua =
@@ -94,7 +94,6 @@
             },
             dwindle = {
               split_width_multiplier = 1.35,
-              pseudotile             = true,
             },
             ecosystem = {
               no_update_news = true,
@@ -110,15 +109,15 @@
           hl.animation({ leaf = "fade",        enabled = true, speed = 7,  bezier = "default" })
           hl.animation({ leaf = "workspaces",  enabled = true, speed = 6,  bezier = "default" })
 
-          local mainMod = "ALT_L"
+          local mainMod = "ALT"
 
           hl.bind(mainMod .. " + T",     hl.dsp.exec_cmd("ghostty"))
-          hl.bind("SHIFT + ALT_L + Q",   hl.dsp.window.close())
+          hl.bind("SHIFT + ALT + Q",   hl.dsp.window.close())
           hl.bind(mainMod .. " + M",     hl.dsp.exit())
           hl.bind(mainMod .. " + E",     hl.dsp.exec_cmd("nautilus"))
           hl.bind(mainMod .. " + V",     hl.dsp.window.float({ action = "toggle" }))
           hl.bind(mainMod .. " + P",     hl.dsp.window.pseudo())
-          hl.bind("SUPER + ALT_L + L",   hl.dsp.exec_cmd("hyprlock"))
+          hl.bind("SUPER + ALT + L",   hl.dsp.exec_cmd("hyprlock"))
           hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
           hl.bind(mainMod .. " + R",     hl.dsp.exec_cmd("${config.userOptions.browser}"))
 
@@ -127,20 +126,20 @@
           hl.bind(mainMod .. " + k", hl.dsp.focus({ direction = "up" }))
           hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "down" }))
 
-          hl.bind(mainMod .. " + SHIFT + h", hl.dsp.window.move({ direction = "left" }))
-          hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "right" }))
-          hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "up" }))
-          hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "down" }))
+          hl.bind("SHIFT + " .. mainMod .. " + h", hl.dsp.window.move({ direction = "left" }))
+          hl.bind("SHIFT + " .. mainMod .. " + l", hl.dsp.window.move({ direction = "right" }))
+          hl.bind("SHIFT + " .. mainMod .. " + k", hl.dsp.window.move({ direction = "up" }))
+          hl.bind("SHIFT + " .. mainMod .. " + j", hl.dsp.window.move({ direction = "down" }))
 
-          hl.bind(mainMod .. " + CTRL + h", hl.dsp.window.resize({ x = -50, y = 0,   relative = true }))
-          hl.bind(mainMod .. " + CTRL + l", hl.dsp.window.resize({ x = 50,  y = 0,   relative = true }))
-          hl.bind(mainMod .. " + CTRL + k", hl.dsp.window.resize({ x = 0,   y = -50, relative = true }))
-          hl.bind(mainMod .. " + CTRL + j", hl.dsp.window.resize({ x = 0,   y = 50,  relative = true }))
+          hl.bind("CTRL + " .. mainMod .. " + h", hl.dsp.window.resize({ x = -50, y = 0,   relative = true }))
+          hl.bind("CTRL + " .. mainMod .. " + l", hl.dsp.window.resize({ x = 50,  y = 0,   relative = true }))
+          hl.bind("CTRL + " .. mainMod .. " + k", hl.dsp.window.resize({ x = 0,   y = -50, relative = true }))
+          hl.bind("CTRL + " .. mainMod .. " + j", hl.dsp.window.resize({ x = 0,   y = 50,  relative = true }))
 
           for i = 1, 10 do
             local key = i % 10
             hl.bind(mainMod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
-            hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+            hl.bind("SHIFT + " .. mainMod .. " + " .. key, hl.dsp.window.move({ workspace = i }))
           end
 
           hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
@@ -149,9 +148,9 @@
           hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
           hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
-          hl.bind(mainMod .. " + SHIFT + s",
+          hl.bind("SHIFT + " .. mainMod .. " + s",
             hl.dsp.exec_cmd([[wayfreeze & sleep 0.2 && grim -g "$(slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy; kill %1]]))
-          hl.bind(mainMod .. " + SHIFT + Home",
+          hl.bind("SHIFT + " .. mainMod .. " + Home",
             hl.dsp.exec_cmd([[grim -g "$(hyprctl monitors -j | jq -r '.[] | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy]]))
 
           hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
