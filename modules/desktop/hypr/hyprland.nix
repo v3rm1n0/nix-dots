@@ -10,224 +10,31 @@
       inherit (config.userOptions) username;
       inherit (config.lib.stylix) colors;
 
-      toHyprValue =
-        v:
-        if builtins.isString v then
-          v
-        else if builtins.isBool v then
-          (if v then "true" else "false")
-        else if builtins.isInt v || builtins.isFloat v then
-          toString v
-        else
-          builtins.toJSON v;
-
-      sortKeys =
-        attrs:
+      monitorLine =
+        m:
         let
-          keys = builtins.attrNames attrs;
-          first = [
-            "bezier"
-            "name"
-          ];
-          priority = lib.filter (k: builtins.elem k first) keys;
-          rest = lib.filter (k: !(builtins.elem k first)) keys;
+          r = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
+          p = "${toString m.x}x${toString m.y}";
         in
-        priority ++ rest;
+        if m.enabled then
+          "hl.monitor({ output = \"${m.name}\", mode = \"${r}\", position = \"${p}\", scale = \"auto\" })"
+        else
+          "hl.monitor({ output = \"${m.name}\", disable = true })";
 
-      renderAttrs =
-        indent: attrs:
-        lib.concatMapStrings (
-          k:
-          let
-            v = attrs.${k};
-          in
-          if builtins.isAttrs v then
-            "${indent}${k} {\n${renderAttrs "${indent}  " v}${indent}}\n"
-          else if builtins.isList v then
-            lib.concatMapStrings (
-              item:
-              if builtins.isAttrs item then
-                "${indent}${k} {\n${renderAttrs "${indent}  " item}${indent}}\n"
-              else
-                "${indent}${k} = ${toHyprValue item}\n"
-            ) v
-          else
-            "${indent}${k} = ${toHyprValue v}\n"
-        ) (sortKeys attrs);
+      monitorsLua = lib.concatMapStrings (m: monitorLine m + "\n") config.monitors;
 
-      toHyprConf = settings: renderAttrs "" settings;
+      workspaceLine =
+        monitor: workspace:
+        "hl.workspace_rule({ workspace = \"${toString workspace}\", monitor = \"${monitor.name}\"${
+          lib.optionalString (workspace == monitor.workspacePrimary) ", default_workspace = true"
+        } })";
 
-      hyprlandSettings = {
-        monitor = map (
-          m:
-          let
-            resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
-            position = "${toString m.x}x${toString m.y}";
-          in
-          "${m.name},${if m.enabled then "${resolution},${position},1" else "disable"}"
-        ) config.monitors;
-
-        workspace =
-          builtins.concatLists (
-            map (
-              monitor:
-              map (
-                workspace:
-                "${toString workspace}, monitor:${monitor.name}${
-                  lib.optionalString (workspace == monitor.workspacePrimary) ", default:true"
-                }"
-              ) monitor.workspaces
-            ) config.monitors
-          )
-          ++ [ "2,split:v" ];
-
-        "ecosystem:no_update_news" = true;
-
-        input = {
-          kb_layout = "us, de";
-          follow_mouse = "1";
-          touchpad.natural_scroll = "no";
-          numlock_by_default = true;
-        };
-
-        general = {
-          gaps_in = "5";
-          gaps_out = "10";
-          border_size = "2";
-          layout = "dwindle";
-          "col.active_border" = "rgb(${colors.base0D})";
-          "col.inactive_border" = "rgb(${colors.base03})";
-        };
-
-        misc.disable_hyprland_logo = true;
-
-        decoration = {
-          rounding = "20";
-          rounding_power = "2";
-          blur = {
-            enabled = true;
-            size = "3";
-            passes = "2";
-            vibrancy = "0.1696";
-          };
-          shadow = {
-            enabled = true;
-            range = "4";
-            render_power = "3";
-          };
-        };
-
-        bezier = [ "myBezier, 0.05, 0.9, 0.1, 1.05" ];
-
-        animations = {
-          enabled = true;
-          animation = [
-            "windows, 1, 7, myBezier"
-            "windowsOut, 1, 7, default, popin 80%"
-            "border, 1, 10, default"
-            "borderangle, 1, 8, default"
-            "fade, 1, 7, default"
-            "workspaces, 1, 6, default"
-          ];
-        };
-
-        dwindle = {
-          split_width_multiplier = 1.35;
-          pseudotile = true;
-        };
-
-        "$mainMod" = "ALT_L";
-
-        bind = [
-          "$mainMod, T, exec, ghostty"
-          "Shift_L&Alt_L, Q, killactive,"
-          "$mainMod, M, exit,"
-          "$mainMod, E, exec, nautilus"
-          "$mainMod, V, togglefloating,"
-          "$mainMod, P, pseudo, # dwindle"
-          "Super_L&Alt_L, L, exec, hyprlock"
-          "$mainMod, SPACE, exec, vicinae toggle"
-          "$mainMod, R, exec, ${config.userOptions.browser}"
-          "$mainMod, h, movefocus, l"
-          "$mainMod, l, movefocus, r"
-          "$mainMod, k, movefocus, u"
-          "$mainMod, j, movefocus, d"
-          "$mainMod SHIFT, h, movewindow, l"
-          "$mainMod SHIFT, l, movewindow, r"
-          "$mainMod SHIFT, k, movewindow, u"
-          "$mainMod SHIFT, j, movewindow, d"
-          "$mainMod CTRL, h, resizeactive, -50 0"
-          "$mainMod CTRL, l, resizeactive, 50 0"
-          "$mainMod CTRL, k, resizeactive, 0 -50"
-          "$mainMod CTRL, j, resizeactive, 0 50"
-          "$mainMod, 1, workspace, 1"
-          "$mainMod, 2, workspace, 2"
-          "$mainMod, 3, workspace, 3"
-          "$mainMod, 4, workspace, 4"
-          "$mainMod, 5, workspace, 5"
-          "$mainMod, 6, workspace, 6"
-          "$mainMod, 7, workspace, 7"
-          "$mainMod, 8, workspace, 8"
-          "$mainMod, 9, workspace, 9"
-          "$mainMod, 0, workspace, 10"
-          "$mainMod SHIFT, 1, movetoworkspace, 1"
-          "$mainMod SHIFT, 2, movetoworkspace, 2"
-          "$mainMod SHIFT, 3, movetoworkspace, 3"
-          "$mainMod SHIFT, 4, movetoworkspace, 4"
-          "$mainMod SHIFT, 5, movetoworkspace, 5"
-          "$mainMod SHIFT, 6, movetoworkspace, 6"
-          "$mainMod SHIFT, 7, movetoworkspace, 7"
-          "$mainMod SHIFT, 8, movetoworkspace, 8"
-          "$mainMod SHIFT, 9, movetoworkspace, 9"
-          "$mainMod SHIFT, 0, movetoworkspace, 10"
-          "$mainMod, mouse_down, workspace, e+1"
-          "$mainMod, mouse_up, workspace, e-1"
-          "$mainMod SHIFT, s, exec, wayfreeze & sleep 0.2 && grim -g \"$(slurp)\" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy; kill %1"
-          "$mainMod SHIFT, Home, exec, grim -g \"$(hyprctl monitors -j | jq -r '.[] | \"\\(.x),\\(.y) \\(.width)x\\(.height)\"' | slurp)\" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy"
-          ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
-          ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
-          ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-          ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
-          ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
-        ];
-
-        bindm = [
-          "$mainMod, mouse:272, movewindow"
-          "$mainMod, mouse:273, resizewindow"
-        ];
-
-        windowrule = [
-          {
-            name = "teamspeak-ws-2";
-            workspace = "2 silent";
-            tile = "on";
-            "match:initial_class" = "^(teamspeak-client)";
-          }
-          {
-            name = "discord-ws-2";
-            workspace = "2 silent";
-            tile = "on";
-            "match:initial_class" = "^(equibop)$";
-          }
-          {
-            name = "spotify-ws-2";
-            workspace = "2 silent";
-            tile = "on";
-            "match:initial_class" = "^(spotify)";
-          }
-          {
-            name = "steam-ws-8";
-            workspace = "8 silent";
-            "match:initial_class" = "^(steam)";
-          }
-        ];
-
-        exec-once = [
-          "noctalia-shell"
-          "TeamSpeak"
-        ];
-      };
+      workspacesLua =
+        lib.concatStringsSep "\n" (
+          builtins.concatLists (map (monitor: map (workspaceLine monitor) monitor.workspaces) config.monitors)
+          ++ [ "hl.workspace_rule({ workspace = \"2\", layout_opts = { split = \"v\" } })" ]
+        )
+        + "\n";
     in
     {
       imports = [ self.nixosModules.modulesDesktopHyprMonitors ];
@@ -241,8 +48,151 @@
         QT_QPA_PLATFORM = "wayland";
       };
 
-      hjem.users.${username}.files.".config/hypr/hyprland.conf" = {
-        text = toHyprConf hyprlandSettings;
+      hjem.users.${username}.files.".config/hypr/hyprland.lua" = {
+        text = ''
+          ${monitorsLua}
+          ${workspacesLua}
+          hl.config({
+            general = {
+              gaps_in     = 5,
+              gaps_out    = 10,
+              border_size = 2,
+              layout      = "dwindle",
+              col = {
+                active_border   = "rgb(${colors.base0D})",
+                inactive_border = "rgb(${colors.base03})",
+              },
+            },
+            decoration = {
+              rounding       = 20,
+              rounding_power = 2,
+              blur = {
+                enabled  = true,
+                size     = 3,
+                passes   = 2,
+                vibrancy = 0.1696,
+              },
+              shadow = {
+                enabled      = true,
+                range        = 4,
+                render_power = 3,
+              },
+            },
+            animations = {
+              enabled = true,
+            },
+            input = {
+              kb_layout          = "us, de",
+              follow_mouse       = 1,
+              numlock_by_default = true,
+              touchpad = {
+                natural_scroll = false,
+              },
+            },
+            misc = {
+              disable_hyprland_logo = true,
+            },
+            dwindle = {
+              split_width_multiplier = 1.35,
+              pseudotile             = true,
+            },
+            ecosystem = {
+              no_update_news = true,
+            },
+          })
+
+          hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
+
+          hl.animation({ leaf = "windows",     enabled = true, speed = 7,  bezier = "myBezier" })
+          hl.animation({ leaf = "windowsOut",  enabled = true, speed = 7,  bezier = "default", style = "popin 80%" })
+          hl.animation({ leaf = "border",      enabled = true, speed = 10, bezier = "default" })
+          hl.animation({ leaf = "borderangle", enabled = true, speed = 8,  bezier = "default" })
+          hl.animation({ leaf = "fade",        enabled = true, speed = 7,  bezier = "default" })
+          hl.animation({ leaf = "workspaces",  enabled = true, speed = 6,  bezier = "default" })
+
+          local mainMod = "ALT_L"
+
+          hl.bind(mainMod .. " + T",     hl.dsp.exec_cmd("ghostty"))
+          hl.bind("SHIFT + ALT_L + Q",   hl.dsp.window.close())
+          hl.bind(mainMod .. " + M",     hl.dsp.exit())
+          hl.bind(mainMod .. " + E",     hl.dsp.exec_cmd("nautilus"))
+          hl.bind(mainMod .. " + V",     hl.dsp.window.float({ action = "toggle" }))
+          hl.bind(mainMod .. " + P",     hl.dsp.window.pseudo())
+          hl.bind("SUPER + ALT_L + L",   hl.dsp.exec_cmd("hyprlock"))
+          hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
+          hl.bind(mainMod .. " + R",     hl.dsp.exec_cmd("${config.userOptions.browser}"))
+
+          hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }))
+          hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }))
+          hl.bind(mainMod .. " + k", hl.dsp.focus({ direction = "up" }))
+          hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "down" }))
+
+          hl.bind(mainMod .. " + SHIFT + h", hl.dsp.window.move({ direction = "left" }))
+          hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "right" }))
+          hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "up" }))
+          hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "down" }))
+
+          hl.bind(mainMod .. " + CTRL + h", hl.dsp.window.resize({ x = -50, y = 0,   relative = true }))
+          hl.bind(mainMod .. " + CTRL + l", hl.dsp.window.resize({ x = 50,  y = 0,   relative = true }))
+          hl.bind(mainMod .. " + CTRL + k", hl.dsp.window.resize({ x = 0,   y = -50, relative = true }))
+          hl.bind(mainMod .. " + CTRL + j", hl.dsp.window.resize({ x = 0,   y = 50,  relative = true }))
+
+          for i = 1, 10 do
+            local key = i % 10
+            hl.bind(mainMod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
+            hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+          end
+
+          hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+          hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+
+          hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
+          hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+          hl.bind(mainMod .. " + SHIFT + s",
+            hl.dsp.exec_cmd([[wayfreeze & sleep 0.2 && grim -g "$(slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy; kill %1]]))
+          hl.bind(mainMod .. " + SHIFT + Home",
+            hl.dsp.exec_cmd([[grim -g "$(hyprctl monitors -j | jq -r '.[] | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy]]))
+
+          hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+          hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
+          hl.bind("XF86AudioMute",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),       { locked = true })
+          hl.bind("XF86AudioMicMute",      hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),     { locked = true })
+          hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl s +5%"),                              { locked = true })
+          hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"),                              { locked = true })
+
+          hl.window_rule({
+            name      = "teamspeak-ws-2",
+            match     = { initial_class = "^(teamspeak-client)" },
+            workspace = "2 silent",
+            tile      = true,
+          })
+
+          hl.window_rule({
+            name      = "discord-ws-2",
+            match     = { initial_class = "^(equibop)$" },
+            workspace = "2 silent",
+            tile      = true,
+          })
+
+          hl.window_rule({
+            name      = "spotify-ws-2",
+            match     = { initial_class = "^(spotify)" },
+            workspace = "2 silent",
+            tile      = true,
+          })
+
+          hl.window_rule({
+            name      = "steam-ws-8",
+            match     = { initial_class = "^(steam)" },
+            workspace = "8 silent",
+          })
+
+          hl.on("hyprland.start", function()
+            hl.exec_cmd("noctalia-shell")
+            hl.exec_cmd("TeamSpeak")
+          end)
+        '';
       };
     };
 }
