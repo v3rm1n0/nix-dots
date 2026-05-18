@@ -20,9 +20,14 @@
         };
 
         hjem.users.${username} = {
-          packages = (with pkgs; [ jq ]) ++ [
-            inputs.nixpkgs-ccusage.legacyPackages.${pkgs.stdenv.hostPlatform.system}.ccusage
-          ];
+          packages =
+            (with pkgs; [
+              jq
+              claude-code
+            ])
+            ++ [
+              inputs.nixpkgs-ccusage.legacyPackages.${pkgs.stdenv.hostPlatform.system}.ccusage
+            ];
 
           files.".claude/settings.json" = {
             generator = lib.generators.toJSON { };
