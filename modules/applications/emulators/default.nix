@@ -18,6 +18,7 @@ _: {
         hjem.users.${username}.packages = with pkgs; [
           qemu
           quickemu
+          winboat
         ];
 
         programs.virt-manager.enable = true;
