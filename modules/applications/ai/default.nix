@@ -15,7 +15,7 @@
 
       config = lib.mkIf config.programs.ai.enable {
         services.ollama = {
-          enable = true;
+          enable = false;
           package = pkgs.ollama-cuda;
         };
 
