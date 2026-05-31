@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-ccusage.url = "github:NixOS/nixpkgs/pull/453892/head";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     helium.url = "github:FKouhai/helium2nix/main";
@@ -9,6 +8,7 @@
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    llm-agents.url = "github:numtide/llm-agents.nix";
     nixcord.url = "github:FlameFlag/nixcord";
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";

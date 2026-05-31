@@ -26,7 +26,7 @@
               claude-code
             ])
             ++ [
-              inputs.nixpkgs-ccusage.legacyPackages.${pkgs.stdenv.hostPlatform.system}.ccusage
+              inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.ccusage
             ];
 
           files.".claude/settings.json" = {
