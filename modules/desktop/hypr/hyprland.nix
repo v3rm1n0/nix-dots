@@ -176,7 +176,7 @@
 
           hl.window_rule({
             name      = "spotify-ws-2",
-            match     = { initial_class = "^(spotify)" },
+            match     = { initial_class = "^(Spotify)" },
             workspace = "2 silent",
             tile      = true,
           })
