@@ -5,7 +5,7 @@ _: {
         enable = true;
         brand = "nvidia";
       };
-      razer.enable = true;
+      razer.enable = false;
     };
   };
 }
