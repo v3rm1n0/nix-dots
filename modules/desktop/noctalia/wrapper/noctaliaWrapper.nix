@@ -29,10 +29,15 @@
                     id = "ControlCenter";
                     useDistroLogo = true;
                   }
-                  { id = "SystemMonitor"; }
+                  {
+                    id = "SystemMonitor";
+                    showMemoryUsage = true;
+                    showNetworkStats = true;
+                  }
                   {
                     id = "Workspace";
-                    labelMode = "none";
+                    labelMode = "index";
+                    showApplications = true;
                   }
                   {
                     id = "AudioVisualizer";
