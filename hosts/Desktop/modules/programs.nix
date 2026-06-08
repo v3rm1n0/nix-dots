@@ -20,6 +20,7 @@
           };
         };
         content.enable = lib.mkForce true;
+        tdarr.enable = true;
         dev.optionalPackages = [
           pkgs.zed-editor
         ];

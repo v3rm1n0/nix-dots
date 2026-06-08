@@ -12,6 +12,7 @@
       self.nixosModules.applicationsGaming
       self.nixosModules.applicationsMedia
       self.nixosModules.applicationsProductivity
+      self.nixosModules.applicationsTdarr
       self.nixosModules.applicationsTerminal
       self.nixosModules.applicationsUni
     ];
