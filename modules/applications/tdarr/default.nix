@@ -51,8 +51,8 @@ _: {
 
         services.tdarr.nodes.desktop = {
           serverURL = "http://172.16.0.115:8266";
-          workers.transcodeCPU = 2;
-          workers.transcodeGPU = 2;
+          workers.transcodeCPU = 0;
+          workers.transcodeGPU = 5;
         };
 
         systemd.services.tdarr-node-desktop.serviceConfig.ReadWritePaths = [ "/media" ];
