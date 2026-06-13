@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.modulesShellP10k =
+  flake.nixosModules.modulesShellZshP10k =
     { config, lib, ... }:
     let
       inherit (config.userOptions) username;
