@@ -73,30 +73,32 @@
         ...
       }:
       {
-        packages.neovim = inputs.wrapper-modules.wrappers.neovim.wrap {
-          inherit pkgs;
-          imports = [
-            self.modules.neovim.main
-            self.modules.neovim.lua
-            self.modules.neovim.nix
-          ];
-        };
+        packages = {
+          neovim = inputs.wrapper-modules.wrappers.neovim.wrap {
+            inherit pkgs;
+            imports = [
+              self.modules.neovim.main
+              self.modules.neovim.lua
+              self.modules.neovim.nix
+            ];
+          };
 
-        packages.neovimFull = inputs.wrapper-modules.wrappers.neovim.wrap {
-          inherit pkgs;
-          imports = [
-            self.modules.neovim.main
-            self.modules.neovim.allServers
-          ];
-        };
+          neovimFull = inputs.wrapper-modules.wrappers.neovim.wrap {
+            inherit pkgs;
+            imports = [
+              self.modules.neovim.main
+              self.modules.neovim.allServers
+            ];
+          };
 
-        packages.neovimDynamic = inputs.wrapper-modules.wrappers.neovim.wrap {
-          inherit pkgs;
-          dynamicMode = true;
-          imports = [
-            self.modules.neovim.main
-            self.modules.neovim.allServers
-          ];
+          neovimDynamic = inputs.wrapper-modules.wrappers.neovim.wrap {
+            inherit pkgs;
+            dynamicMode = true;
+            imports = [
+              self.modules.neovim.main
+              self.modules.neovim.allServers
+            ];
+          };
         };
       };
   };

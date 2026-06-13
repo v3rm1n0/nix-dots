@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.nixosModules.assets =
     { config, ... }:
     let

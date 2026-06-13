@@ -1,10 +1,12 @@
 _: {
   flake.nixosModules.modulesShellP10k =
-    { config, ... }:
+    { config, lib, ... }:
     let
       inherit (config.userOptions) username;
     in
     {
-      hjem.users.${username}.files.".config/zsh/.p10k.zsh".source = ./p10k.zsh;
+      config = lib.mkIf config.shell.zsh.enable {
+        hjem.users.${username}.files.".config/zsh/.p10k.zsh".source = ./p10k.zsh;
+      };
     };
 }

@@ -23,15 +23,17 @@ let
     };
 in
 {
-  flake.modules.neovim.lua = luaModule;
-  flake.modules.neovim.nix = nixModule;
+  flake.modules.neovim = {
+    lua = luaModule;
+    nix = nixModule;
 
-  # Use let-bound references instead of self.modules.neovim.* to avoid
-  # circular evaluation through the flake.modules.neovim attrset
-  flake.modules.neovim.allServers = {
-    imports = [
-      luaModule
-      nixModule
-    ];
+    # Use let-bound references instead of self.modules.neovim.* to avoid
+    # circular evaluation through the flake.modules.neovim attrset
+    allServers = {
+      imports = [
+        luaModule
+        nixModule
+      ];
+    };
   };
 }
