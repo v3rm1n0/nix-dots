@@ -93,6 +93,22 @@
         "type": "github"
       }
     },
+    "brave-origin": {
+      "locked": {
+        "lastModified": 1781252981,
+        "narHash": "sha256-mBGF67cT9s6OGSKcFhsxnKnhILUOGH8o8NaP7wBAADw=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "bc995a0268ea2acf93b9ea255986bf37d1959ff9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "pull/511131/merge",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "bun2nix": {
       "inputs": {
         "flake-parts": [
@@ -636,6 +652,7 @@
     },
     "root": {
       "inputs": {
+        "brave-origin": "brave-origin",
         "flake-parts": "flake-parts",
         "helium": "helium",
         "hjem": "hjem",
