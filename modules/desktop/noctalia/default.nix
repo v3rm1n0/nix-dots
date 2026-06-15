@@ -108,8 +108,6 @@
         };
     in
     {
-      imports = [ inputs.noctalia.nixosModules.default ];
-
       environment.systemPackages = [
         (mkNoctalia { withBattery = hostName == "Laptop"; })
       ];
