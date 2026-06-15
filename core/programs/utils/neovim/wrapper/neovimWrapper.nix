@@ -45,7 +45,7 @@
         config = {
           settings.config_directory = if config.dynamicMode then config.dynamicInitLua else config.initLua;
 
-          extraPackages = [
+          runtimePkgs = [
             pkgs.ffmpeg-full
             pkgs.imagemagick
             pkgs.wl-clipboard

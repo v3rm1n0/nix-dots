@@ -3,7 +3,7 @@ let
   luaModule =
     { pkgs, ... }:
     {
-      extraPackages = [
+      runtimePkgs = [
         pkgs.lua-language-server
       ];
 
@@ -16,7 +16,7 @@ let
   nixModule =
     { pkgs, ... }:
     {
-      extraPackages = [
+      runtimePkgs = [
         pkgs.nixd
         pkgs.nixfmt
       ];
