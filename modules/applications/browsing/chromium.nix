@@ -49,13 +49,13 @@ _: {
             "SafeBrowsingExtendedReportingEnabled" = false;
           };
           extensions = [
-            #"nngceckbapebfimnlniiiahkandclblb" # Bitwarden
+            "nngceckbapebfimnlniiiahkandclblb" # Bitwarden
             "enamippconapkdmgfgjchkhakpfinmaj" # DeArrow
             "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
             "mlomiejdfkolichcflejclcbmpeaniij" # Ghostery
             "bggfcpfjbdkhfhfmkjpbhnkhnpjjeomc" # Material Icons for GitHub
             #"pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
-            "ghmbeldphafepmbegfdlkpapadhbakde" # Proton Pass
+            #"ghmbeldphafepmbegfdlkpapadhbakde" # Proton Pass
             "gebbhagfogifgggkldgodflihgfeippi" # Return YouTube Dislike
             #"cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
             "ponfpcnoihfmfllpaingbgckeeldkhle" # YouTube Enhancer
