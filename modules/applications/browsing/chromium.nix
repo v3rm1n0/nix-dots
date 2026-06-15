@@ -41,7 +41,7 @@ _: {
             "DefaultSearchProviderEnabled" = true;
             "DefaultSearchProviderAlternateURLs" = [ "https://search.v3rm1n.dev/?q={searchTerms}" ];
             "DnsOverHttpsMode" = "secure";
-            "DnsOverHttpsTemplates" = "https://ag.v3rm1n.dev/dns-query{?dns}";
+            "DnsOverHttpsTemplates" = "https://dns.v3rm1n.dev/dns-query{?dns}";
             "RestoreOnStartup" = 4; # Restore specified pages
             "RestoreOnStartupURLs" = [ "https://start.v3rm1n.dev" ];
             "MetricsReportingEnabled" = false;
@@ -49,13 +49,13 @@ _: {
             "SafeBrowsingExtendedReportingEnabled" = false;
           };
           extensions = [
-            #"nngceckbapebfimnlniiiahkandclblb" # Bitwarden
+            "nngceckbapebfimnlniiiahkandclblb" # Bitwarden
             "enamippconapkdmgfgjchkhakpfinmaj" # DeArrow
             "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
             "mlomiejdfkolichcflejclcbmpeaniij" # Ghostery
             "bggfcpfjbdkhfhfmkjpbhnkhnpjjeomc" # Material Icons for GitHub
             #"pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
-            "ghmbeldphafepmbegfdlkpapadhbakde" # Proton Pass
+            #"ghmbeldphafepmbegfdlkpapadhbakde" # Proton Pass
             "gebbhagfogifgggkldgodflihgfeippi" # Return YouTube Dislike
             #"cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
             "ponfpcnoihfmfllpaingbgckeeldkhle" # YouTube Enhancer

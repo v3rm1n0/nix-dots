@@ -23,7 +23,7 @@
           ${lib.getExe pkgs.tirith} init --shell fish | source
           ${lib.getExe pkgs.zoxide} init fish --cmd cd | source
         '';
-        extraPackages = [ self'.packages.starship ];
+        runtimePkgs = [ self'.packages.starship ];
         flags."--no-config" = false;
         plugins = with pkgs.fishPlugins; [
           bass

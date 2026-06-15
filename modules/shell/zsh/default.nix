@@ -11,6 +11,8 @@
       myAliases = self.lib.commonAliases;
     in
     {
+      imports = [ self.nixosModules.modulesShellZshP10k ];
+
       options.shell.zsh.enable = lib.mkEnableOption "Enable zsh Module";
 
       config = lib.mkIf config.shell.zsh.enable {

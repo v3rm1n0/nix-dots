@@ -47,17 +47,19 @@
         };
       };
 
-      programs.hyprland = {
-        enable = true;
-        xwayland.enable = true;
-        withUWSM = true;
-      };
+      programs = {
+        hyprland = {
+          enable = true;
+          xwayland.enable = true;
+          withUWSM = true;
+        };
 
-      programs.nautilus-open-any-terminal = {
-        enable = true;
-        terminal = "ghostty";
-      };
+        nautilus-open-any-terminal = {
+          enable = true;
+          terminal = "ghostty";
+        };
 
-      programs.uwsm.enable = true;
+        uwsm.enable = true;
+      };
     };
 }
