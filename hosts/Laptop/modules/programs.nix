@@ -7,7 +7,7 @@
         browsing = {
           chromium = {
             enable = true;
-            package = inputs.helium.defaultPackage.${pkgs.stdenv.hostPlatform.system};
+            package = inputs.brave-origin.legacyPackages.${pkgs.stdenv.hostPlatform.system}.brave-origin;
           };
         };
       };

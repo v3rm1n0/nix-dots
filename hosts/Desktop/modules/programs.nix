@@ -11,7 +11,7 @@
         ai.enable = true;
         browsing = {
           chromium = {
-            enable = true;
+            enable = false;
             package = inputs.brave-origin.legacyPackages.${pkgs.stdenv.hostPlatform.system}.brave-origin;
           };
           firefox = {

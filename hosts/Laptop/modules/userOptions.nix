@@ -3,7 +3,7 @@ _: {
     { config, ... }:
     {
       config.userOptions = {
-        browser = "helium";
+        browser = "brave-origin";
         colorScheme = "gruvbox-dark-hard";
         dots = "/home/${config.userOptions.username}/dotfiles";
         hostName = "Laptop";

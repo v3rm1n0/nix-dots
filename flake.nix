@@ -4,7 +4,6 @@
     brave-origin.url = "github:nixos/nixpkgs/pull/511131/merge";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
-    helium.url = "github:FKouhai/helium2nix/main";
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
