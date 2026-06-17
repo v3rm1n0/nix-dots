@@ -17,7 +17,7 @@
           p = "${toString m.x}x${toString m.y}";
         in
         if m.enabled then
-          "hl.monitor({ output = \"${m.name}\", mode = \"${r}\", position = \"${p}\", scale = \"auto\" })"
+          "hl.monitor({ output = \"${m.name}\", mode = \"${r}\", position = \"${p}\", scale = \"1\" })"
         else
           "hl.monitor({ output = \"${m.name}\", disable = true })";
 
