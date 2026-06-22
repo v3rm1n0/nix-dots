@@ -16,7 +16,7 @@
           };
           firefox = {
             enable = true;
-            package = pkgs.librewolf;
+            package = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default;
           };
         };
         content.enable = lib.mkForce true;

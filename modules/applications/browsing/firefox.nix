@@ -81,6 +81,33 @@ _: {
                 OverrideFirstRunPage = "https://start.v3rm1n.dev";
                 OverridePostUpdatePage = "";
                 SearchBar = "unified";
+                SearchEngines = {
+                  Default = "V3RM1N Search";
+                  Add = [
+                    {
+                      Name = "V3RM1N Search";
+                      URLTemplate = "https://search.v3rm1n.dev/search?q={searchTerms}";
+                    }
+                    {
+                      Name = "nixpkgs packages";
+                      URLTemplate = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}";
+                      IconURL = "https://wiki.nixos.org/favicon.ico";
+                      Alias = "@np";
+                    }
+                    {
+                      Name = "NixOS options";
+                      URLTemplate = "https://search.nixos.org/options?channel=unstable&query={searchTerms}";
+                      IconURL = "https://wiki.nixos.org/favicon.ico";
+                      Alias = "@no";
+                    }
+                    {
+                      Name = "NixOS Wiki";
+                      URLTemplate = "https://wiki.nixos.org/w/index.php?search={searchTerms}";
+                      IconURL = "https://wiki.nixos.org/favicon.ico";
+                      Alias = "@nw";
+                    }
+                  ];
+                };
 
                 # ─── Extensions ───────────────────────────────────────────────────────────────
                 ExtensionSettings =

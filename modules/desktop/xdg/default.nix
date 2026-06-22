@@ -8,7 +8,11 @@ _: {
     }:
     let
       inherit (config.userOptions) username;
-      librewolf = config.programs.browsing.firefox.package == pkgs.librewolf;
+      librewolf =
+        let
+          pkg = config.programs.browsing.firefox.package;
+        in
+        pkg != null && lib.hasPrefix "librewolf" (pkg.pname or pkg.name or "");
       chromium = config.programs.browsing.chromium.enable;
     in
     {

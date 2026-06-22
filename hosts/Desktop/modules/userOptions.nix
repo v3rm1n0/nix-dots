@@ -3,7 +3,7 @@ _: {
     { config, ... }:
     {
       config.userOptions = {
-        browser = "librewolf";
+        browser = "zen";
         colorScheme = "gruvbox-dark-hard";
         dots = "/home/${config.userOptions.username}/dotfiles";
         hostName = "Desktop";
