@@ -24,6 +24,12 @@
         ];
       };
 
-      hjem.users.${username}.enable = true;
+      hjem = {
+        extraModules = [
+          inputs.hjem-rum.hjemModules.default
+        ];
+        users.${username}.enable = true;
+        clobberByDefault = true;
+      };
     };
 }
