@@ -1,4 +1,4 @@
-_: {
+{ pkgs, ... }: {
   flake.nixosModules.coreProgramsUtilsGit = {
     programs.git = {
       enable = true;
@@ -13,5 +13,6 @@ _: {
         };
       };
     };
+    environment.systemPackages = with pkgs; [ jujutsu ];
   };
 }
