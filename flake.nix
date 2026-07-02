@@ -8,6 +8,11 @@
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hjem-rum = {
+      url = "github:snugnug/hjem-rum";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.hjem.follows = "hjem";
+    };
     llm-agents.url = "github:numtide/llm-agents.nix";
     nixcord.url = "github:FlameFlag/nixcord";
     noctalia = {
