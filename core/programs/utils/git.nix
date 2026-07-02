@@ -1,5 +1,10 @@
-{ pkgs, ... }: {
-  flake.nixosModules.coreProgramsUtilsGit = {
+_: {
+  flake.nixosModules.coreProgramsUtilsGit = 
+    {
+      pkgs,
+      ...
+    }:
+    {
     programs.git = {
       enable = true;
       config = {
