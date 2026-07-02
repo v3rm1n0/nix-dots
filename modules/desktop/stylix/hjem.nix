@@ -197,42 +197,40 @@ _: {
         pkgs.adw-gtk3
       ];
 
-      hjem.users.${username}.files = {
-        # Makes the cursor theme the system default (picked up by GTK, SDL2, etc.)
-        ".local/share/icons/default/index.theme".text = ''
-          [Icon Theme]
-          Name=Default
-          Comment=Default cursor theme
-          Inherits=${cursorName}
-        '';
+      hjem.users.${username} = {
+        # GTK — mirrors stylix/hm/cursor.nix + modules/gtk/hm.nix.
+        # rum prepends "gtk-" to each setting name and writes both gtk-3.0
+        # and gtk-4.0 settings.ini.
+        rum.misc.gtk = {
+          enable = true;
+          settings = {
+            application-prefer-dark-mode = if dark then 1 else 0;
+            cursor-theme-name = cursorName;
+            cursor-theme-size = cursorSize;
+            font-name = fontName;
+            icon-theme-name = iconTheme;
+            theme-name = gtkTheme;
+          };
+          css.gtk3 = gtkCss;
+          css.gtk4 = gtkCss;
+        };
 
-        # GTK — mirrors stylix/hm/cursor.nix + modules/gtk/hm.nix
-        ".config/gtk-3.0/settings.ini".text = ''
-          [Settings]
-          gtk-application-prefer-dark-mode = ${if dark then "1" else "0"}
-          gtk-cursor-theme-name = ${cursorName}
-          gtk-cursor-theme-size = ${cursorSize}
-          gtk-font-name = ${fontName}
-          gtk-icon-theme-name = ${iconTheme}
-          gtk-theme-name = ${gtkTheme}
-        '';
-        ".config/gtk-4.0/settings.ini".text = ''
-          [Settings]
-          gtk-application-prefer-dark-mode = ${if dark then "1" else "0"}
-          gtk-cursor-theme-name = ${cursorName}
-          gtk-cursor-theme-size = ${cursorSize}
-          gtk-font-name = ${fontName}
-          gtk-icon-theme-name = ${iconTheme}
-        '';
-        ".config/gtk-3.0/gtk.css".text = gtkCss;
-        ".config/gtk-4.0/gtk.css".text = gtkCss;
+        files = {
+          # Makes the cursor theme the system default (picked up by GTK, SDL2, etc.)
+          ".local/share/icons/default/index.theme".text = ''
+            [Icon Theme]
+            Name=Default
+            Comment=Default cursor theme
+            Inherits=${cursorName}
+          '';
 
-        # btop — mirrors stylix modules/btop/hm.nix
-        ".config/btop/themes/stylix.theme".text = btopTheme;
-        ".config/btop/btop.conf".text = ''
-          color_theme = "stylix"
-          theme_background = false
-        '';
+          # btop — mirrors stylix modules/btop/hm.nix
+          ".config/btop/themes/stylix.theme".text = btopTheme;
+          ".config/btop/btop.conf".text = ''
+            color_theme = "stylix"
+            theme_background = false
+          '';
+        };
       };
     };
 }
