@@ -8,6 +8,7 @@
       self.nixosModules.coreServicesPowerProfiles
       self.nixosModules.coreServicesRtkit
       self.nixosModules.coreServicesUpower
+      self.nixosModules.coreServicesNetwork
     ];
   };
 }

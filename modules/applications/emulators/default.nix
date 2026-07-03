@@ -24,7 +24,10 @@ _: {
         programs.virt-manager.enable = true;
         users.users.${username}.extraGroups = [ "libvirtd" ];
         virtualisation = {
-          docker.enable = true;
+          docker = {
+            enable = true;
+            enableOnBoot = false;
+          };
           libvirtd.enable = true;
           spiceUSBRedirection.enable = true;
         };
