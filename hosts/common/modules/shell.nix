@@ -2,7 +2,7 @@ _: {
   flake.nixosModules.hostCommonModulesShell = {
     config.shell = {
       bash.enable = true;
-      fish.enable = false;
+      fish.enable = true;
       zsh.enable = true;
     };
   };

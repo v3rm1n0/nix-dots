@@ -14,7 +14,7 @@
 
       programs.zsh.enable = true;
       users.users.${username} = {
-        shell = pkgs.zsh;
+        shell = pkgs.fish;
         isNormalUser = true;
         hashedPassword = "$6$TSeuDdaiycwV2p9R$SfYPYi5lKha0PLWOqoCXTJW8/SthhJ3R99Hfvo8g5AT5hR3BZIUTmXNmxU03DyJNrSu/yh6SDwkbEXIOOlETO.";
         extraGroups = [
