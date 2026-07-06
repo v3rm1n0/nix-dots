@@ -9,8 +9,6 @@ _: {
       inherit (config.userOptions) username;
     in
     {
-      environment.systemPackages = with pkgs; [ jujutsu ];
-
       hjem.users.${username}.rum.programs.git = {
         enable = true;
         settings = {
