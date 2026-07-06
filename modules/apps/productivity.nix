@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.applicationsProductivity =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -10,9 +10,9 @@ _: {
       inherit (config.userOptions) username;
     in
     {
-      options.programs.productivity.enable = lib.mkEnableOption "Enable the office module";
+      options.mods.apps.productivity.enable = lib.mkEnableOption "Enable the office module";
 
-      config = lib.mkIf config.programs.productivity.enable {
+      config = lib.mkIf config.mods.apps.productivity.enable {
         hjem.users.${username}.packages = with pkgs; [
           obsidian
           onlyoffice-desktopeditors

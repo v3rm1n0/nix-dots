@@ -4,7 +4,6 @@
     imports = [
       self.nixosModules.hostLaptopModulesHardware
       self.nixosModules.hostLaptopModulesMonitors
-      self.nixosModules.hostLaptopModulesPrograms
     ];
   };
 }

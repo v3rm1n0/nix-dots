@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.nixosModules.applicationsAi =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -11,9 +11,9 @@
       inherit (config.userOptions) username;
     in
     {
-      options.programs.ai.enable = lib.mkEnableOption "Enables ai module";
+      options.mods.apps.ai.enable = lib.mkEnableOption "Enables ai module";
 
-      config = lib.mkIf config.programs.ai.enable {
+      config = lib.mkIf config.mods.apps.ai.enable {
         services.ollama = {
           enable = false;
           package = pkgs.ollama-cuda;

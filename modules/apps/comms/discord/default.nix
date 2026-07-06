@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.nixosModules.applicationsCommsDiscord =
+  flake.modules.nixos.default =
     { config, lib, ... }:
     let
       inherit (config.userOptions) username;
@@ -8,7 +8,7 @@
     {
       imports = [ inputs.nixcord.nixosModules.nixcord ];
 
-      config = lib.mkIf config.programs.comms.enable {
+      config = lib.mkIf config.mods.apps.comms.enable {
         programs.nixcord = {
           enable = true;
           user = username;

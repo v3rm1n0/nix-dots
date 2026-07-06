@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.applicationsTerminal =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -10,9 +10,9 @@ _: {
       inherit (config.lib.stylix) colors;
     in
     {
-      options.programs.terminal.enable = lib.mkEnableOption "Enable terminal module";
+      options.mods.apps.terminal.enable = lib.mkEnableOption "Enable terminal module";
 
-      config = lib.mkIf config.programs.terminal.enable {
+      config = lib.mkIf config.mods.apps.terminal.enable {
         hjem.users.${username}.rum.programs.ghostty = {
           enable = true;
           settings = {

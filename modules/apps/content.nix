@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.applicationsContent =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -13,7 +13,7 @@ _: {
       defaultPackages = with pkgs; [ ];
     in
     {
-      options.programs.content = {
+      options.mods.apps.content = {
         enable = mkEnableOption "Enable content creation tools";
 
         optionalPackages = mkOption {
@@ -26,8 +26,8 @@ _: {
         };
       };
 
-      config = mkIf config.programs.content.enable {
-        environment.systemPackages = defaultPackages ++ config.programs.content.optionalPackages;
+      config = mkIf config.mods.apps.content.enable {
+        environment.systemPackages = defaultPackages ++ config.mods.apps.content.optionalPackages;
 
         programs.obs-studio = {
           enable = true;

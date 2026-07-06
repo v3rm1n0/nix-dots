@@ -10,10 +10,10 @@ _: {
       inherit (config.userOptions) username;
       librewolf =
         let
-          pkg = config.programs.browsing.firefox.package;
+          pkg = config.mods.apps.browsing.firefox.package;
         in
         pkg != null && lib.hasPrefix "librewolf" (pkg.pname or pkg.name or "");
-      chromium = config.programs.browsing.chromium.enable;
+      chromium = config.mods.apps.browsing.chromium.enable;
     in
     {
       xdg = {

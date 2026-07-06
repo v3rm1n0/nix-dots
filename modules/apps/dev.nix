@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.applicationsDev =
+  flake.modules.nixos.default =
     {
       lib,
       config,
@@ -17,7 +17,7 @@ _: {
       ];
     in
     {
-      options.programs.dev = {
+      options.mods.apps.dev = {
         enable = mkEnableOption "Enable developer tools";
 
         optionalPackages = mkOption {
@@ -31,8 +31,8 @@ _: {
         };
       };
 
-      config = mkIf config.programs.dev.enable {
-        environment.systemPackages = defaultPackages ++ config.programs.dev.optionalPackages;
+      config = mkIf config.mods.apps.dev.enable {
+        environment.systemPackages = defaultPackages ++ config.mods.apps.dev.optionalPackages;
       };
     };
 }

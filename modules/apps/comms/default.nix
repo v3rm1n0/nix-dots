@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.nixosModules.applicationsComms =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -11,11 +11,10 @@
       inherit (config.userOptions) username;
     in
     {
-      imports = [ self.nixosModules.applicationsCommsDiscord ];
 
-      options.programs.comms.enable = lib.mkEnableOption "Enables communication module";
+      options.mods.apps.comms.enable = lib.mkEnableOption "Enables communication module";
 
-      config = lib.mkIf config.programs.comms.enable {
+      config = lib.mkIf config.mods.apps.comms.enable {
         hjem.users.${username} = {
           packages = with pkgs; [
             cinny-desktop

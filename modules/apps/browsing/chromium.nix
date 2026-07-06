@@ -1,8 +1,8 @@
 _: {
-  flake.nixosModules.applicationsBrowsingChromium =
+  flake.modules.nixos.default =
     { config, lib, ... }:
     {
-      options.programs.browsing.chromium = {
+      options.mods.apps.browsing.chromium = {
         enable = lib.mkOption {
           type = lib.types.bool;
           default = false;
@@ -17,9 +17,9 @@ _: {
         };
       };
 
-      config = lib.mkIf config.programs.browsing.chromium.enable {
+      config = lib.mkIf config.mods.apps.browsing.chromium.enable {
         environment.systemPackages = [
-          config.programs.browsing.chromium.package
+          config.mods.apps.browsing.chromium.package
         ];
 
         programs.chromium = {

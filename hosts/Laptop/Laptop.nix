@@ -1,6 +1,7 @@
+{ inputs, ... }:
 {
   flake.modules.nixos."host/Laptop" =
-    { config, ... }:
+    { config, pkgs, ... }:
     {
       userOptions = {
         browser = "brave-origin";
@@ -9,6 +10,11 @@
         hostName = "Laptop";
         username = "v3rm1n";
         wallpaper = "rocket.png";
+      };
+
+      mods.apps.browsing.chromium = {
+        enable = true;
+        package = inputs.brave-origin.legacyPackages.${pkgs.stdenv.hostPlatform.system}.brave-origin;
       };
     };
 }

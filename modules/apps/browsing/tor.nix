@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.applicationsBrowsingTor =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -7,11 +7,11 @@ _: {
       ...
     }:
     {
-      options.programs.browsing.tor = {
+      options.mods.apps.browsing.tor = {
         enable = lib.mkEnableOption "Enable Tor Browser";
       };
 
-      config = lib.mkIf config.programs.browsing.tor.enable {
+      config = lib.mkIf config.mods.apps.browsing.tor.enable {
 
         environment.systemPackages = [
           pkgs.tor-browser

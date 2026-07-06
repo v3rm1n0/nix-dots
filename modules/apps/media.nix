@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.nixosModules.applicationsMedia =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -13,9 +13,9 @@
     {
       imports = [ inputs.spicetify-nix.nixosModules.default ];
 
-      options.programs.media.enable = lib.mkEnableOption "Enables media module";
+      options.mods.apps.media.enable = lib.mkEnableOption "Enables media module";
 
-      config = lib.mkIf config.programs.media.enable {
+      config = lib.mkIf config.mods.apps.media.enable {
         programs.spicetify.enable = true;
 
         hjem.users.${username} = {

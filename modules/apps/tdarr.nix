@@ -1,14 +1,14 @@
 _: {
-  flake.nixosModules.applicationsTdarr =
+  flake.modules.nixos.default =
     {
       config,
       lib,
       ...
     }:
     {
-      options.programs.tdarr.enable = lib.mkEnableOption "Enable tdarr node";
+      options.mods.apps.tdarr.enable = lib.mkEnableOption "Enable tdarr node";
 
-      config = lib.mkIf config.programs.tdarr.enable {
+      config = lib.mkIf config.mods.apps.tdarr.enable {
         fileSystems."/media" = {
           device = "172.16.0.99:/media";
           fsType = "nfs";

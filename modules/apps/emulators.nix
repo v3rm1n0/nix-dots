@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.applicationsEmulators =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -10,9 +10,9 @@ _: {
       inherit (config.userOptions) username;
     in
     {
-      options.programs.emulation.enable = lib.mkEnableOption "Enabled the emulation programs";
+      options.mods.apps.emulators.enable = lib.mkEnableOption "Enabled the emulation programs";
 
-      config = lib.mkIf config.programs.emulation.enable {
+      config = lib.mkIf config.mods.apps.emulators.enable {
         environment.systemPackages = with pkgs; [ docker-compose ];
 
         hjem.users.${username}.packages = with pkgs; [

@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.applicationsGaming =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -17,7 +17,7 @@ _: {
 
     in
     {
-      options.programs.gaming = {
+      options.mods.apps.gaming = {
         enable = mkEnableOption "Gaming profile with various gaming tools";
         optionalPackages = mkOption {
           type = types.listOf types.package;
@@ -29,8 +29,8 @@ _: {
         };
       };
 
-      config = mkIf config.programs.gaming.enable {
-        environment.systemPackages = defaultPackages ++ config.programs.gaming.optionalPackages;
+      config = mkIf config.mods.apps.gaming.enable {
+        environment.systemPackages = defaultPackages ++ config.mods.apps.gaming.optionalPackages;
 
         programs = {
           steam = {

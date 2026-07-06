@@ -2,7 +2,6 @@
 {
   flake.nixosModules.modules = {
     imports = [
-      self.nixosModules.modulesApplications
       self.nixosModules.modulesDesktop
       self.nixosModules.modulesHardware
       self.nixosModules.modulesSecurity

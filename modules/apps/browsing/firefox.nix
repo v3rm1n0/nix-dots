@@ -1,8 +1,8 @@
 _: {
-  flake.nixosModules.applicationsBrowsingFirefox =
+  flake.modules.nixos.default =
     { config, lib, ... }:
     {
-      options.programs.browsing.firefox = {
+      options.mods.apps.browsing.firefox = {
         enable = lib.mkOption {
           type = lib.types.bool;
           default = false;
@@ -19,7 +19,7 @@ _: {
 
       config =
         let
-          cfg = config.programs.browsing.firefox;
+          cfg = config.mods.apps.browsing.firefox;
           isLibreWolf =
             cfg.package != null && lib.hasPrefix "librewolf" (cfg.package.pname or cfg.package.name or "");
         in
