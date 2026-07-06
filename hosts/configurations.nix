@@ -1,12 +1,12 @@
 { self, inputs, ... }:
 let
-  # Each host shares the same module spine and differs only by its
-  # host-specific hardware/hardware-specific/modules trio, which follow
-  # the `host<Name><Role>` naming convention.
   mkHost =
     name:
     inputs.nixpkgs.lib.nixosSystem {
       modules = [
+        self.modules.nixos.default
+        self.modules.nixos."host/${name}"
+        # Legacy aggregates, emptied out area by area during the migration.
         self.nixosModules.assets
         self.nixosModules.users
         self.nixosModules.core

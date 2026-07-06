@@ -1,27 +1,10 @@
-# User Options Module
+# User Options
 #
-# This module defines the core user-level configuration options that are used
-# throughout the system. These options provide a centralized way to configure
-# user-specific settings without modifying individual modules.
-#
-# Usage:
-#   Set these options in your host configuration (e.g., hosts/Desktop/modules/userOptions.nix):
-#
-#   config.userOptions = {
-#     username = "myuser";
-#     hostName = "myhost";
-#     browser = "firefox";
-#     colorScheme = "kanagawa";
-#     wallpaper = "kanagawa.png";
-#     dots = "/home/myuser/.dotfiles";
-#   };
-#
-# These options are then accessible throughout all modules via `config.userOptions.*`
-_: {
-
-  flake.nixosModules.modulesUser =
+# Centralized user-level options referenced throughout the system via
+# `config.userOptions.*`. Hosts set them in hosts/<Name>/<Name>.nix.
+{
+  flake.modules.nixos.default =
     { lib, ... }:
-
     {
       options.userOptions = {
         browser = lib.mkOption {
@@ -68,7 +51,7 @@ _: {
           type = lib.types.str;
           description = ''
             The primary user's username for this system.
-            This is used throughout the configuration for Home Manager and user-specific settings.
+            This is used throughout the configuration for user-specific settings.
           '';
           example = "myuser";
         };

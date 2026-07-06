@@ -32,7 +32,7 @@
             };
             scripts = with pkgs.mpvScripts; [
               modernz
-              sponsorblock-minimal 
+              sponsorblock-minimal
               thumbfast
             ];
           };

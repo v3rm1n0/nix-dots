@@ -8,7 +8,6 @@
       self.nixosModules.modulesSecurity
       self.nixosModules.modulesServices
       self.nixosModules.modulesShell
-      self.nixosModules.modulesUser
     ];
   };
 }

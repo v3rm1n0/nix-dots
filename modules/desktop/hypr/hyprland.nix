@@ -116,41 +116,40 @@
             "TeamSpeak"
           ];
 
-          bind =
-            [
-              "$mainMod, T, exec, ghostty"
-              "SHIFT ALT, Q, killactive"
-              "$mainMod, M, exit"
-              "$mainMod, E, exec, nautilus"
-              "$mainMod, V, togglefloating"
-              "$mainMod, P, pseudo"
-              "SUPER ALT, L, exec, hyprlock"
-              "$mainMod, SPACE, exec, vicinae toggle"
-              "$mainMod, R, exec, ${browser}"
+          bind = [
+            "$mainMod, T, exec, ghostty"
+            "SHIFT ALT, Q, killactive"
+            "$mainMod, M, exit"
+            "$mainMod, E, exec, nautilus"
+            "$mainMod, V, togglefloating"
+            "$mainMod, P, pseudo"
+            "SUPER ALT, L, exec, hyprlock"
+            "$mainMod, SPACE, exec, vicinae toggle"
+            "$mainMod, R, exec, ${browser}"
 
-              "$mainMod, h, movefocus, l"
-              "$mainMod, l, movefocus, r"
-              "$mainMod, k, movefocus, u"
-              "$mainMod, j, movefocus, d"
+            "$mainMod, h, movefocus, l"
+            "$mainMod, l, movefocus, r"
+            "$mainMod, k, movefocus, u"
+            "$mainMod, j, movefocus, d"
 
-              "SHIFT $mainMod, h, movewindow, l"
-              "SHIFT $mainMod, l, movewindow, r"
-              "SHIFT $mainMod, k, movewindow, u"
-              "SHIFT $mainMod, j, movewindow, d"
+            "SHIFT $mainMod, h, movewindow, l"
+            "SHIFT $mainMod, l, movewindow, r"
+            "SHIFT $mainMod, k, movewindow, u"
+            "SHIFT $mainMod, j, movewindow, d"
 
-              "CTRL $mainMod, h, resizeactive, -50 0"
-              "CTRL $mainMod, l, resizeactive, 50 0"
-              "CTRL $mainMod, k, resizeactive, 0 -50"
-              "CTRL $mainMod, j, resizeactive, 0 50"
+            "CTRL $mainMod, h, resizeactive, -50 0"
+            "CTRL $mainMod, l, resizeactive, 50 0"
+            "CTRL $mainMod, k, resizeactive, 0 -50"
+            "CTRL $mainMod, j, resizeactive, 0 50"
 
-              "$mainMod, mouse_down, workspace, e+1"
-              "$mainMod, mouse_up, workspace, e-1"
-            ]
-            ++ workspaceBinds
-            ++ [
-              ''SHIFT $mainMod, s, exec, wayfreeze & sleep 0.2 && grim -g "$(slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy; kill %1''
-              ''SHIFT $mainMod, Home, exec, grim -g "$(hyprctl monitors -j | jq -r '.[] | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy''
-            ];
+            "$mainMod, mouse_down, workspace, e+1"
+            "$mainMod, mouse_up, workspace, e-1"
+          ]
+          ++ workspaceBinds
+          ++ [
+            ''SHIFT $mainMod, s, exec, wayfreeze & sleep 0.2 && grim -g "$(slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy; kill %1''
+            ''SHIFT $mainMod, Home, exec, grim -g "$(hyprctl monitors -j | jq -r '.[] | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy''
+          ];
 
           bindm = [
             "$mainMod, mouse:272, movewindow"
@@ -170,30 +169,30 @@
           ];
 
           windowrule = [
-	          {
-	            name = "teamspeak-ws-2";
-	            workspace = "2 silent";
-	            tile = "on";
-	            "match:initial_class" = "^(teamspeak-client)";
-	          }
-	          {
-	            name = "discord-ws-2";
-	            workspace = "2 silent";
-	            tile = "on";
-	            "match:initial_class" = "^(equibop)$";
-	          }
-	          {
-	            name = "spotify-ws-2";
-	            workspace = "2 silent";
-	            tile = "on";
-	            "match:initial_class" = "^(spotify)";
-	          }
-	          {
-	            name = "steam-ws-8";
-	            workspace = "8 silent";
-	            "match:initial_class" = "^(steam)";
-	          }
-	        ];
+            {
+              name = "teamspeak-ws-2";
+              workspace = "2 silent";
+              tile = "on";
+              "match:initial_class" = "^(teamspeak-client)";
+            }
+            {
+              name = "discord-ws-2";
+              workspace = "2 silent";
+              tile = "on";
+              "match:initial_class" = "^(equibop)$";
+            }
+            {
+              name = "spotify-ws-2";
+              workspace = "2 silent";
+              tile = "on";
+              "match:initial_class" = "^(spotify)";
+            }
+            {
+              name = "steam-ws-8";
+              workspace = "8 silent";
+              "match:initial_class" = "^(steam)";
+            }
+          ];
         };
       };
     };

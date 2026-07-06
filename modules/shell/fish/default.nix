@@ -20,12 +20,15 @@
         # Vendored fish plugins are installed system-wide so fish discovers them
         # via /run/current-system/sw/share/fish/vendor_*. tide provides the prompt
         # (installing it as a package is what fixes the previously-broken tide).
-        environment.systemPackages = with pkgs.fishPlugins; [
-          puffer
-          done
-          bass
-          fzf-fish
-        ] ++ [ pkgs.jj-starship ];
+        environment.systemPackages =
+          with pkgs.fishPlugins;
+          [
+            puffer
+            done
+            bass
+            fzf-fish
+          ]
+          ++ [ pkgs.jj-starship ];
 
         hjem.users.${username}.rum.programs.fish = {
           enable = true;

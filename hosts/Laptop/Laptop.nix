@@ -1,12 +1,12 @@
-_: {
-  flake.nixosModules.hostDesktopModulesUserOptions =
+{
+  flake.modules.nixos."host/Laptop" =
     { config, ... }:
     {
-      config.userOptions = {
-        browser = "zen";
+      userOptions = {
+        browser = "brave-origin";
         colorScheme = "gruvbox-dark-hard";
         dots = "/home/${config.userOptions.username}/dotfiles";
-        hostName = "Desktop";
+        hostName = "Laptop";
         username = "v3rm1n";
         wallpaper = "rocket.png";
       };

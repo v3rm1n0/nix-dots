@@ -1,17 +1,10 @@
 {
   inputs,
   self,
-  lib,
   ...
 }:
 {
   imports = [ inputs.wrapper-modules.flakeModules.wrappers ];
-
-  # Declare flake.modules as mergeable so lsp.nix can also contribute
-  options.flake.modules = lib.mkOption {
-    type = lib.types.attrsOf (lib.types.attrsOf lib.types.raw);
-    default = { };
-  };
 
   config = {
     flake.modules.neovim.main =
