@@ -6,9 +6,6 @@ _: {
       pkgs,
       ...
     }:
-
-    with lib;
-
     let
       defaultPackages = [
         #--- Tools ---#
@@ -18,10 +15,10 @@ _: {
     in
     {
       options.mods.apps.dev = {
-        enable = mkEnableOption "Enable developer tools";
+        enable = lib.mkEnableOption "Enable developer tools";
 
-        optionalPackages = mkOption {
-          type = types.listOf types.package;
+        optionalPackages = lib.mkOption {
+          type = lib.types.listOf lib.types.package;
           default = [ ];
           example = [
             pkgs.nodejs_latest
@@ -31,7 +28,7 @@ _: {
         };
       };
 
-      config = mkIf config.mods.apps.dev.enable {
+      config = lib.mkIf config.mods.apps.dev.enable {
         environment.systemPackages = defaultPackages ++ config.mods.apps.dev.optionalPackages;
       };
     };

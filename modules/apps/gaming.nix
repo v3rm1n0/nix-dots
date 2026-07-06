@@ -6,8 +6,6 @@ _: {
       pkgs,
       ...
     }:
-    with lib;
-
     let
       defaultPackages = with pkgs; [
         ed-odyssey-materials-helper
@@ -18,9 +16,9 @@ _: {
     in
     {
       options.mods.apps.gaming = {
-        enable = mkEnableOption "Gaming profile with various gaming tools";
-        optionalPackages = mkOption {
-          type = types.listOf types.package;
+        enable = lib.mkEnableOption "Gaming profile with various gaming tools";
+        optionalPackages = lib.mkOption {
+          type = lib.types.listOf lib.types.package;
           default = [ ];
           example = [
             pkgs.lunar-client
@@ -29,7 +27,7 @@ _: {
         };
       };
 
-      config = mkIf config.mods.apps.gaming.enable {
+      config = lib.mkIf config.mods.apps.gaming.enable {
         environment.systemPackages = defaultPackages ++ config.mods.apps.gaming.optionalPackages;
 
         programs = {

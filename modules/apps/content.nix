@@ -6,18 +6,15 @@ _: {
       pkgs,
       ...
     }:
-
-    with lib;
-
     let
-      defaultPackages = with pkgs; [ ];
+      defaultPackages = [ ];
     in
     {
       options.mods.apps.content = {
-        enable = mkEnableOption "Enable content creation tools";
+        enable = lib.mkEnableOption "Enable content creation tools";
 
-        optionalPackages = mkOption {
-          type = types.listOf types.package;
+        optionalPackages = lib.mkOption {
+          type = lib.types.listOf lib.types.package;
           default = [ ];
           example = [
             pkgs.davinci-resolve-studio
@@ -26,7 +23,7 @@ _: {
         };
       };
 
-      config = mkIf config.mods.apps.content.enable {
+      config = lib.mkIf config.mods.apps.content.enable {
         environment.systemPackages = defaultPackages ++ config.mods.apps.content.optionalPackages;
 
         programs.obs-studio = {

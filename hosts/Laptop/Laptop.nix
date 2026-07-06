@@ -3,6 +3,8 @@
   flake.modules.nixos."host/Laptop" =
     { config, pkgs, ... }:
     {
+      boot.kernelPackages = pkgs.linuxPackages_zen;
+
       userOptions = {
         browser = "brave-origin";
         colorScheme = "gruvbox-dark-hard";
