@@ -9,7 +9,6 @@ let
         # Legacy aggregates, emptied out area by area during the migration.
         self.nixosModules.assets
         self.nixosModules.users
-        self.nixosModules.core
         self.nixosModules.modules
         self.nixosModules.hostCommon
         self.nixosModules."host${name}Hardware"
