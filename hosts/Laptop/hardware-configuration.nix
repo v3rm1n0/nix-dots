@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.hostLaptopHardware =
+  flake.modules.nixos."host/Laptop" =
     {
       config,
       lib,

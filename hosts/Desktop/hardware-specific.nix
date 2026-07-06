@@ -1,6 +1,6 @@
 _: {
 
-  flake.nixosModules.hostDesktopHardwareSpecific =
+  flake.modules.nixos."host/Desktop" =
     { pkgs, ... }:
     {
       boot.initrd = {

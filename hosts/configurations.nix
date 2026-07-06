@@ -6,12 +6,6 @@ let
       modules = [
         self.modules.nixos.default
         self.modules.nixos."host/${name}"
-        # Legacy aggregates, emptied out area by area during the migration.
-        self.nixosModules.modules
-        self.nixosModules.hostCommon
-        self.nixosModules."host${name}Hardware"
-        self.nixosModules."host${name}HardwareSpecific"
-        self.nixosModules."host${name}Modules"
       ];
     };
 in

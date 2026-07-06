@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.hostLaptopHardwareSpecific =
+  flake.modules.nixos."host/Laptop" =
     { pkgs, ... }:
     {
       boot.kernelPackages = pkgs.linuxPackages_zen;
