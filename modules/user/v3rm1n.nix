@@ -1,6 +1,6 @@
-{ inputs, self, ... }:
+{ inputs, ... }:
 {
-  flake.nixosModules.usersV3rm1n =
+  flake.modules.nixos.default =
     {
       config,
       pkgs,
@@ -13,6 +13,8 @@
       imports = [ inputs.hjem.nixosModules.hjem ];
 
       programs.zsh.enable = true;
+      users.mutableUsers = true;
+      users.defaultUserShell = pkgs.zsh;
       users.users.${username} = {
         shell = pkgs.fish;
         isNormalUser = true;

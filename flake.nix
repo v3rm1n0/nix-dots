@@ -44,7 +44,6 @@
           (inputs.import-tree ./assets)
           (inputs.import-tree ./hosts)
           (inputs.import-tree ./modules)
-          (inputs.import-tree ./users)
         ];
       }
     );

@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.assets =
+  flake.modules.nixos.default =
     { config, ... }:
     let
       inherit (config.userOptions) username;
