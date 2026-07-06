@@ -1,12 +1,15 @@
 _: {
   flake.modules.nixos.default =
-    { lib, ... }:
+    { config, lib, ... }:
+    let
+    	inherit (config.userOptions) hostName;
+    in
     {
       config = {
         boot = {
           loader = {
             limine = {
-              enable = true;
+              enable = lib.mkIf (hostName == "Desktop") true;
               extraEntries = ''
                 /Windows
                   protocol: efi
@@ -15,7 +18,7 @@ _: {
               resolution = "1920x1080x32";
               secureBoot.enable = true;
             };
-            systemd-boot.enable = lib.mkForce false;
+            systemd-boot.enable = lib.mkIf (hostName == "Laptop") true;
             efi.canTouchEfiVariables = true;
           };
         };
