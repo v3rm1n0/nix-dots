@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.modulesHardwareRazer =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -7,11 +7,11 @@ _: {
       ...
     }:
     {
-      options.hardwareModule.razer = {
+      options.mods.hardware.razer = {
         enable = lib.mkEnableOption "Enable razer module";
       };
 
-      config = lib.mkIf config.hardwareModule.razer.enable {
+      config = lib.mkIf config.mods.hardware.razer.enable {
         hardware.openrazer.enable = true;
         environment.systemPackages = with pkgs; [
           openrazer-daemon

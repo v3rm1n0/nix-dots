@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.modulesSecurityVpn =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -7,10 +7,10 @@ _: {
       ...
     }:
     let
-      cfg = config.securityModule.vpn;
+      cfg = config.mods.security.vpn;
     in
     {
-      options.securityModule.vpn = {
+      options.mods.security.vpn = {
         enable = lib.mkEnableOption "VPN client tools";
       };
 

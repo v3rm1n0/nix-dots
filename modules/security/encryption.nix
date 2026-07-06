@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.modulesSecurityEncryption =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -7,11 +7,11 @@ _: {
       ...
     }:
     {
-      options.securityModule.encryption.passwords = {
+      options.mods.security.encryption.passwords = {
         enable = lib.mkEnableOption "Enable passwords module";
       };
 
-      config = lib.mkIf config.securityModule.encryption.passwords.enable {
+      config = lib.mkIf config.mods.security.encryption.passwords.enable {
         environment = {
           systemPackages = with pkgs; [
             bitwarden-desktop

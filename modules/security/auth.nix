@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.modulesSecurityAuth = {
+  flake.modules.nixos.default = {
     security.pam.services.ly = {
       enableGnomeKeyring = true;
       text = ''

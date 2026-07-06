@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.nixosModules.modulesShellBash =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -10,9 +10,9 @@
       myAliases = self.lib.commonAliases;
     in
     {
-      options.shell.bash.enable = lib.mkEnableOption "Enable bash Module";
+      options.mods.shell.bash.enable = lib.mkEnableOption "Enable bash Module";
 
-      config = lib.mkIf config.shell.bash.enable {
+      config = lib.mkIf config.mods.shell.bash.enable {
         programs.bash = {
           completion.enable = true;
           shellAliases = myAliases;

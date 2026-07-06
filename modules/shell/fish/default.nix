@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.nixosModules.modulesShellFish =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -12,9 +12,9 @@
       myAliases = self.lib.commonAliases;
     in
     {
-      options.shell.fish.enable = lib.mkEnableOption "Enable fish Module";
+      options.mods.shell.fish.enable = lib.mkEnableOption "Enable fish Module";
 
-      config = lib.mkIf config.shell.fish.enable {
+      config = lib.mkIf config.mods.shell.fish.enable {
         programs.fish.enable = true;
 
         # Vendored fish plugins are installed system-wide so fish discovers them

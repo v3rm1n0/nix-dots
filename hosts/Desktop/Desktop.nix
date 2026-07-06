@@ -12,6 +12,14 @@
         wallpaper = "rocket.png";
       };
 
+      mods.hardware = {
+        gpu = {
+          enable = true;
+          brand = "nvidia";
+        };
+        razer.enable = false;
+      };
+
       mods.desktop.monitors = [
         {
           name = "DP-1";

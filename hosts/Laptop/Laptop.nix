@@ -12,6 +12,11 @@
         wallpaper = "rocket.png";
       };
 
+      mods.hardware.gpu = {
+        enable = true;
+        brand = "intel";
+      };
+
       mods.desktop = {
         hypr.hypridle.enable = true;
         noctalia.withBattery = true;

@@ -1,16 +1,16 @@
 _: {
-  flake.nixosModules.modulesServicesBlueman =
+  flake.modules.nixos.default =
     {
       config,
       lib,
       ...
     }:
     {
-      options.servicesModule.blueman = {
+      options.mods.services.blueman = {
         enable = lib.mkEnableOption "Enable blueman service aka bluetooth";
       };
 
-      config = lib.mkIf config.servicesModule.blueman.enable {
+      config = lib.mkIf config.mods.services.blueman.enable {
         services.blueman.enable = true;
       };
     };

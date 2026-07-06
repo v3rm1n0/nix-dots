@@ -9,7 +9,7 @@ _: {
 
     let
       inherit (lib) mkIf mkMerge;
-      cfg = config.hardwareModule;
+      cfg = config.mods.hardware;
     in
     {
       config = mkMerge [

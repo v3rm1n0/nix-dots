@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.modulesSecurityGnupg =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -10,9 +10,9 @@ _: {
       inherit (config.userOptions) username;
     in
     {
-      options.securityModule.gpg.enable = lib.mkEnableOption "Enable the gpg module";
+      options.mods.security.gnupg.enable = lib.mkEnableOption "Enable the gpg module";
 
-      config = lib.mkIf config.securityModule.gpg.enable {
+      config = lib.mkIf config.mods.security.gnupg.enable {
         programs.gnupg.agent = {
           enable = true;
           enableSSHSupport = true;

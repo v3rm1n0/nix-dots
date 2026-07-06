@@ -1,11 +1,11 @@
 _: {
-  flake.nixosModules.modulesSecuritySsh =
+  flake.modules.nixos.default =
     { config, lib, ... }:
     let
-      cfg = config.securityModule.ssh;
+      cfg = config.mods.security.ssh;
     in
     {
-      options.securityModule.ssh = {
+      options.mods.security.ssh = {
         enable = lib.mkEnableOption "SSH server and client configuration";
       };
 

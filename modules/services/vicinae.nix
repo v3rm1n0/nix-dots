@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.modulesServicesVicinae =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -10,9 +10,9 @@ _: {
       inherit (config.userOptions) username;
     in
     {
-      options.servicesModule.vicinae.enable = lib.mkEnableOption "Enable vicinae service";
+      options.mods.services.vicinae.enable = lib.mkEnableOption "Enable vicinae service";
 
-      config = lib.mkIf config.servicesModule.vicinae.enable {
+      config = lib.mkIf config.mods.services.vicinae.enable {
         environment.systemPackages = [ pkgs.vicinae ];
 
         hjem.users.${username} = {

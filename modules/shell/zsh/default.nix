@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.nixosModules.modulesShellZsh =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -15,11 +15,10 @@
       );
     in
     {
-      imports = [ self.nixosModules.modulesShellZshP10k ];
 
-      options.shell.zsh.enable = lib.mkEnableOption "Enable zsh Module";
+      options.mods.shell.zsh.enable = lib.mkEnableOption "Enable zsh Module";
 
-      config = lib.mkIf config.shell.zsh.enable {
+      config = lib.mkIf config.mods.shell.zsh.enable {
         environment.shells = [ pkgs.zsh ];
         environment.systemPackages = [ pkgs.fzf ];
 
