@@ -4,6 +4,14 @@
   flake.modules.nixos.default =
     { lib, ... }:
     {
+      mods.desktop = {
+        hypr.enable = lib.mkDefault true;
+        ly.enable = lib.mkDefault true;
+        noctalia.enable = lib.mkDefault true;
+        stylix.enable = lib.mkDefault true;
+        xdg.enable = lib.mkDefault true;
+      };
+
       mods.apps = {
         comms.enable = lib.mkDefault true;
         content.enable = lib.mkDefault false;

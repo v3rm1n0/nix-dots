@@ -1,11 +1,11 @@
 _: {
-  flake.nixosModules.modulesDesktopHyprMonitors =
+  flake.modules.nixos.default =
     { lib, ... }:
     let
       inherit (lib) mkOption types;
     in
     {
-      options.monitors = mkOption {
+      options.mods.desktop.monitors = mkOption {
         type = types.listOf (
           types.submodule {
             options = {

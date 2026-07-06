@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.nixosModules.modulesDesktopNoctalia =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -8,7 +8,8 @@
       ...
     }:
     let
-      inherit (config.userOptions) username hostName wallpaper;
+      inherit (config.userOptions) username wallpaper;
+      cfg = config.mods.desktop.noctalia;
       colors = config.lib.stylix.colors;
 
       mkNoctalia =
@@ -108,14 +109,25 @@
         };
     in
     {
-      environment.systemPackages = [
-        (mkNoctalia { withBattery = hostName == "Laptop"; })
-      ];
+      options.mods.desktop.noctalia = {
+        enable = lib.mkEnableOption "the Noctalia shell";
+        withBattery = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Show the battery widget in the bar.";
+        };
+      };
 
-      hjem.users.${username} = {
-        files.".cache/noctalia/wallpapers.json" = {
-          text = builtins.toJSON {
-            defaultWallpaper = "/home/${username}/.config/backgrounds/${wallpaper}";
+      config = lib.mkIf cfg.enable {
+        environment.systemPackages = [
+          (mkNoctalia { withBattery = cfg.withBattery; })
+        ];
+
+        hjem.users.${username} = {
+          files.".cache/noctalia/wallpapers.json" = {
+            text = builtins.toJSON {
+              defaultWallpaper = "/home/${username}/.config/backgrounds/${wallpaper}";
+            };
           };
         };
       };

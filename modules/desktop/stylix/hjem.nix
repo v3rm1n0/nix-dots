@@ -1,5 +1,5 @@
 _: {
-  flake.nixosModules.modulesDesktopStylixHjem =
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -190,46 +190,48 @@ _: {
     {
       # Stylix's cursor and GTK integration runs via home.pointerCursor / gtk.enable
       # (Home Manager only). Since this config uses hjem, replicate them here.
-      environment.variables.XCURSOR_THEME = cursorName;
-      environment.systemPackages = [
-        config.stylix.cursor.package
-        config.stylix.icons.package
-        pkgs.adw-gtk3
-      ];
+      config = lib.mkIf config.mods.desktop.stylix.enable {
+        environment.variables.XCURSOR_THEME = cursorName;
+        environment.systemPackages = [
+          config.stylix.cursor.package
+          config.stylix.icons.package
+          pkgs.adw-gtk3
+        ];
 
-      hjem.users.${username} = {
-        # GTK — mirrors stylix/hm/cursor.nix + modules/gtk/hm.nix.
-        # rum prepends "gtk-" to each setting name and writes both gtk-3.0
-        # and gtk-4.0 settings.ini.
-        rum.misc.gtk = {
-          enable = true;
-          settings = {
-            application-prefer-dark-mode = if dark then 1 else 0;
-            cursor-theme-name = cursorName;
-            cursor-theme-size = cursorSize;
-            font-name = fontName;
-            icon-theme-name = iconTheme;
-            theme-name = gtkTheme;
+        hjem.users.${username} = {
+          # GTK — mirrors stylix/hm/cursor.nix + modules/gtk/hm.nix.
+          # rum prepends "gtk-" to each setting name and writes both gtk-3.0
+          # and gtk-4.0 settings.ini.
+          rum.misc.gtk = {
+            enable = true;
+            settings = {
+              application-prefer-dark-mode = if dark then 1 else 0;
+              cursor-theme-name = cursorName;
+              cursor-theme-size = cursorSize;
+              font-name = fontName;
+              icon-theme-name = iconTheme;
+              theme-name = gtkTheme;
+            };
+            css.gtk3 = gtkCss;
+            css.gtk4 = gtkCss;
           };
-          css.gtk3 = gtkCss;
-          css.gtk4 = gtkCss;
-        };
 
-        files = {
-          # Makes the cursor theme the system default (picked up by GTK, SDL2, etc.)
-          ".local/share/icons/default/index.theme".text = ''
-            [Icon Theme]
-            Name=Default
-            Comment=Default cursor theme
-            Inherits=${cursorName}
-          '';
+          files = {
+            # Makes the cursor theme the system default (picked up by GTK, SDL2, etc.)
+            ".local/share/icons/default/index.theme".text = ''
+              [Icon Theme]
+              Name=Default
+              Comment=Default cursor theme
+              Inherits=${cursorName}
+            '';
 
-          # btop — mirrors stylix modules/btop/hm.nix
-          ".config/btop/themes/stylix.theme".text = btopTheme;
-          ".config/btop/btop.conf".text = ''
-            color_theme = "stylix"
-            theme_background = false
-          '';
+            # btop — mirrors stylix modules/btop/hm.nix
+            ".config/btop/themes/stylix.theme".text = btopTheme;
+            ".config/btop/btop.conf".text = ''
+              color_theme = "stylix"
+              theme_background = false
+            '';
+          };
         };
       };
     };

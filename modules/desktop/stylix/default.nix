@@ -1,8 +1,9 @@
-{ self, inputs, ... }:
+{ inputs, ... }:
 {
-  flake.nixosModules.modulesDesktopStylix =
+  flake.modules.nixos.default =
     {
       config,
+      lib,
       pkgs,
       ...
     }:
@@ -12,10 +13,11 @@
     {
       imports = [
         inputs.stylix.nixosModules.stylix
-        self.nixosModules.modulesDesktopStylixHjem
       ];
 
-      stylix = {
+      options.mods.desktop.stylix.enable = lib.mkEnableOption "Stylix system-wide theming";
+
+      config.stylix = lib.mkIf config.mods.desktop.stylix.enable {
         enable = true;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/${colorScheme}.yaml";
 

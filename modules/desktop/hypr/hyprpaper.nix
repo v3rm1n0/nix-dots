@@ -1,7 +1,8 @@
 _: {
-  flake.nixosModules.modulesDesktopHyprHyprpaper =
+  flake.modules.nixos.default =
     {
       config,
+      lib,
       pkgs,
       ...
     }:
@@ -9,21 +10,23 @@ _: {
       inherit (config.userOptions) username wallpaper;
     in
     {
-      hjem.users.${username} = {
-        files.".config/hypr/hyprpaper.conf".text = ''
-          preload = /home/${username}/.config/backgrounds/${wallpaper}
-          splash = false
-          wallpaper = ,~/.config/backgrounds/${wallpaper}
-        '';
+      config = lib.mkIf config.mods.desktop.hypr.enable {
+        hjem.users.${username} = {
+          files.".config/hypr/hyprpaper.conf".text = ''
+            preload = /home/${username}/.config/backgrounds/${wallpaper}
+            splash = false
+            wallpaper = ,~/.config/backgrounds/${wallpaper}
+          '';
 
-        systemd.services.hyprpaper = {
-          description = "Hyprpaper wallpaper daemon";
-          after = [ "graphical-session.target" ];
-          partOf = [ "graphical-session.target" ];
-          wantedBy = [ "graphical-session.target" ];
-          serviceConfig = {
-            ExecStart = "${pkgs.hyprpaper}/bin/hyprpaper";
-            Restart = "on-failure";
+          systemd.services.hyprpaper = {
+            description = "Hyprpaper wallpaper daemon";
+            after = [ "graphical-session.target" ];
+            partOf = [ "graphical-session.target" ];
+            wantedBy = [ "graphical-session.target" ];
+            serviceConfig = {
+              ExecStart = "${pkgs.hyprpaper}/bin/hyprpaper";
+              Restart = "on-failure";
+            };
           };
         };
       };

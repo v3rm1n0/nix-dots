@@ -1,5 +1,5 @@
-_: {
-  flake.nixosModules.modulesDesktopHyprHypridle =
+{
+  flake.modules.nixos.default =
     {
       config,
       lib,
@@ -10,7 +10,9 @@ _: {
       inherit (config.userOptions) username;
     in
     {
-      config = lib.mkIf (config.userOptions.hostName == "Laptop") {
+      options.mods.desktop.hypr.hypridle.enable = lib.mkEnableOption "the hypridle idle daemon";
+
+      config = lib.mkIf config.mods.desktop.hypr.hypridle.enable {
         hjem.users.${username} = {
           rum.programs.hypridle = {
             enable = true;

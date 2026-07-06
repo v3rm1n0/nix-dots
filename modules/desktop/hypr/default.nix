@@ -1,8 +1,8 @@
-{ self, inputs, ... }:
 {
-  flake.nixosModules.modulesDesktopHypr =
+  flake.modules.nixos.default =
     {
       config,
+      lib,
       pkgs,
       ...
     }:
@@ -10,56 +10,54 @@
       inherit (config.userOptions) username;
     in
     {
-      imports = [
-        self.nixosModules.modulesDesktopHyprHypridle
-        self.nixosModules.modulesDesktopHyprHyprland
-        self.nixosModules.modulesDesktopHyprHyprlock
-        self.nixosModules.modulesDesktopHyprHyprpaper
-      ];
+      options.mods.desktop.hypr.enable =
+        lib.mkEnableOption "the Hyprland desktop (hyprland, hyprlock, hyprpaper, polkit agent)";
 
-      environment.systemPackages = with pkgs; [
-        brightnessctl
-        grim
-        gthumb
-        hyprpaper
-        libnotify
-        nautilus
-        networkmanagerapplet
-        pavucontrol
-        playerctl
-        pywal
-        satty
-        slurp
-        wayfreeze
-        wl-clipboard
-        yazi
-        zenity
-      ];
+      config = lib.mkIf config.mods.desktop.hypr.enable {
+        environment.systemPackages = with pkgs; [
+          brightnessctl
+          grim
+          gthumb
+          hyprpaper
+          libnotify
+          nautilus
+          networkmanagerapplet
+          pavucontrol
+          playerctl
+          pywal
+          satty
+          slurp
+          wayfreeze
+          wl-clipboard
+          yazi
+          zenity
+        ];
 
-      hjem.users.${username}.systemd.services.hyprpolkitagent = {
-        description = "Hyprland Polkit Authentication Agent";
-        after = [ "graphical-session.target" ];
-        partOf = [ "graphical-session.target" ];
-        wantedBy = [ "graphical-session.target" ];
-        serviceConfig = {
-          ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
-          Restart = "on-failure";
-        };
-      };
-
-      programs = {
-        hyprland = {
-          enable = true;
-          xwayland.enable = true;
-          withUWSM = true;
+        hjem.users.${username}.systemd.services.hyprpolkitagent = {
+          description = "Hyprland Polkit Authentication Agent";
+          after = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
+          serviceConfig = {
+            ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
+            Restart = "on-failure";
+          };
         };
 
-        nautilus-open-any-terminal = {
-          enable = true;
-          terminal = "ghostty";
-        };
+        programs = {
+          hyprland = {
+            enable = true;
+            xwayland.enable = true;
+            withUWSM = true;
+          };
 
-        uwsm.enable = true;
+          nautilus-open-any-terminal = {
+            enable = true;
+            terminal = "ghostty";
+          };
+
+          uwsm.enable = true;
+        };
       };
     };
 }
