@@ -16,7 +16,6 @@
       config = lib.mkIf config.mods.desktop.hypr.enable {
         environment.systemPackages = with pkgs; [
           brightnessctl
-          grim
           gthumb
           hyprpaper
           libnotify
@@ -26,8 +25,6 @@
           playerctl
           pywal
           satty
-          slurp
-          wayfreeze
           wl-clipboard
           yazi
           zenity

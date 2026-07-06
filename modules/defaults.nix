@@ -24,6 +24,7 @@
       };
 
       mods.desktop = {
+        flameshot.enable = lib.mkDefault true;
         hypr.enable = lib.mkDefault true;
         ly.enable = lib.mkDefault true;
         noctalia.enable = lib.mkDefault true;

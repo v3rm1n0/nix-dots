@@ -145,8 +145,10 @@
             ]
             ++ workspaceBinds
             ++ [
-              ''SHIFT $mainMod, s, exec, wayfreeze & sleep 0.2 && grim -g "$(slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy; kill %1''
-              ''SHIFT $mainMod, Home, exec, grim -g "$(hyprctl monitors -j | jq -r '.[] | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" - | tee ~/Pictures/$(date +%Y%m%d_%H%M%S).png | wl-copy''
+              # flameshot: selection editor / monitor under the cursor; both
+              # save to ~/Pictures and copy to the clipboard.
+              "SHIFT $mainMod, s, exec, flameshot gui -c -p ~/Pictures"
+              "SHIFT $mainMod, Home, exec, flameshot screen -c -p ~/Pictures"
             ];
 
             bindm = [
