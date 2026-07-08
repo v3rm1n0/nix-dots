@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1112" height="1120" viewBox="0 0 1112 1120" font-family="JetBrains Mono, Fira Code, DejaVu Sans Mono, monospace">
+<rect width="1112" height="1120" fill="#0d0d0d"/>
+<text x="36" y="56" font-size="20" fill="#ffffff" text-anchor="start" font-weight="bold">dotfiles</text>
+<text x="36" y="76" font-size="14" fill="#898781" text-anchor="start">Flake Structure</text>
+<rect x="36" y="100" width="1040" height="340" rx="8" fill="#1a1a19" stroke="#383835" stroke-width="1.2"/>
+<text x="556" y="126" font-size="14" fill="#ffffff" text-anchor="middle" font-weight="bold">Flake Inputs</text>
+<path d="M48 134 H1064" fill="none" stroke="#2c2c2a" stroke-width="1"/>
+<rect x="48" y="140" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="212" y="158" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">brave-origin</text>
+<text x="212" y="174" font-size="10" fill="#898781" text-anchor="middle">github:nixos/nixpkgs/pull/511131/merge</text>
+<rect x="392" y="140" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="556" y="158" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">flake-parts</text>
+<text x="556" y="174" font-size="10" fill="#898781" text-anchor="middle">github:hercules-ci/flake-parts</text>
+<rect x="736" y="140" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="900" y="158" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">hjem</text>
+<text x="900" y="174" font-size="10" fill="#898781" text-anchor="middle">github:feel-co/hjem</text>
+<rect x="48" y="200" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="212" y="218" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">hjem-rum</text>
+<text x="212" y="234" font-size="10" fill="#898781" text-anchor="middle">github:snugnug/hjem-rum</text>
+<rect x="392" y="200" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="556" y="218" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">import-tree</text>
+<text x="556" y="234" font-size="10" fill="#898781" text-anchor="middle">github:vic/import-tree</text>
+<rect x="736" y="200" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="900" y="218" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">llm-agents</text>
+<text x="900" y="234" font-size="10" fill="#898781" text-anchor="middle">github:numtide/llm-agents.nix</text>
+<rect x="48" y="260" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="212" y="278" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">nixcord</text>
+<text x="212" y="294" font-size="10" fill="#898781" text-anchor="middle">github:FlameFlag/nixcord</text>
+<rect x="392" y="260" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="556" y="278" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">nixpkgs</text>
+<text x="556" y="294" font-size="10" fill="#898781" text-anchor="middle">github:nixos/nixpkgs/nixos-unstable</text>
+<rect x="736" y="260" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="900" y="278" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">noctalia</text>
+<text x="900" y="294" font-size="10" fill="#898781" text-anchor="middle">github:noctalia-dev/noctalia-shell</text>
+<rect x="48" y="320" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="212" y="338" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">spicetify-nix</text>
+<text x="212" y="354" font-size="10" fill="#898781" text-anchor="middle">github:Gerg-L/spicetify-nix</text>
+<rect x="392" y="320" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="556" y="338" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">stylix</text>
+<text x="556" y="354" font-size="10" fill="#898781" text-anchor="middle">github:nix-community/stylix</text>
+<rect x="736" y="320" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="900" y="338" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">wrapper-modules</text>
+<text x="900" y="354" font-size="10" fill="#898781" text-anchor="middle">github:BirdeeHub/nix-wrapper-modules</text>
+<rect x="48" y="380" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="212" y="398" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">wrappers</text>
+<text x="212" y="414" font-size="10" fill="#898781" text-anchor="middle">github:Lassulus/wrappers</text>
+<rect x="392" y="380" width="328" height="44" rx="6" fill="#1a1a19" stroke="#3987e5" stroke-width="1.2"/>
+<text x="556" y="398" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">zen-browser</text>
+<text x="556" y="414" font-size="10" fill="#898781" text-anchor="middle">github:youwen5/zen-browser-flake</text>
+<path d="M556 440 V454 H556 V468" fill="none" stroke="#3987e5" stroke-width="1.5"/>
+<polygon points="556,468 551.5,460.8 560.5,460.8" fill="#3987e5"/>
+<rect x="279" y="468" width="553.9" height="112" rx="8" fill="#1a1a19" stroke="#9085e9" stroke-width="1.2"/>
+<text x="556" y="494" font-size="14" fill="#ffffff" text-anchor="middle" font-weight="bold">flake.nix</text>
+<path d="M291 502 H821" fill="none" stroke="#2c2c2a" stroke-width="1"/>
+<circle cx="294" cy="516.5" r="3" fill="#3987e5"/>
+<text x="303" y="520" font-size="12" fill="#c3c2b7" text-anchor="start">nixosConfigurations: Desktop, Laptop</text>
+<circle cx="294" cy="536.5" r="3" fill="#199e70"/>
+<text x="303" y="540" font-size="12" fill="#c3c2b7" text-anchor="start">formatter: x86_64-linux</text>
+<circle cx="294" cy="556.5" r="3" fill="#c98500"/>
+<text x="303" y="560" font-size="12" fill="#c3c2b7" text-anchor="start">packages: fastfetch, neovim, neovimDynamic, neovimFull, nh, starship</text>
+<path d="M556 580 V602 H108 V624" fill="none" stroke="#199e70" stroke-width="1.5"/>
+<polygon points="108,624 103.5,616.8 112.5,616.8" fill="#199e70"/>
+<path d="M556 580 V602 H276 V624" fill="none" stroke="#c98500" stroke-width="1.5"/>
+<polygon points="276,624 271.5,616.8 280.5,616.8" fill="#c98500"/>
+<path d="M556 580 V602 H444 V624" fill="none" stroke="#008300" stroke-width="1.5"/>
+<polygon points="444,624 439.5,616.8 448.5,616.8" fill="#008300"/>
+<rect x="36" y="624" width="144" height="52" rx="8" fill="#1a1a19" stroke="#199e70" stroke-width="1.2"/>
+<text x="108" y="650" font-size="14" fill="#ffffff" text-anchor="middle" font-weight="bold">./assets</text>
+<path d="M48 658 H168" fill="none" stroke="#2c2c2a" stroke-width="1"/>
+<rect x="204" y="624" width="144" height="130" rx="8" fill="#1a1a19" stroke="#c98500" stroke-width="1.2"/>
+<text x="276" y="650" font-size="14" fill="#ffffff" text-anchor="middle" font-weight="bold">./hosts</text>
+<path d="M216 658 H336" fill="none" stroke="#2c2c2a" stroke-width="1"/>
+<rect x="216" y="664" width="67.4" height="22" rx="5" fill="#1a1a19" stroke="#c98500" stroke-width="1.2"/>
+<text x="249.7" y="678.5" font-size="10" fill="#c3c2b7" text-anchor="middle">Desktop</text>
+<rect x="216" y="692" width="61.2" height="22" rx="5" fill="#1a1a19" stroke="#c98500" stroke-width="1.2"/>
+<text x="246.6" y="706.5" font-size="10" fill="#c3c2b7" text-anchor="middle">Laptop</text>
+<rect x="216" y="720" width="110.8" height="22" rx="5" fill="#1a1a19" stroke="#c98500" stroke-width="1.2"/>
+<text x="271.4" y="734.5" font-size="10" fill="#c3c2b7" text-anchor="middle">configurations</text>
+<rect x="372" y="624" width="144" height="326" rx="8" fill="#1a1a19" stroke="#008300" stroke-width="1.2"/>
+<text x="444" y="650" font-size="14" fill="#ffffff" text-anchor="middle" font-weight="bold">./modules</text>
+<path d="M384 658 H504" fill="none" stroke="#2c2c2a" stroke-width="1"/>
+<rect x="384" y="664" width="48.8" height="22" rx="5" fill="#1a1a19" stroke="#008300" stroke-width="1.2"/>
+<text x="408.4" y="678.5" font-size="10" fill="#c3c2b7" text-anchor="middle">apps</text>
+<rect x="384" y="692" width="73.6" height="22" rx="5" fill="#1a1a19" stroke="#008300" stroke-width="1.2"/>
+<text x="420.8" y="706.5" font-size="10" fill="#c3c2b7" text-anchor="middle">defaults</text>
+<rect x="384" y="720" width="67.4" height="22" rx="5" fill="#1a1a19" stroke="#008300" stroke-width="1.2"/>
+<text x="417.7" y="734.5" font-size="10" fill="#c3c2b7" text-anchor="middle">desktop</text>
+<rect x="384" y="748" width="55" height="22" rx="5" fill="#1a1a19" stroke="#008300" stroke-width="1.2"/>
+<text x="411.5" y="762.5" font-size="10" fill="#c3c2b7" text-anchor="middle">flake</text>
+<rect x="384" y="776" width="73.6" height="22" rx="5" fill="#1a1a19" stroke="#008300" stroke-width="1.2"/>
+<text x="420.8" y="790.5" font-size="10" fill="#c3c2b7" text-anchor="middle">hardware</text>
+<rect x="384" y="804" width="73.6" height="22" rx="5" fill="#1a1a19" stroke="#008300" stroke-width="1.2"/>
+<text x="420.8" y="818.5" font-size="10" fill="#c3c2b7" text-anchor="middle">security</text>
+<rect x="384" y="832" width="73.6" height="22" rx="5" fill="#1a1a19" stroke="#008300" stroke-width="1.2"/>
+<text x="420.8" y="846.5" font-size="10" fill="#c3c2b7" text-anchor="middle">services</text>
+<rect x="384" y="860" width="55" height="22" rx="5" fill="#1a1a19" stroke="#008300" stroke-width="1.2"/>
+<text x="411.5" y="874.5" font-size="10" fill="#c3c2b7" text-anchor="middle">shell</text>
+<rect x="384" y="888" width="61.2" height="22" rx="5" fill="#1a1a19" stroke="#008300" stroke-width="1.2"/>
+<text x="414.6" y="902.5" font-size="10" fill="#c3c2b7" text-anchor="middle">system</text>
+<rect x="384" y="916" width="48.8" height="22" rx="5" fill="#1a1a19" stroke="#008300" stroke-width="1.2"/>
+<text x="408.4" y="930.5" font-size="10" fill="#c3c2b7" text-anchor="middle">user</text>
+<rect x="918.2" y="966" width="157.8" height="98" rx="8" fill="#1a1a19" stroke="#383835" stroke-width="1"/>
+<text x="930.2" y="988" font-size="10" fill="#898781" text-anchor="start" font-weight="bold">Legend</text>
+<rect x="930.2" y="996" width="14" height="10" rx="3" fill="#3987e5"/>
+<text x="952.2" y="1005" font-size="10" fill="#c3c2b7" text-anchor="start">Flake inputs</text>
+<rect x="930.2" y="1016" width="14" height="10" rx="3" fill="#9085e9"/>
+<text x="952.2" y="1025" font-size="10" fill="#c3c2b7" text-anchor="start">flake.nix / outputs</text>
+<rect x="930.2" y="1036" width="14" height="10" rx="3" fill="#199e70"/>
+<text x="952.2" y="1045" font-size="10" fill="#c3c2b7" text-anchor="start">Module groups</text>
+<text x="36" y="1084" font-size="10" fill="#898781" text-anchor="start">generated by nix-flake-graph</text>
+<rect x="10" y="10" width="1092" height="1100" rx="12" fill="none" stroke="#383835" stroke-width="1.5"/>
+</svg>

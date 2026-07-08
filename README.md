@@ -41,6 +41,16 @@ A modular NixOS configuration featuring Hyprland, hjem, and comprehensive system
 | **Theme**          | Stylix (gruvbox-dark-hard)            |
 | **Filesystem**     | Btrfs with auto-scrub                 |
 
+## Graphs
+<details>
+<summary>📊 Diagrams</summary>
+
+![Flake Structure](assets/graphs/flake-graph.svg)
+
+![Flake Profiles](assets/graphs/flake-graph-systems.svg)
+
+</details> 
+
 ## 🛠️ System Management
 
 ### Common Commands
