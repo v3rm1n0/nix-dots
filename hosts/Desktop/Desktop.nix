@@ -13,7 +13,7 @@
       boot.kernelPackages = pkgs.linuxPackages_zen;
 
       userOptions = {
-        browser = "zen";
+        browser = "librewolf";
         colorScheme = "gruvbox-dark-hard";
         dots = "/home/${config.userOptions.username}/dotfiles";
         hostName = "Desktop";
@@ -75,7 +75,7 @@
           };
           firefox = {
             enable = true;
-            package = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default;
+            package = pkgs.librewolf;
           };
         };
         content.enable = true;
@@ -84,7 +84,8 @@
           pkgs.zed-editor
         ];
         gaming.optionalPackages = [
-          #pkgs.stoat-desktop
+          pkgs.edhm-ui
+          pkgs.stoat-desktop
         ];
       };
     };
