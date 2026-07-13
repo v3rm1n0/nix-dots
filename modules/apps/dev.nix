@@ -11,6 +11,7 @@ _: {
         #--- Tools ---#
         pkgs.devenv
         pkgs.nix-output-monitor
+        pkgs.secretspec
       ];
     in
     {
