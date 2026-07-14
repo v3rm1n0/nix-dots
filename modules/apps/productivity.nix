@@ -16,7 +16,6 @@ _: {
         hjem.users.${username}.packages = with pkgs; [
           obsidian
           onlyoffice-desktopeditors
-          zathura
         ];
       };
     };
