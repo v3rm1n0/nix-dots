@@ -51,6 +51,47 @@ A modular NixOS configuration featuring Hyprland, hjem, and comprehensive system
 
 </details> 
 
+## 🧭 Guide
+
+### Prerequisites
+
+- Nix with `flakes` and `nix-command` experimental features enabled
+- `git` (or `jj`, this repo is a colocated git+jj checkout)
+
+### Adding a New Host
+
+1. Create `hosts/<Name>/<Name>.nix` defining `flake.modules.nixos."host/<Name>"` — set `userOptions` (browser, colorScheme, dots, hostName, username, wallpaper) and toggle whichever `mods.*` options you want (see `hosts/Desktop/Desktop.nix` / `hosts/Laptop/Laptop.nix` for reference).
+2. Create `hosts/<Name>/hardware-configuration.nix` contributing to the same `"host/<Name>"` key with the machine's real `fileSystems`, bootloader, and kernel modules (generate one with `nixos-generate-config` on the target machine).
+3. Register the host in `hosts/configurations.nix`:
+   ```nix
+   flake.nixosConfigurations = {
+     <Name> = mkHost "<Name>";
+   };
+   ```
+4. Apply it with the commands in the System Management section below.
+
+### 💿 Fresh Install via ISO
+
+For bootstrapping brand-new hardware, this flake can build its own installer media with the dotfiles baked in:
+
+1. Build an installer image:
+   ```sh
+   nix build .#nixosConfigurations.iso-gnome.config.system.build.isoImage    # graphical, GNOME-based
+   nix build .#nixosConfigurations.iso-minimal.config.system.build.isoImage  # console-only
+   ```
+   Both are stock NixOS installer environments — nothing from this flake runs on the live system itself.
+2. Flash the resulting `.iso` (in `result/iso/`) to a USB drive and boot the target machine from it.
+3. Partition, format, and mount your disks as usual, then generate a hardware profile:
+   ```sh
+   nixos-generate-config --root /mnt
+   ```
+4. The flake is already present on the live image at `/etc/dotfiles`. Copy the generated `hardware-configuration.nix` into a host directory in there (either flesh out `hosts/Template` with it, or add a new host per the steps above), so it contributes `fileSystems`/bootloader options to that host's `"host/<Name>"` module.
+5. Install:
+   ```sh
+   nixos-install --flake /etc/dotfiles#<Name>
+   ```
+6. Reboot into the new system and continue with the commands below.
+
 ## 🛠️ System Management
 
 ### Common Commands

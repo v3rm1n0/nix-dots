@@ -13,5 +13,6 @@ in
   flake.nixosConfigurations = {
     Desktop = mkHost "Desktop";
     Laptop = mkHost "Laptop";
+    Template = mkHost "Template";
   };
 }
