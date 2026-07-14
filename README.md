@@ -85,12 +85,18 @@ For bootstrapping brand-new hardware, this flake can build its own installer med
    ```sh
    nixos-generate-config --root /mnt
    ```
-4. The flake is already present on the live image at `/etc/dotfiles`. Copy the generated `hardware-configuration.nix` into a host directory in there (either flesh out `hosts/Template` with it, or add a new host per the steps above), so it contributes `fileSystems`/bootloader options to that host's `"host/<Name>"` module.
-5. Install:
+4. The flake is baked onto the live image at `/etc/dotfiles`, but that's a symlink into the (read-only) Nix store, so it can't be edited in place — and on the graphical installer you're auto-logged in as the unprivileged `nixos` user, not root, so you'll need `sudo` besides. Become root and copy it to a writable location first:
    ```sh
-   nixos-install --flake /etc/dotfiles#<Name>
+   sudo -i
+   cp -r /etc/dotfiles /tmp/dotfiles
+   chmod -R u+w /tmp/dotfiles
    ```
-6. Reboot into the new system and continue with the commands below.
+5. Copy the generated `hardware-configuration.nix` into a host directory in the writable copy (either flesh out `hosts/Template` with it, or add a new host per the steps above), so it contributes `fileSystems`/bootloader options to that host's `"host/<Name>"` module.
+6. Install from the writable copy:
+   ```sh
+   nixos-install --flake /tmp/dotfiles#<Name>
+   ```
+7. Reboot into the new system and continue with the commands below.
 
 ## 🛠️ System Management
 
