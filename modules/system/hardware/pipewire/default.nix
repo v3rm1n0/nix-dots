@@ -18,7 +18,7 @@ _: {
         jack.enable = true;
         pulse.enable = true;
       };
-      environment.systemPackages = [ pkgs.crosspipe ];
+      environment.systemPackages = [ pkgs.crosspipe pkgs.easyeffects ];
 
       hjem.users.${username}.files = {
         ".config/pipewire/pipewire.conf.d/truthear-equalizer.conf".text = ''
