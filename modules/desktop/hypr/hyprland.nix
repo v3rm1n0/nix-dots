@@ -51,7 +51,7 @@
         hjem.users.${username}.rum.desktops.hyprland = {
           enable = true;
           settings = {
-            "$mainMod" = "ALT";
+            "$mainMod" = "SUPER";
 
             inherit monitor workspace;
             # NOTE: the old Lua config also forced a vertical split on workspace 2
@@ -116,12 +116,12 @@
 
             bind = [
               "$mainMod, T, exec, ghostty"
-              "SHIFT ALT, Q, killactive"
+              "$mainMod SHIFT, Q, killactive"
               "$mainMod, M, exit"
               "$mainMod, E, exec, nautilus"
               "$mainMod, V, togglefloating"
               "$mainMod, P, pseudo"
-              "SUPER ALT, L, exec, hyprlock"
+              "$mainMod SHIFT, L, exec, hyprlock"
               "$mainMod, SPACE, exec, vicinae toggle"
               "$mainMod, R, exec, ${browser}"
 
@@ -130,15 +130,15 @@
               "$mainMod, k, movefocus, u"
               "$mainMod, j, movefocus, d"
 
-              "SHIFT $mainMod, h, movewindow, l"
-              "SHIFT $mainMod, l, movewindow, r"
-              "SHIFT $mainMod, k, movewindow, u"
-              "SHIFT $mainMod, j, movewindow, d"
+              "$mainMod SHIFT , h, movewindow, l"
+              "$mainMod SHIFT , l, movewindow, r"
+              "$mainMod SHIFT , k, movewindow, u"
+              "$mainMod SHIFT , j, movewindow, d"
 
-              "CTRL $mainMod, h, resizeactive, -50 0"
-              "CTRL $mainMod, l, resizeactive, 50 0"
-              "CTRL $mainMod, k, resizeactive, 0 -50"
-              "CTRL $mainMod, j, resizeactive, 0 50"
+              "$mainMod CTRL , h, resizeactive, -50 0"
+              "$mainMod CTRL , l, resizeactive, 50 0"
+              "$mainMod CTRL , k, resizeactive, 0 -50"
+              "$mainMod CTRL , j, resizeactive, 0 50"
 
               "$mainMod, mouse_down, workspace, e+1"
               "$mainMod, mouse_up, workspace, e-1"
@@ -147,8 +147,8 @@
             ++ [
               # flameshot: selection editor / monitor under the cursor; both
               # save to ~/Pictures and copy to the clipboard.
-              "SHIFT $mainMod, s, exec, flameshot gui -c -p ~/Pictures"
-              "SHIFT $mainMod, Home, exec, flameshot screen -c -p ~/Pictures"
+              "$mainMod SHIFT , s, exec, flameshot gui -c -p ~/Pictures"
+              "$mainMod SHIFT , Home, exec, flameshot screen -c -p ~/Pictures"
             ];
 
             bindm = [
