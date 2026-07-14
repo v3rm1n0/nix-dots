@@ -12,7 +12,7 @@
       monitor = map (
         m:
         if m.enabled then
-          "${m.name}, ${toString m.width}x${toString m.height}@${toString m.refreshRate}, ${toString m.x}x${toString m.y}, 1"
+          "${m.name}, ${toString m.width}x${toString m.height}@${toString m.refreshRate}, ${toString m.x}x${toString m.y}, ${toString m.scale}"
         else
           "${m.name}, disable"
       ) config.mods.desktop.monitors;

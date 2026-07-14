@@ -21,6 +21,11 @@ _: {
                 type = types.int;
                 example = 1080;
               };
+              scale = mkOption {
+                type = types.int;
+                default = 1;
+                example = 1;
+              };
               refreshRate = mkOption {
                 type = types.int;
                 example = 60;
