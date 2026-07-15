@@ -2,6 +2,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     brave-origin.url = "github:nixos/nixpkgs/pull/511131/merge";
+    handbrake-fix.url = "github:nixos/nixpkgs/pull/541043/merge";
+    ccextractor-fix.url = "github:nixos/nixpkgs/pull/532947/merge";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     hjem = {

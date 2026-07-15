@@ -1,3 +1,4 @@
+{ inputs, ... }:
 {
   flake.modules.nixos.default =
     {
@@ -6,6 +7,13 @@
       ...
     }:
     {
+      nixpkgs.overlays = [
+        (final: prev: {
+          handbrake = inputs.handbrake-fix.legacyPackages.${prev.stdenv.hostPlatform.system}.handbrake;
+          ccextractor = inputs.ccextractor-fix.legacyPackages.${prev.stdenv.hostPlatform.system}.ccextractor;
+        })
+      ];
+
       system = {
         autoUpgrade = {
           enable = true;
