@@ -82,12 +82,8 @@ _: {
                 OverridePostUpdatePage = "";
                 SearchBar = "unified";
                 SearchEngines = {
-                  Default = "V3RM1N Search";
+                  Default = "DuckDuckGo";
                   Add = [
-                    {
-                      Name = "V3RM1N Search";
-                      URLTemplate = "https://search.v3rm1n.dev/search?q={searchTerms}";
-                    }
                     {
                       Name = "nixpkgs packages";
                       URLTemplate = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}";
