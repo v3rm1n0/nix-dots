@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+_: {
   flake.modules.nixos.default =
     {
       config,
@@ -7,13 +6,6 @@
       ...
     }:
     {
-      nixpkgs.overlays = [
-        (final: prev: {
-          handbrake = inputs.handbrake-fix.legacyPackages.${prev.stdenv.hostPlatform.system}.handbrake;
-          ccextractor = inputs.ccextractor-fix.legacyPackages.${prev.stdenv.hostPlatform.system}.ccextractor;
-        })
-      ];
-
       system = {
         autoUpgrade = {
           enable = true;
@@ -49,6 +41,7 @@
         allowUnfree = true;
         permittedInsecurePackages = [
           "electron-39.8.10"
+          "electron-40.10.5"
         ];
       };
 
