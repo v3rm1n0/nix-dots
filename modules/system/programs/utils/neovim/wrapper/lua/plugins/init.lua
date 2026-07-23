@@ -118,4 +118,10 @@ return {
       virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
     },
   },
+
+  {
+    "uhs-robert/sshfs.nvim",
+    lazy = false,
+    opts = { },
+  },
 }

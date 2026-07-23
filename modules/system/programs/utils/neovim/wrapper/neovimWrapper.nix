@@ -43,6 +43,7 @@
             pkgs.imagemagick
             pkgs.wl-clipboard
             pkgs.luarocks
+            pkgs.sshfs
           ];
 
           specs.init = {
