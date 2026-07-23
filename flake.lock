@@ -548,6 +548,7 @@
         "noctalia": "noctalia",
         "spicetify-nix": "spicetify-nix",
         "stylix": "stylix",
+        "tdarr-fix": "tdarr-fix",
         "wrapper-modules": "wrapper-modules",
         "wrappers": "wrappers",
         "zen-browser": "zen-browser"
@@ -649,6 +650,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tdarr-fix": {
+      "locked": {
+        "lastModified": 1784809564,
+        "narHash": "sha256-HxzC1aOogjroHBp00veGJVOz7vMYmUxa/45mma36DIs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "631f6ac022f82265ea97d96a7c6ee04edcd9710d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "pull/544847/merge",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
