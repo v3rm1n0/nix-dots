@@ -22,6 +22,7 @@ _: {
             protonmail-desktop
             signal-desktop
             teamspeak6-client
+            thunderbird
             zoom-us
           ];
         };
