@@ -21,12 +21,32 @@
         wallpaper = "rocket.png";
       };
 
-      mods.hardware = {
-        gpu = {
-          enable = true;
-          brand = "nvidia";
+      mods = {
+        apps = {
+          ai.enable = true;
+          browsing = {
+            firefox = {
+              enable = true;
+              package = pkgs.librewolf;
+            };
+          };
+          content.enable = true;
+          tdarr.enable = true;
+          dev.optionalPackages = [
+            pkgs.zed-editor
+          ];
+          gaming.optionalPackages = [
+            pkgs.edhm-ui
+            pkgs.stoat-desktop
+          ];
         };
-        razer.enable = false;
+        hardware = {
+          gpu = {
+            enable = true;
+            brand = "nvidia";
+          };
+          razer.enable = false;
+        };
       };
 
       mods.desktop.monitors = [
@@ -37,6 +57,8 @@
           refreshRate = 180;
           x = 0;
           y = 0;
+          bitdepth = 10;
+          cm = "wide";
           workspaces = [
             1
             3
@@ -56,6 +78,8 @@
           refreshRate = 60;
           x = 1920;
           y = 0;
+          bitdepth = 10;
+          cm = "wide";
           workspaces = [
             2
             9
@@ -65,28 +89,5 @@
           enabled = true;
         }
       ];
-
-      mods.apps = {
-        ai.enable = true;
-        browsing = {
-          chromium = {
-            enable = false;
-            package = inputs.brave-origin.legacyPackages.${pkgs.stdenv.hostPlatform.system}.brave-origin;
-          };
-          firefox = {
-            enable = true;
-            package = pkgs.librewolf;
-          };
-        };
-        content.enable = true;
-        tdarr.enable = true;
-        dev.optionalPackages = [
-          pkgs.zed-editor
-        ];
-        gaming.optionalPackages = [
-          pkgs.edhm-ui
-          pkgs.stoat-desktop
-        ];
-      };
     };
 }

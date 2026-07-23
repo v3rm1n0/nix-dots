@@ -38,6 +38,21 @@ _: {
                 type = types.int;
                 example = 0;
               };
+              vrr = mkOption {
+                type = types.int;
+                default = 0;
+                example = 1;
+              };
+              bitdepth = mkOption {
+                type = types.int;
+                default = 8;
+                example = 10;
+              };
+              cm = mkOption {
+                type = types.str;
+                default = "srgb";
+                example = "wide";
+              };
               workspaces = mkOption {
                 type = types.listOf types.int;
                 example = [

@@ -12,7 +12,7 @@
       monitor = map (
         m:
         if m.enabled then
-          "${m.name}, ${toString m.width}x${toString m.height}@${toString m.refreshRate}, ${toString m.x}x${toString m.y}, ${toString m.scale}"
+          "${m.name}, ${toString m.width}x${toString m.height}@${toString m.refreshRate}, ${toString m.x}x${toString m.y}, ${toString m.scale}, vrr, ${toString m.vrr}, bitdepth, ${toString m.bitdepth}, cm, ${toString m.cm}"
         else
           "${m.name}, disable"
       ) config.mods.desktop.monitors;
@@ -92,7 +92,14 @@
               touchpad.natural_scroll = false;
             };
 
-            misc.disable_hyprland_logo = true;
+            misc = {
+              disable_hyprland_logo = true;
+            };
+
+            cursor = {
+              no_hardware_cursors = true;
+              no_break_fs_vrr = true;
+            };
 
             dwindle.split_width_multiplier = "1.35";
 
