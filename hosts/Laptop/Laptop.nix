@@ -6,7 +6,7 @@
       boot.kernelPackages = pkgs.linuxPackages_zen;
 
       userOptions = {
-        browser = "brave-origin";
+        browser = "librewolf";
         colorScheme = "gruvbox-dark-hard";
         dots = "/home/${config.userOptions.username}/dotfiles";
         hostName = "Laptop";
@@ -58,9 +58,17 @@
         ];
       };
 
-      mods.apps.browsing.chromium = {
-        enable = true;
-        package = inputs.brave-origin.legacyPackages.${pkgs.stdenv.hostPlatform.system}.brave-origin;
+      mods.apps = {
+        browsing = {
+          chromium = {
+            enable = false;
+            package = inputs.brave-origin.legacyPackages.${pkgs.stdenv.hostPlatform.system}.brave-origin;
+          };
+          firefox = {
+            enable = true;
+            package = pkgs.librewolf;
+          };
+        };
       };
     };
 }
