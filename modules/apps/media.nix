@@ -22,6 +22,7 @@
           packages = with pkgs; [
             freetube
             librepods
+            jellyfin-mpv-shim
             vlc
           ];
           rum.programs.mpv = {
