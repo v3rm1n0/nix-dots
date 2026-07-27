@@ -17,8 +17,6 @@ _: {
         hjem.users.${username} = {
           packages = with pkgs; [
             cinny-desktop
-            gajim
-            mumble
             protonmail-desktop
             signal-desktop
             teamspeak6-client
