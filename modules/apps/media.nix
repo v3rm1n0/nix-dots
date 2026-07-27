@@ -28,11 +28,15 @@
           rum.programs.mpv = {
             enable = true;
             config = {
-              fullscreen = true;
+              border = false;
+              fullscreen = false;
+              icc-profile-auto = true;
+              osc = false;
+              target-colorspace-hint = "auto";
               ytdl-format = "bestvideo+bestaudio/best";
             };
             scripts = with pkgs.mpvScripts; [
-              modernz
+              modernx
               sponsorblock-minimal
               thumbfast
             ];
