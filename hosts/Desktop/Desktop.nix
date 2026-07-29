@@ -58,7 +58,7 @@
           x = 0;
           y = 0;
           bitdepth = 10;
-          cm = "wide";
+          cm = "dcip3";
           workspaces = [
             1
             3
@@ -79,7 +79,7 @@
           x = 1920;
           y = 0;
           bitdepth = 10;
-          cm = "wide";
+          cm = "dcip3";
           workspaces = [
             2
             9
