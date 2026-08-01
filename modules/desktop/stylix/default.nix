@@ -33,8 +33,8 @@
             name = "Noto Color Emoji";
           };
           monospace = {
-            package = pkgs.nerd-fonts.geist-mono;
-            name = "Geist Mono";
+            package = pkgs.maple-mono.NF;
+            name = "Maple Mono NF";
           };
           sansSerif = {
             package = pkgs.geist-font;
