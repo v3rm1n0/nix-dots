@@ -2,7 +2,6 @@ _: {
   flake.modules.nixos.default =
     {
       config,
-      pkgs,
       ...
     }:
     let

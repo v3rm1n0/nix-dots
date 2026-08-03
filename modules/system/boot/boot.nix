@@ -2,7 +2,7 @@ _: {
   flake.modules.nixos.default =
     { config, lib, ... }:
     let
-    	inherit (config.userOptions) hostName;
+      inherit (config.userOptions) hostName;
     in
     {
       config = {

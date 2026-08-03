@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ ... }:
 {
   flake.modules.nixos."host/Desktop" =
     { config, pkgs, ... }:

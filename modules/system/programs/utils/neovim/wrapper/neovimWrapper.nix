@@ -63,7 +63,6 @@
     perSystem =
       {
         pkgs,
-        self',
         ...
       }:
       {
