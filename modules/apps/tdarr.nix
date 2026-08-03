@@ -24,7 +24,7 @@
 
         services.tdarr.nodes.desktop = {
           package =
-            (import inputs.tdarr-fix {
+            (import inputs.tdarr-update {
               system = pkgs.stdenv.hostPlatform.system;
               config.allowUnfree = true;
             }).tdarr-node;

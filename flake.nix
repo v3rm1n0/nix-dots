@@ -3,7 +3,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
-    tdarr-fix.url = "github:NixOS/nixpkgs/pull/544847/merge";
+    tdarr-update.url = "github:NixOS/nixpkgs/pull/543302/merge";
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,10 +29,6 @@
     };
     wrappers.url = "github:Lassulus/wrappers";
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
-    zen-browser = {
-      url = "github:youwen5/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
