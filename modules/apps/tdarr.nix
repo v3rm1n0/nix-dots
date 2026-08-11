@@ -1,9 +1,8 @@
-{ inputs, ... }: {
+_: {
   flake.modules.nixos.default =
     {
       config,
       lib,
-      pkgs,
       ...
     }:
     {
@@ -23,11 +22,6 @@
         };
 
         services.tdarr.nodes.desktop = {
-          package =
-            (import inputs.tdarr-update {
-              system = pkgs.stdenv.hostPlatform.system;
-              config.allowUnfree = true;
-            }).tdarr-node;
           serverURL = "http://172.16.0.115:8266";
           workers.transcodeCPU = 0;
           workers.transcodeGPU = 5;
