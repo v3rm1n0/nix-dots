@@ -16,6 +16,7 @@ _: {
         statix
         tirith
         unzip
+        zathura
         zoxide
       ];
     };
