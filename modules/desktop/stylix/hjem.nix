@@ -15,7 +15,10 @@ _: {
       cursorSize = toString config.stylix.cursor.size;
       iconTheme = if dark then config.stylix.icons.dark else config.stylix.icons.light;
       gtkTheme = if dark then "adw-gtk3-dark" else "adw-gtk3";
-      fontName = "${config.stylix.fonts.sansSerif.name} ${toString config.stylix.fonts.sizes.applications}";
+      appSize = toString config.stylix.fonts.sizes.applications;
+      fontName = "${config.stylix.fonts.sansSerif.name} ${appSize}";
+      documentFontName = "${config.stylix.fonts.serif.name} ${appSize}";
+      monospaceFontName = "${config.stylix.fonts.monospace.name} ${appSize}";
 
       # Convert a 6-char hex color to "r, g, b" decimal string for rgba() CSS values.
       hexToDecParts =
@@ -196,6 +199,21 @@ _: {
           config.stylix.cursor.package
           config.stylix.icons.package
           pkgs.adw-gtk3
+        ];
+
+        programs.dconf.profiles.user.databases = [
+          {
+            settings."org/gnome/desktop/interface" = {
+              color-scheme = if dark then "prefer-dark" else "default";
+              gtk-theme = gtkTheme;
+              icon-theme = iconTheme;
+              cursor-theme = cursorName;
+              cursor-size = lib.gvariant.mkInt32 config.stylix.cursor.size;
+              font-name = fontName;
+              document-font-name = documentFontName;
+              monospace-font-name = monospaceFontName;
+            };
+          }
         ];
 
         hjem.users.${username} = {
