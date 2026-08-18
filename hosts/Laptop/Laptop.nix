@@ -14,9 +14,23 @@
         wallpaper = "rocket.png";
       };
 
-      mods.hardware.gpu = {
-        enable = true;
-        brand = "intel";
+      mods = {
+        apps = {
+          ai.enable = true;
+          browsing = {
+            firefox = {
+              enable = true;
+              package = pkgs.librewolf;
+            };
+          };
+          dev.optionalPackages = [
+            pkgs.zed-editor
+          ];
+        };
+        hardware.gpu = {
+          enable = true;
+          brand = "intel";
+        };
       };
 
       mods.desktop = {
@@ -56,19 +70,6 @@
             enabled = true;
           }
         ];
-      };
-
-      mods.apps = {
-        browsing = {
-          chromium = {
-            enable = false;
-            package = inputs.brave-origin.legacyPackages.${pkgs.stdenv.hostPlatform.system}.brave-origin;
-          };
-          firefox = {
-            enable = true;
-            package = pkgs.librewolf;
-          };
-        };
       };
     };
 }
