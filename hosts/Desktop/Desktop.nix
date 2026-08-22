@@ -22,6 +22,7 @@
       };
 
       mods = {
+        boot.windowsBoot.enable = true;
         apps = {
           ai.enable = true;
           browsing = {
