@@ -16,8 +16,8 @@ _: {
       config = lib.mkIf config.mods.apps.comms.enable {
         hjem.users.${username} = {
           packages = with pkgs; [
-            cinny-desktop
             protonmail-desktop
+            sable
             signal-desktop
             teamspeak6-client
             thunderbird
