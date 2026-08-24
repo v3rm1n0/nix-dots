@@ -12,7 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.hjem.follows = "hjem";
     };
-    llm-agents.url = "github:numtide/llm-agents.nix";
     nixcord.url = "github:FlameFlag/nixcord";
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";

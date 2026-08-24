@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+_: {
   flake.modules.nixos.default =
     {
       config,
@@ -20,14 +19,10 @@
         };
 
         hjem.users.${username} = {
-          packages =
-            (with pkgs; [
-              jq
-              claude-code
-            ])
-            ++ [
-              inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.ccusage
-            ];
+          packages = with pkgs; [
+            jq
+            claude-code
+          ];
 
           files.".claude/settings.json" = {
             generator = lib.generators.toJSON { };
