@@ -50,8 +50,8 @@ return {
       vim.g.vimtex_view_method = "zathura"
       vim.g.vimtex_view_forward_search_on_start = false
       vim.g.vimtex_compiler_latexmk = {
-        aux_dir = "/home/v3rm1n/.texfiles/",
-        out_dir = "/home/v3rm1n/.texfiles/",
+        aux_dir = ".texfiles",
+        out_dir = "",
       }
     end,
   },
