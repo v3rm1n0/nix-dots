@@ -199,6 +199,12 @@
                 workspace = "8 silent";
                 "match:initial_class" = "^(steam)";
               }
+              {
+                name = "flameshot-float-top";
+                float = "on";
+                pin = "on";
+                "match:title" = "^(flameshot)$";
+              }
             ];
           };
         };
