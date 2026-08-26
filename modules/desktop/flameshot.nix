@@ -8,6 +8,7 @@ _: {
     }:
     let
       inherit (config.userOptions) username;
+      inherit (config.lib.stylix) colors;
     in
     {
       options.mods.desktop.flameshot.enable = lib.mkEnableOption "the flameshot screenshot tool";
@@ -24,6 +25,8 @@ _: {
             showDesktopNotification = false;
             showStartupLaunchMessage = false;
             disabledTrayIcon = true;
+            uiColor = "#${colors.base0D}";
+            contrastUiColor = "#${colors.base00}";
           };
         };
       };
