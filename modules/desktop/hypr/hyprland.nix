@@ -3,6 +3,7 @@
     {
       config,
       lib,
+      pkgs,
       ...
     }:
     let
@@ -36,6 +37,13 @@
           "SHIFT $mainMod, ${key}, movetoworkspace, ${toString i}"
         ]
       ) (lib.range 1 10);
+
+      # See scripts/flameshot-select.sh for why this exists.
+      flameshotSelect = pkgs.writeShellApplication {
+        name = "flameshot-select";
+        runtimeInputs = [ pkgs.jq ];
+        text = builtins.readFile ./scripts/flameshot-select.sh;
+      };
     in
     {
       config = lib.mkIf config.mods.desktop.hypr.enable {
@@ -47,6 +55,8 @@
           MOZ_ENABLE_WAYLAND = "1";
           QT_QPA_PLATFORM = "wayland";
         };
+
+        environment.systemPackages = [ flameshotSelect ];
 
         hjem.users.${username}.rum.desktops.hyprland = {
           enable = true;
@@ -153,8 +163,10 @@
             ++ workspaceBinds
             ++ [
               # flameshot: selection editor / monitor under the cursor; both
-              # save to ~/Pictures and copy to the clipboard.
-              "$mainMod SHIFT , s, exec, flameshot gui -c -p ~/Pictures"
+              # save to ~/Pictures and copy to the clipboard. flameshot-select
+              # wraps `flameshot gui` to fix its capture overlay position
+              # (see flameshotSelect above).
+              "$mainMod SHIFT , s, exec, flameshot-select"
               "$mainMod SHIFT , Home, exec, flameshot screen -c -p ~/Pictures"
             ];
 
