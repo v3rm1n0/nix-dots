@@ -22,6 +22,7 @@ _: {
           packages = with pkgs; [
             jq
             claude-code
+            sox
           ];
 
           files.".claude/settings.json" = {
@@ -42,6 +43,10 @@ _: {
               statusLine = {
                 command = "~/.claude/statusline.sh";
                 type = "command";
+              };
+              voice = {
+                enabled = true;
+                mode = "tap";
               };
             };
           };
