@@ -24,6 +24,7 @@ _: {
           allowedUDPPorts = [
             53317 # localsend
           ];
+          checkReversePath = lib.mkIf config.mods.security.vpn.enable false;
         };
       };
 

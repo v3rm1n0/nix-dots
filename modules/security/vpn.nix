@@ -15,7 +15,7 @@ _: {
       };
 
       config = lib.mkIf cfg.enable {
-        environment.systemPackages = [ pkgs.proton-vpn ];
+        environment.systemPackages = [ pkgs.proton-vpn pkgs.wireguard-tools ];
       };
     };
 }
