@@ -12,7 +12,7 @@ _: {
       networking = {
         useDHCP = lib.mkDefault true;
         networkmanager = {
-          dns = "systemd-resolved";
+          dns = lib.mkIf config.services.resolved.enable "systemd-resolved";
           enable = true;
           wifi.powersave = true;
         };
@@ -29,7 +29,7 @@ _: {
       };
 
       services.resolved = {
-        enable = true;
+        enable = false;
         settings = {
           Resolve = {
             DNSSEC = true;
