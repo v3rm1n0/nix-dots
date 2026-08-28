@@ -33,7 +33,7 @@
             helium.enable = true;
           };
           content.enable = true;
-          tdarr.enable = true;
+          # tdarr.enable = true;
           dev.optionalPackages = [
             pkgs.zed-editor
           ];
