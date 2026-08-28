@@ -25,6 +25,10 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wazuh-agent-nixos = {
+      url = "git+https://github.com/nealfennimore/wazuh-agent-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     wrappers.url = "github:Lassulus/wrappers";
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
   };

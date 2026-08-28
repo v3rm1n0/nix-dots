@@ -141,6 +141,42 @@
         "type": "github"
       }
     },
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
+      "inputs": {
+        "systems": "systems_4"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "fromYaml": {
       "flake": false,
       "locked": {
@@ -421,6 +457,7 @@
         "noctalia": "noctalia",
         "spicetify-nix": "spicetify-nix",
         "stylix": "stylix",
+        "wazuh-agent-nixos": "wazuh-agent-nixos",
         "wrapper-modules": "wrapper-modules",
         "wrappers": "wrappers"
       }
@@ -593,6 +630,27 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
+      }
+    },
+    "wazuh-agent-nixos": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787848767,
+        "narHash": "sha256-wqPGk/CFZoynWyomPRjAVkiulYJe0nze597aLl4+dSU=",
+        "ref": "refs/heads/main",
+        "rev": "cde2502240de83b94ae4c24932de07313dd5b9ed",
+        "revCount": 57,
+        "type": "git",
+        "url": "https://github.com/nealfennimore/wazuh-agent-nixos"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/nealfennimore/wazuh-agent-nixos"
       }
     },
     "wrapper-modules": {

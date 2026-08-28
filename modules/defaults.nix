@@ -9,6 +9,7 @@
         gnupg.enable = lib.mkDefault true;
         ssh.enable = lib.mkDefault true;
         vpn.enable = lib.mkDefault true;
+        wazuh.enable = lib.mkDefault true;
       };
 
       mods.services = {
