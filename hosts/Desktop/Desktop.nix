@@ -13,7 +13,7 @@
       boot.kernelPackages = pkgs.linuxPackages_zen;
 
       userOptions = {
-        browser = "librewolf";
+        browser = "helium";
         colorScheme = "gruvbox-dark-hard";
         dots = "/home/${config.userOptions.username}/dotfiles";
         hostName = "Desktop";
@@ -27,9 +27,10 @@
           ai.enable = true;
           browsing = {
             firefox = {
-              enable = true;
+              enable = false;
               package = pkgs.librewolf;
             };
+            helium.enable = true;
           };
           content.enable = true;
           tdarr.enable = true;
