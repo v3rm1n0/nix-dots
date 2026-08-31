@@ -9,7 +9,12 @@
         settings = {
           logo = {
             type = "kitty-direct";
-            source = builtins.toString (inputs.self + "/assets/logo/nix-snowflake.png");
+            source = builtins.toString (
+              builtins.path {
+                path = ../../../../../../assets/logo/nix-snowflake.png;
+                name = "nix-snowflake-logo.png";
+              }
+            );
             width = 18;
             height = 8;
             padding = {
