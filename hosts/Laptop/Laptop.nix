@@ -1,28 +1,19 @@
 { inputs, ... }:
 {
   flake.modules.nixos."host/Laptop" =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       boot.kernelPackages = pkgs.linuxPackages_zen;
 
       userOptions = {
-        browser = "librewolf";
         colorScheme = "gruvbox-dark-hard";
-        dots = "/home/${config.userOptions.username}/dotfiles";
+        dots = "/etc/dotfiles";
         hostName = "Laptop";
-        username = "v3rm1n";
-        wallpaper = "rocket.png";
       };
 
       mods = {
         apps = {
-          ai.enable = true;
-          browsing = {
-            firefox = {
-              enable = true;
-              package = pkgs.librewolf;
-            };
-          };
+          browsing.firefox.package = pkgs.librewolf;
           dev.optionalPackages = [
             pkgs.zed-editor
           ];

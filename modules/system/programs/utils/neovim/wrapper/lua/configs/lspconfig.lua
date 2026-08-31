@@ -17,10 +17,10 @@ vim.lsp.config("nixd", {
       },
       options = {
         nixos = {
-          expr = '(builtins.getFlake "/home/v3rm1n/.dotfiles").nixosConfigurations',
+          expr = '(builtins.getFlake "/etc/dotfiles").nixosConfigurations',
         },
         home_manager = {
-          expr = '(builtins.getFlake "/home/v3rm1n/.dotfiles").nixosConfigurations.Desktop.options.home-manager.users.type.getSubOptions []'
+          expr = '(builtins.getFlake "/etc/dotfiles").nixosConfigurations.Desktop.options.home-manager.users.type.getSubOptions []'
         }
       },
     },
