@@ -1,71 +1,62 @@
 _: {
   flake.modules.nixos.default =
     {
-      config,
       lib,
       pkgs,
+      hostUsernames,
+      userProfiles,
       ...
     }:
+    let
+      users = builtins.filter (n: builtins.elem "browsing-tor" userProfiles.${n}.apps) hostUsernames;
+    in
     {
-      options.mods.apps.browsing.tor = {
-        enable = lib.mkEnableOption "Enable Tor Browser";
-      };
+      config = lib.mkMerge (
+        [
+          (lib.mkIf (users != [ ]) {
+            services.tor = {
+              enable = true;
 
-      config = lib.mkIf config.mods.apps.browsing.tor.enable {
+              enableGeoIP = false;
 
-        environment.systemPackages = [
-          pkgs.tor-browser
-        ];
+              torsocks.enable = true;
 
-        services.tor = {
-          enable = true;
+              client = {
+                enable = true;
+              };
 
-          # Disable GeoIP to prevent the Tor client from estimating the locations of Tor nodes it connects to
-          enableGeoIP = false;
+              relay = {
+                enable = true;
+                role = "relay";
+              };
 
-          # Enable Torsocks for transparent proxying of applications through Tor
-          torsocks.enable = true;
+              settings = {
+                MaxAdvertisedBandwidth = "100 MB";
+                BandWidthRate = "50 MB";
+                RelayBandwidthRate = "50 MB";
+                RelayBandwidthBurst = "100 MB";
 
-          # Enable the Tor client
-          client = {
-            enable = true;
-          };
+                ExitPolicy = "reject *:*";
 
-          # Enable and configure the Tor relay
-          relay = {
-            enable = true;
-            role = "relay"; # Set the relay role (e.g., "relay", "bridge")
-          };
+                CookieAuthentication = true;
+                AvoidDiskWrites = 1;
+                HardwareAccel = 1;
+                SafeLogging = 1;
+                NumCPUs = 3;
 
-          # Configure Tor settings
-          settings = {
+                ORPort = [ 443 ];
+              };
+            };
 
-            # Bandwidth settings
-            MaxAdvertisedBandwidth = "100 MB";
-            BandWidthRate = "50 MB";
-            RelayBandwidthRate = "50 MB";
-            RelayBandwidthBurst = "100 MB";
-
-            # Reject all exit traffic
-            ExitPolicy = "reject *:*";
-
-            # Performance and security settings
-            CookieAuthentication = true;
-            AvoidDiskWrites = 1;
-            HardwareAccel = 1;
-            SafeLogging = 1;
-            NumCPUs = 3;
-
-            # Network settings
-            ORPort = [ 443 ];
-          };
-        };
-
-        # Operating a Snowflake proxy helps others circumvent censorship. Safe to run.
-        services.snowflake-proxy = {
-          enable = true;
-          capacity = 10;
-        };
-      };
+            services.snowflake-proxy = {
+              enable = true;
+              capacity = 10;
+            };
+          })
+        ]
+        ++ map (name: {
+          hjem.users.${name}.packages = [ pkgs.tor-browser ];
+        }) users
+      );
     };
 }

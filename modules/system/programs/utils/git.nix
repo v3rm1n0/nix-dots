@@ -4,11 +4,8 @@ _: {
       config,
       ...
     }:
-    let
-      inherit (config.userOptions) username;
-    in
     {
-      hjem.users.${username}.rum.programs.git = {
+      hjem.users.v3rm1n.rum.programs.git = {
         enable = true;
         settings = {
           commit.gpgsign = true;
@@ -21,5 +18,10 @@ _: {
           };
         };
       };
+
+      environment.etc.gitconfig.text = ''
+        [safe]
+        	directory = ${config.userOptions.dots}
+      '';
     };
 }

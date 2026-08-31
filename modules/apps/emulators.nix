@@ -1,36 +1,40 @@
 _: {
   flake.modules.nixos.default =
     {
-      config,
       lib,
       pkgs,
+      hostUsernames,
+      userProfiles,
       ...
     }:
     let
-      inherit (config.userOptions) username;
+      users = builtins.filter (n: builtins.elem "emulators" userProfiles.${n}.apps) hostUsernames;
     in
     {
-      options.mods.apps.emulators.enable = lib.mkEnableOption "Enabled the emulation programs";
+      config = lib.mkMerge (
+        [
+          (lib.mkIf (users != [ ]) {
+            environment.systemPackages = with pkgs; [ docker-compose ];
 
-      config = lib.mkIf config.mods.apps.emulators.enable {
-        environment.systemPackages = with pkgs; [ docker-compose ];
-
-        hjem.users.${username}.packages = with pkgs; [
-          qemu
-          quickemu
-          winboat
-        ];
-
-        programs.virt-manager.enable = true;
-        users.users.${username}.extraGroups = [ "libvirtd" ];
-        virtualisation = {
-          docker = {
-            enable = true;
-            enableOnBoot = false;
-          };
-          libvirtd.enable = true;
-          spiceUSBRedirection.enable = true;
-        };
-      };
+            programs.virt-manager.enable = true;
+            virtualisation = {
+              docker = {
+                enable = true;
+                enableOnBoot = false;
+              };
+              libvirtd.enable = true;
+              spiceUSBRedirection.enable = true;
+            };
+          })
+        ]
+        ++ map (name: {
+          hjem.users.${name}.packages = with pkgs; [
+            qemu
+            quickemu
+            winboat
+          ];
+          users.users.${name}.extraGroups = [ "libvirtd" ];
+        }) users
+      );
     };
 }

@@ -4,49 +4,55 @@
       config,
       lib,
       pkgs,
+      hostUsernames,
+      userProfiles,
       ...
     }:
     let
-      inherit (config.userOptions) username;
+      hyprUsers = builtins.filter (n: userProfiles.${n}.wm == "hyprland") hostUsernames;
     in
     {
       options.mods.desktop.hypr.hypridle.enable = lib.mkEnableOption "the hypridle idle daemon";
 
-      config = lib.mkIf config.mods.desktop.hypr.hypridle.enable {
-        hjem.users.${username} = {
-          rum.programs.hypridle = {
-            enable = true;
-            settings = {
-              general = {
-                after_sleep_cmd = "hyprctl dispatch dpms on";
-                ignore_dbus_inhibit = false;
-                lock_cmd = "hyprlock";
+      config = lib.mkIf config.mods.desktop.hypr.hypridle.enable (
+        lib.mkMerge (
+          map (username: {
+            hjem.users.${username} = {
+              rum.programs.hypridle = {
+                enable = true;
+                settings = {
+                  general = {
+                    after_sleep_cmd = "hyprctl dispatch dpms on";
+                    ignore_dbus_inhibit = false;
+                    lock_cmd = "hyprlock";
+                  };
+                  listener = [
+                    {
+                      timeout = 300;
+                      "on-timeout" = "hyprctl dispatch dpms off";
+                      "on-resume" = "hyprctl dispatch dpms on";
+                    }
+                    {
+                      timeout = 420;
+                      "on-timeout" = "hyprlock";
+                    }
+                  ];
+                };
               };
-              listener = [
-                {
-                  timeout = 300;
-                  "on-timeout" = "hyprctl dispatch dpms off";
-                  "on-resume" = "hyprctl dispatch dpms on";
-                }
-                {
-                  timeout = 420;
-                  "on-timeout" = "hyprlock";
-                }
-              ];
-            };
-          };
 
-          systemd.services.hypridle = {
-            description = "Hypridle idle daemon";
-            after = [ "graphical-session.target" ];
-            partOf = [ "graphical-session.target" ];
-            wantedBy = [ "graphical-session.target" ];
-            serviceConfig = {
-              ExecStart = "${pkgs.hypridle}/bin/hypridle";
-              Restart = "on-failure";
+              systemd.services.hypridle = {
+                description = "Hypridle idle daemon";
+                after = [ "graphical-session.target" ];
+                partOf = [ "graphical-session.target" ];
+                wantedBy = [ "graphical-session.target" ];
+                serviceConfig = {
+                  ExecStart = "${pkgs.hypridle}/bin/hypridle";
+                  Restart = "on-failure";
+                };
+              };
             };
-          };
-        };
-      };
+          }) hyprUsers
+        )
+      );
     };
 }

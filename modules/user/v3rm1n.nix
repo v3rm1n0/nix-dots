@@ -1,21 +1,8 @@
-{ inputs, ... }:
-{
-  flake.modules.nixos.default =
+_: {
+  flake.modules.nixos."user/v3rm1n" =
+    { pkgs, ... }:
     {
-      config,
-      pkgs,
-      ...
-    }:
-    let
-      inherit (config.userOptions) username;
-    in
-    {
-      imports = [ inputs.hjem.nixosModules.hjem ];
-
-      programs.zsh.enable = true;
-      users.mutableUsers = true;
-      users.defaultUserShell = pkgs.zsh;
-      users.users.${username} = {
+      users.users.v3rm1n = {
         shell = pkgs.fish;
         isNormalUser = true;
         hashedPassword = "$6$TSeuDdaiycwV2p9R$SfYPYi5lKha0PLWOqoCXTJW8/SthhJ3R99Hfvo8g5AT5hR3BZIUTmXNmxU03DyJNrSu/yh6SDwkbEXIOOlETO.";
@@ -26,12 +13,6 @@
         ];
       };
 
-      hjem = {
-        extraModules = [
-          inputs.hjem-rum.hjemModules.default
-        ];
-        users.${username}.enable = true;
-        clobberByDefault = true;
-      };
+      hjem.users.v3rm1n.enable = true;
     };
 }

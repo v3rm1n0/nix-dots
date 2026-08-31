@@ -1,10 +1,11 @@
 _: {
   flake.modules.nixos.default =
-    { config, ... }:
-    let
-      inherit (config.userOptions) username;
-    in
+    { lib, hostUsernames, ... }:
     {
-      hjem.users.${username}.files.".config/electron-flags.conf".source = ./electron-flags.conf;
+      config = lib.mkMerge (
+        map (name: {
+          hjem.users.${name}.files.".config/electron-flags.conf".source = ./electron-flags.conf;
+        }) hostUsernames
+      );
     };
 }

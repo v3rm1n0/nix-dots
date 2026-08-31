@@ -1,7 +1,6 @@
-{ ... }:
-{
+_: {
   flake.modules.nixos."host/Desktop" =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       boot.initrd = {
         availableKernelModules = [
@@ -13,27 +12,15 @@
       boot.kernelPackages = pkgs.linuxPackages_zen;
 
       userOptions = {
-        browser = "helium";
         colorScheme = "gruvbox-dark-hard";
-        dots = "/home/${config.userOptions.username}/dotfiles";
+        dots = "/etc/dotfiles";
         hostName = "Desktop";
-        username = "v3rm1n";
-        wallpaper = "rocket.png";
       };
 
       mods = {
         boot.windowsBoot.enable = true;
         apps = {
-          ai.enable = true;
-          browsing = {
-            firefox = {
-              enable = false;
-              package = pkgs.librewolf;
-            };
-            helium.enable = true;
-          };
-          content.enable = true;
-          # tdarr.enable = true;
+          browsing.firefox.package = pkgs.librewolf;
           dev.optionalPackages = [
             pkgs.zed-editor
           ];

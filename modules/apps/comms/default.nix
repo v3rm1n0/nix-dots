@@ -1,29 +1,29 @@
 _: {
   flake.modules.nixos.default =
     {
-      config,
       lib,
       pkgs,
+      hostUsernames,
+      userProfiles,
       ...
     }:
     let
-      inherit (config.userOptions) username;
+      users = builtins.filter (n: builtins.elem "comms" userProfiles.${n}.apps) hostUsernames;
     in
     {
-
-      options.mods.apps.comms.enable = lib.mkEnableOption "Enables communication module";
-
-      config = lib.mkIf config.mods.apps.comms.enable {
-        hjem.users.${username} = {
-          packages = with pkgs; [
-            protonmail-desktop
-            sable
-            signal-desktop
-            teamspeak6-client
-            thunderbird
-            zoom-us
-          ];
-        };
-      };
+      config = lib.mkMerge (
+        map (name: {
+          hjem.users.${name} = {
+            packages = with pkgs; [
+              protonmail-desktop
+              sable
+              signal-desktop
+              teamspeak6-client
+              thunderbird
+              zoom-us
+            ];
+          };
+        }) users
+      );
     };
 }

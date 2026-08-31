@@ -1,12 +1,14 @@
 _: {
   flake.modules.nixos.default =
     {
-      config,
+      lib,
       pkgs,
+      hostUsernames,
+      userProfiles,
       ...
     }:
     let
-      username = config.userOptions.username;
+      username = lib.head (builtins.filter (n: userProfiles.${n}.isAdmin) hostUsernames);
       EQPathAirpods = ".config/pipewire/config/airpods.txt";
       EQPathTruthear = ".config/pipewire/config/truthear.txt";
     in
