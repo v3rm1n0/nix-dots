@@ -4,7 +4,7 @@ _: {
 
     userOptions = {
       colorScheme = "gruvbox-dark-hard";
-      dots = "/etc/dotfiles";
+      dots = "/home/<user>/dotfiles";
       hostName = "Template";
     };
   };

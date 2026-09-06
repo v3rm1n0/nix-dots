@@ -7,7 +7,7 @@
         inherit pkgs;
         package = pkgs.nh;
         env = {
-          "NH_FLAKE" = "/etc/dotfiles";
+          "NH_FLAKE" = "$HOME/dotfiles";
         };
       };
     };

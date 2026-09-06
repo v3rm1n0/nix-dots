@@ -13,7 +13,7 @@
       boot.kernelPackages = pkgs.linuxPackages_zen;
 
       userOptions = {
-        browser = "helium";
+        browser = "brave-origin";
         colorScheme = "gruvbox-dark-hard";
         dots = "/home/${config.userOptions.username}/dotfiles";
         hostName = "Desktop";
@@ -26,6 +26,10 @@
         apps = {
           ai.enable = true;
           browsing = {
+            chromium = {
+              enable = true;
+              package = pkgs.brave-origin;
+            };
             firefox = {
               enable = false;
               package = pkgs.librewolf;
@@ -33,7 +37,6 @@
             helium.enable = true;
           };
           content.enable = true;
-          # tdarr.enable = true;
           dev.optionalPackages = [
             pkgs.zed-editor
           ];

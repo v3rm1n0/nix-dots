@@ -49,16 +49,12 @@ _: {
             "SafeBrowsingExtendedReportingEnabled" = false;
           };
           extensions = [
-            "nngceckbapebfimnlniiiahkandclblb" # Bitwarden
-            "enamippconapkdmgfgjchkhakpfinmaj" # DeArrow
             "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
-            "mlomiejdfkolichcflejclcbmpeaniij" # Ghostery
-            "bggfcpfjbdkhfhfmkjpbhnkhnpjjeomc" # Material Icons for GitHub
-            #"pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
-            #"ghmbeldphafepmbegfdlkpapadhbakde" # Proton Pass
-            "gebbhagfogifgggkldgodflihgfeippi" # Return YouTube Dislike
+            "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
+            "ghmbeldphafepmbegfdlkpapadhbakde" # Proton Pass
             #"cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
             "ponfpcnoihfmfllpaingbgckeeldkhle" # YouTube Enhancer
+            "pjgickchbiikhdfpmecaabkphmofpdce" # Knock Off
           ];
         };
       };
