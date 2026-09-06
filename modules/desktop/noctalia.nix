@@ -5,12 +5,10 @@
       config,
       lib,
       pkgs,
-      hostUsernames,
-      userProfiles,
       ...
     }:
     let
-      hyprUsers = builtins.filter (n: userProfiles.${n}.wm == "hyprland") hostUsernames;
+      inherit (config.userOptions) username wallpaper;
       cfg = config.mods.desktop.noctalia;
       colors = config.lib.stylix.colors;
 
@@ -112,11 +110,7 @@
     in
     {
       options.mods.desktop.noctalia = {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          default = hyprUsers != [ ];
-          description = "Enable the Noctalia shell.";
-        };
+        enable = lib.mkEnableOption "the Noctalia shell";
         withBattery = lib.mkOption {
           type = lib.types.bool;
           default = false;
@@ -124,23 +118,18 @@
         };
       };
 
-      config = lib.mkIf cfg.enable (
-        lib.mkMerge (
-          [
-            {
-              environment.systemPackages = [
-                (mkNoctalia { withBattery = cfg.withBattery; })
-              ];
-            }
-          ]
-          ++ map (username: {
-            hjem.users.${username}.files.".cache/noctalia/wallpapers.json" = {
-              text = builtins.toJSON {
-                defaultWallpaper = "/home/${username}/.config/backgrounds/${userProfiles.${username}.wallpaper}";
-              };
+      config = lib.mkIf cfg.enable {
+        environment.systemPackages = [
+          (mkNoctalia { withBattery = cfg.withBattery; })
+        ];
+
+        hjem.users.${username} = {
+          files.".cache/noctalia/wallpapers.json" = {
+            text = builtins.toJSON {
+              defaultWallpaper = "/home/${username}/.config/backgrounds/${wallpaper}";
             };
-          }) hyprUsers
-        )
-      );
+          };
+        };
+      };
     };
 }

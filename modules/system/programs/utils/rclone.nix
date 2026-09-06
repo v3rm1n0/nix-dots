@@ -1,14 +1,13 @@
 _: {
   flake.modules.nixos.default =
     {
+      config,
       lib,
       pkgs,
-      hostUsernames,
-      userProfiles,
       ...
     }:
     let
-      username = lib.head (builtins.filter (n: userProfiles.${n}.isAdmin) hostUsernames);
+      inherit (config.userOptions) username;
       mountdir = "/home/${username}/ProtonDrive";
     in
     {

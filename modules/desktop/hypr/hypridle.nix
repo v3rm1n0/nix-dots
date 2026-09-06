@@ -4,55 +4,49 @@
       config,
       lib,
       pkgs,
-      hostUsernames,
-      userProfiles,
       ...
     }:
     let
-      hyprUsers = builtins.filter (n: userProfiles.${n}.wm == "hyprland") hostUsernames;
+      inherit (config.userOptions) username;
     in
     {
       options.mods.desktop.hypr.hypridle.enable = lib.mkEnableOption "the hypridle idle daemon";
 
-      config = lib.mkIf config.mods.desktop.hypr.hypridle.enable (
-        lib.mkMerge (
-          map (username: {
-            hjem.users.${username} = {
-              rum.programs.hypridle = {
-                enable = true;
-                settings = {
-                  general = {
-                    after_sleep_cmd = "hyprctl dispatch dpms on";
-                    ignore_dbus_inhibit = false;
-                    lock_cmd = "hyprlock";
-                  };
-                  listener = [
-                    {
-                      timeout = 300;
-                      "on-timeout" = "hyprctl dispatch dpms off";
-                      "on-resume" = "hyprctl dispatch dpms on";
-                    }
-                    {
-                      timeout = 420;
-                      "on-timeout" = "hyprlock";
-                    }
-                  ];
-                };
+      config = lib.mkIf config.mods.desktop.hypr.hypridle.enable {
+        hjem.users.${username} = {
+          rum.programs.hypridle = {
+            enable = true;
+            settings = {
+              general = {
+                after_sleep_cmd = "hyprctl dispatch dpms on";
+                ignore_dbus_inhibit = false;
+                lock_cmd = "hyprlock";
               };
-
-              systemd.services.hypridle = {
-                description = "Hypridle idle daemon";
-                after = [ "graphical-session.target" ];
-                partOf = [ "graphical-session.target" ];
-                wantedBy = [ "graphical-session.target" ];
-                serviceConfig = {
-                  ExecStart = "${pkgs.hypridle}/bin/hypridle";
-                  Restart = "on-failure";
-                };
-              };
+              listener = [
+                {
+                  timeout = 300;
+                  "on-timeout" = "hyprctl dispatch dpms off";
+                  "on-resume" = "hyprctl dispatch dpms on";
+                }
+                {
+                  timeout = 420;
+                  "on-timeout" = "hyprlock";
+                }
+              ];
             };
-          }) hyprUsers
-        )
-      );
+          };
+
+          systemd.services.hypridle = {
+            description = "Hypridle idle daemon";
+            after = [ "graphical-session.target" ];
+            partOf = [ "graphical-session.target" ];
+            wantedBy = [ "graphical-session.target" ];
+            serviceConfig = {
+              ExecStart = "${pkgs.hypridle}/bin/hypridle";
+              Restart = "on-failure";
+            };
+          };
+        };
+      };
     };
 }

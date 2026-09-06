@@ -1,14 +1,13 @@
 _: {
   flake.modules.nixos.default =
-    { lib, hostUsernames, ... }:
+    { config, ... }:
+    let
+      inherit (config.userOptions) username;
+    in
     {
-      config = lib.mkMerge (
-        map (username: {
-          hjem.users.${username}.files = {
-            ".config/backgrounds".source = ./wallpapers;
-            ".config/nixlogo.png".source = ./logo/nix-snowflake.png;
-          };
-        }) hostUsernames
-      );
+      hjem.users.${username}.files = {
+        ".config/backgrounds".source = ./wallpapers;
+        ".config/nixlogo.png".source = ./logo/nix-snowflake.png;
+      };
     };
 }

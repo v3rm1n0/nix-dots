@@ -5,12 +5,11 @@
       config,
       lib,
       pkgs,
-      hostUsernames,
-      userProfiles,
       ...
     }:
     let
-      users = builtins.filter (n: builtins.elem "browsing-helium" userProfiles.${n}.apps) hostUsernames;
+      inherit (config.userOptions) username;
+      cfg = config.mods.apps.browsing.helium;
 
       widevineUpdater = pkgs.writeShellApplication {
         name = "helium-widevine-update";
@@ -58,6 +57,7 @@
           install -m755 "$widevine_so" "$version_dir/_platform_specific/linux_x64/libwidevinecdm.so"
           install -m644 "$manifest" "$version_dir/manifest.json"
 
+          # Drop stale versions so Helium doesn't get confused by multiple copies
           find "$target_dir" -mindepth 1 -maxdepth 1 -type d ! -name "$version" -exec rm -rf {} +
 
           echo "installed widevine CDM $version"
@@ -65,45 +65,48 @@
       };
     in
     {
-      options.mods.apps.browsing.helium.package = lib.mkOption {
-        type = lib.types.nullOr lib.types.package;
-        default = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        defaultText = lib.literalExpression "inputs.helium.packages.\${pkgs.stdenv.hostPlatform.system}.default";
-        description = "The Helium package to use.";
+      options.mods.apps.browsing.helium = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Enable Helium browser.";
+        };
+
+        package = lib.mkOption {
+          type = lib.types.nullOr lib.types.package;
+          default = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          defaultText = lib.literalExpression "inputs.helium.packages.\${pkgs.stdenv.hostPlatform.system}.default";
+          description = "The Helium package to use.";
+        };
       };
 
-      config = lib.mkMerge (
-        [
-          (lib.mkIf (users != [ ]) {
-            mods.apps.browsing.chromium.package = lib.mkDefault config.mods.apps.browsing.helium.package;
-          })
-        ]
-        ++ map (name: {
-          hjem.users.${name} = {
-            packages = [ config.mods.apps.browsing.helium.package ];
-            systemd = {
-              services.helium-widevine-update = {
-                description = "Fetch and install the Widevine CDM for Helium";
-                after = [ "network-online.target" ];
-                wants = [ "network-online.target" ];
-                serviceConfig = {
-                  Type = "oneshot";
-                  ExecStart = lib.getExe widevineUpdater;
-                };
-              };
+      config = lib.mkIf cfg.enable {
+        mods.apps.browsing.chromium = {
+          enable = lib.mkDefault true;
+          package = lib.mkDefault cfg.package;
+        };
 
-              timers.helium-widevine-update = {
-                description = "Periodically refresh the Widevine CDM for Helium";
-                wantedBy = [ "timers.target" ];
-                timerConfig = {
-                  OnBootSec = "5m";
-                  OnUnitActiveSec = "7d";
-                  Persistent = true;
-                };
-              };
+        hjem.users.${username}.systemd = {
+          services.helium-widevine-update = {
+            description = "Fetch and install the Widevine CDM for Helium";
+            after = [ "network-online.target" ];
+            wants = [ "network-online.target" ];
+            serviceConfig = {
+              Type = "oneshot";
+              ExecStart = lib.getExe widevineUpdater;
             };
           };
-        }) users
-      );
+
+          timers.helium-widevine-update = {
+            description = "Periodically refresh the Widevine CDM for Helium";
+            wantedBy = [ "timers.target" ];
+            timerConfig = {
+              OnBootSec = "5m";
+              OnUnitActiveSec = "7d";
+              Persistent = true;
+            };
+          };
+        };
+      };
     };
 }

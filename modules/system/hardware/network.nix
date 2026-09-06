@@ -3,9 +3,11 @@ _: {
     {
       config,
       lib,
-      hostUsernames,
       ...
     }:
+    let
+      inherit (config.userOptions) username;
+    in
     {
       networking = {
         useDHCP = lib.mkDefault true;
@@ -40,7 +42,9 @@ _: {
         };
       };
 
-      users.groups.networkmanager.members = hostUsernames;
+      users.users.${username} = {
+        extraGroups = [ "networkmanager" ];
+      };
 
       programs.traceroute.enable = true;
 

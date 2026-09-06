@@ -2,48 +2,46 @@
 {
   flake.modules.nixos.default =
     {
+      config,
       lib,
       pkgs,
-      hostUsernames,
-      userProfiles,
       ...
     }:
     let
-      users = builtins.filter (n: builtins.elem "media" userProfiles.${n}.apps) hostUsernames;
+      inherit (config.userOptions) username;
     in
     {
       imports = [ inputs.spicetify-nix.nixosModules.default ];
 
-      config = lib.mkMerge (
-        [
-          (lib.mkIf (users != [ ]) { programs.spicetify.enable = true; })
-        ]
-        ++ map (name: {
-          hjem.users.${name} = {
-            packages = with pkgs; [
-              freetube
-              librepods
-              jellyfin-mpv-shim
-              vlc
-            ];
-            rum.programs.mpv = {
-              enable = true;
-              config = {
-                border = false;
-                fullscreen = false;
-                icc-profile-auto = true;
-                osc = false;
-                target-colorspace-hint = "auto";
-                ytdl-format = "bestvideo+bestaudio/best";
-              };
-              scripts = with pkgs.mpvScripts; [
-                modernx
-                sponsorblock-minimal
-                thumbfast
-              ];
+      options.mods.apps.media.enable = lib.mkEnableOption "Enables media module";
+
+      config = lib.mkIf config.mods.apps.media.enable {
+        programs.spicetify.enable = true;
+
+        hjem.users.${username} = {
+          packages = with pkgs; [
+            freetube
+            librepods
+            jellyfin-mpv-shim
+            vlc
+          ];
+          rum.programs.mpv = {
+            enable = true;
+            config = {
+              border = false;
+              fullscreen = false;
+              icc-profile-auto = true;
+              osc = false;
+              target-colorspace-hint = "auto";
+              ytdl-format = "bestvideo+bestaudio/best";
             };
+            scripts = with pkgs.mpvScripts; [
+              modernx
+              sponsorblock-minimal
+              thumbfast
+            ];
           };
-        }) users
-      );
+        };
+      };
     };
 }

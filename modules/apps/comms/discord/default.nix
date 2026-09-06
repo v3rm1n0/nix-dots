@@ -1,20 +1,14 @@
 { inputs, ... }:
 {
   flake.modules.nixos.default =
-    {
-      lib,
-      hostUsernames,
-      userProfiles,
-      ...
-    }:
+    { config, lib, ... }:
     let
-      users = builtins.filter (n: builtins.elem "comms" userProfiles.${n}.apps) hostUsernames;
-      username = lib.head users;
+      inherit (config.userOptions) username;
     in
     {
       imports = [ inputs.nixcord.nixosModules.nixcord ];
 
-      config = lib.mkIf (users != [ ]) {
+      config = lib.mkIf config.mods.apps.comms.enable {
         programs.nixcord = {
           enable = true;
           user = username;

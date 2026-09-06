@@ -4,12 +4,10 @@ _: {
       config,
       lib,
       pkgs,
-      hostUsernames,
-      userProfiles,
       ...
     }:
     let
-      adminUser = lib.head (builtins.filter (n: userProfiles.${n}.isAdmin) hostUsernames);
+      inherit (config.userOptions) username;
     in
     {
       options.mods.security.gnupg.enable = lib.mkEnableOption "Enable the gpg module";
@@ -27,7 +25,7 @@ _: {
 
         environment.systemPackages = [ pkgs.gnupg ];
 
-        hjem.users.${adminUser}.files.".gnupg/sshcontrol".text = ''
+        hjem.users.${username}.files.".gnupg/sshcontrol".text = ''
           2EAF5EEFD4334DD0130D5158FED38D4505C78DAF
         '';
       };

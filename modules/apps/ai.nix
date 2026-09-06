@@ -1,60 +1,56 @@
 _: {
   flake.modules.nixos.default =
     {
+      config,
       lib,
       pkgs,
-      hostUsernames,
-      userProfiles,
       ...
     }:
     let
-      users = builtins.filter (n: builtins.elem "ai" userProfiles.${n}.apps) hostUsernames;
+      inherit (config.userOptions) username;
     in
     {
-      config = lib.mkMerge (
-        [
-          (lib.mkIf (users != [ ]) {
-            services.ollama = {
-              enable = false;
-              package = pkgs.ollama-cuda;
-            };
-          })
-        ]
-        ++ map (name: {
-          hjem.users.${name} = {
-            packages = with pkgs; [
-              jq
-              claude-code
-              sox
-            ];
+      options.mods.apps.ai.enable = lib.mkEnableOption "Enables ai module";
 
-            files.".claude/settings.json" = {
-              generator = lib.generators.toJSON { };
-              value = {
-                "$schema" = "https://json.schemastore.org/claude-code-settings.json";
-                extraKnownMarketplaces = {
-                  superpowers-marketplace = {
-                    source = {
-                      source = "github";
-                      repo = "obra/superpowers-marketplace";
-                    };
+      config = lib.mkIf config.mods.apps.ai.enable {
+        services.ollama = {
+          enable = false;
+          package = pkgs.ollama-cuda;
+        };
+
+        hjem.users.${username} = {
+          packages = with pkgs; [
+            jq
+            claude-code
+            sox
+          ];
+
+          files.".claude/settings.json" = {
+            generator = lib.generators.toJSON { };
+            value = {
+              "$schema" = "https://json.schemastore.org/claude-code-settings.json";
+              extraKnownMarketplaces = {
+                superpowers-marketplace = {
+                  source = {
+                    source = "github";
+                    repo = "obra/superpowers-marketplace";
                   };
                 };
-                enabledPlugins = {
-                  "superpowers@claude-plugins-official" = true;
-                };
-                statusLine = {
-                  command = "~/.claude/statusline.sh";
-                  type = "command";
-                };
-                voice = {
-                  enabled = true;
-                  mode = "tap";
-                };
+              };
+              enabledPlugins = {
+                "superpowers@claude-plugins-official" = true;
+              };
+              statusLine = {
+                command = "~/.claude/statusline.sh";
+                type = "command";
+              };
+              voice = {
+                enabled = true;
+                mode = "tap";
               };
             };
           };
-        }) users
-      );
+        };
+      };
     };
 }

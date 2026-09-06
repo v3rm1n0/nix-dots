@@ -1,22 +1,20 @@
 _: {
   flake.modules.nixos.default =
     {
+      config,
       lib,
       pkgs,
-      hostUsernames,
-      userProfiles,
       ...
     }:
-    let
-      users = builtins.filter (n: builtins.elem "uni" userProfiles.${n}.apps) hostUsernames;
-    in
     {
-      config = lib.mkMerge (
-        map (name: {
-          hjem.users.${name}.packages = with pkgs; [
-            texliveFull
-          ];
-        }) users
-      );
+      options.mods.apps.uni = {
+        enable = lib.mkEnableOption "Enable uni module aka tex shit";
+      };
+
+      config = lib.mkIf config.mods.apps.uni.enable {
+        environment.systemPackages = with pkgs; [
+          texliveFull
+        ];
+      };
     };
 }

@@ -1,23 +1,22 @@
 _: {
   flake.modules.nixos.default =
     {
+      config,
       lib,
       pkgs,
-      hostUsernames,
-      userProfiles,
       ...
     }:
     let
-      users = builtins.filter (n: builtins.elem "productivity" userProfiles.${n}.apps) hostUsernames;
+      inherit (config.userOptions) username;
     in
     {
-      config = lib.mkMerge (
-        map (name: {
-          hjem.users.${name}.packages = with pkgs; [
-            obsidian
-            onlyoffice-desktopeditors
-          ];
-        }) users
-      );
+      options.mods.apps.productivity.enable = lib.mkEnableOption "Enable the office module";
+
+      config = lib.mkIf config.mods.apps.productivity.enable {
+        hjem.users.${username}.packages = with pkgs; [
+          obsidian
+          onlyoffice-desktopeditors
+        ];
+      };
     };
 }

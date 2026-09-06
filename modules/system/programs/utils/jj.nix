@@ -1,14 +1,12 @@
 _: {
   flake.modules.nixos.default =
     {
-      lib,
+      config,
       pkgs,
-      hostUsernames,
-      userProfiles,
       ...
     }:
     let
-      username = lib.head (builtins.filter (n: userProfiles.${n}.isAdmin) hostUsernames);
+      inherit (config.userOptions) username;
       toml = pkgs.formats.toml { };
 
       settings = {
