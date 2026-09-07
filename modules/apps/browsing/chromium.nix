@@ -38,15 +38,27 @@ _: {
             "BraveWalletDisabled" = true; # Disable Brave Wallet
             "BraveP3AEnabled" = false;
             "BravePlaylistEnabled" = false;
-            "DefaultSearchProviderEnabled" = true;
-            "DefaultSearchProviderAlternateURLs" = [ "https://search.v3rm1n.dev/?q={searchTerms}" ];
-            "DnsOverHttpsMode" = "secure";
-            "DnsOverHttpsTemplates" = "https://dns.v3rm1n.dev/dns-query{?dns}";
             "RestoreOnStartup" = 4; # Restore specified pages
-            "RestoreOnStartupURLs" = [ "https://start.v3rm1n.dev" ];
             "MetricsReportingEnabled" = false;
             "PasswordManagerEnabled" = false;
             "SafeBrowsingExtendedReportingEnabled" = false;
+            "SiteSearchSettings" = [
+              {
+                name = "nixpkgs packages";
+                shortcut = "np";
+                url = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}";
+              }
+              {
+                name = "NixOS options";
+                shortcut = "no";
+                url = "https://search.nixos.org/options?channel=unstable&query={searchTerms}";
+              }
+              {
+                name = "NixOS Wiki";
+                shortcut = "nw";
+                url = "https://wiki.nixos.org/w/index.php?search={searchTerms}";
+              }
+            ];
           };
           extensions = [
             "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
