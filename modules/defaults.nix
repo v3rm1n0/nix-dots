@@ -5,6 +5,7 @@
     { lib, ... }:
     {
       mods.security = {
+        apparmor.enable = lib.mkDefault true;
         encryption.passwords.enable = lib.mkDefault true;
         gnupg.enable = lib.mkDefault true;
         ssh.enable = lib.mkDefault true;
