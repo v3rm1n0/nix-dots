@@ -35,8 +35,8 @@ _: {
               userns,
               ${execPath} mrix,
 
-              owner @{HOME}/.config/{chromium,google-chrome,net.imput.helium}/{,**} rwk,
-              owner @{HOME}/.cache/{chromium,google-chrome,net.imput.helium}/{,**} rwk,
+              owner @{HOME}/.config/{chromium,google-chrome,net.imput.helium,BraveSoftware/Brave-Browser}/{,**} rwk,
+              owner @{HOME}/.cache/{chromium,google-chrome,net.imput.helium,BraveSoftware/Brave-Browser}/{,**} rwk,
 
               network inet stream,
               network inet6 stream,
