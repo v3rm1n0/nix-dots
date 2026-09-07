@@ -128,7 +128,7 @@
 
             exec-once = [
               "noctalia-shell"
-              "TeamSpeak"
+              "equibop"
             ];
 
             bind = [
