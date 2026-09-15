@@ -21,6 +21,7 @@
         hjem.users.${username} = {
           packages = with pkgs; [
             freetube
+            gramps
             librepods
             jellyfin-mpv-shim
             vlc
