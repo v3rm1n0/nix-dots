@@ -47,9 +47,8 @@ _: {
             /etc/nixos/** r,
 
             /nix/store/ r,
-            /nix/store/** r,
-            /nix/store/*/bin/** mrix,
-            /nix/store/*/libexec/** mrix,
+            /nix/store/** mrix,
+            @{PROC}/self/exe mrix,
 
             owner @{HOME}/.cache/mesa_shader_cache*/{,**} rw,
             owner @{HOME}/.config/dconf/user r,

@@ -33,10 +33,11 @@ _: {
               include <abstractions/user-download>
 
               userns,
+              capability sys_admin,
               ${execPath} mrix,
 
-              owner @{HOME}/.config/{chromium,google-chrome,net.imput.helium,BraveSoftware/Brave-Browser}/{,**} rwk,
-              owner @{HOME}/.cache/{chromium,google-chrome,net.imput.helium,BraveSoftware/Brave-Browser}/{,**} rwk,
+              owner @{HOME}/.config/{chromium,google-chrome,net.imput.helium,BraveSoftware/Brave-Browser,BraveSoftware/Brave-Origin}/{,**} rwk,
+              owner @{HOME}/.cache/{chromium,google-chrome,net.imput.helium,BraveSoftware/Brave-Browser,BraveSoftware/Brave-Origin}/{,**} rwk,
 
               network inet stream,
               network inet6 stream,
