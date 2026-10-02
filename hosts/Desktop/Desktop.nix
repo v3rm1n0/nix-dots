@@ -24,7 +24,10 @@
       mods = {
         boot.windowsBoot.enable = true;
         apps = {
-          ai.enable = true;
+          ai = {
+            enable = true;
+            llama.enable = true;
+          };
           browsing = {
             chromium = {
               enable = true;
