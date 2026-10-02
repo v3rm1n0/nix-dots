@@ -28,7 +28,10 @@ _: {
             enable = true;
             enableOnBoot = false;
           };
-          libvirtd.enable = true;
+          libvirtd = {
+            enable = true;
+            onBoot = "ignore";
+          };
           spiceUSBRedirection.enable = true;
         };
       };
