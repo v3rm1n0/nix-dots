@@ -11,6 +11,7 @@ _: {
     {
       networking = {
         useDHCP = lib.mkDefault true;
+        nftables.enable = true;
         networkmanager = {
           dns = lib.mkIf config.services.resolved.enable "systemd-resolved";
           enable = true;
