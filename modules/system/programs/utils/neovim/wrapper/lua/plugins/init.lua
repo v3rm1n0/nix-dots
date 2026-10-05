@@ -124,4 +124,12 @@ return {
     lazy = false,
     opts = { },
   },
+
+  {
+    "zk-org/zk-nvim",
+    lazy = false,
+    config = function()
+      require "configs.zk"
+    end,
+  },
 }
