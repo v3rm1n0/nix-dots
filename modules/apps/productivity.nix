@@ -1,4 +1,4 @@
-_: {
+{ inputs, ... }: {
   flake.modules.nixos.default =
     {
       config,
@@ -16,6 +16,7 @@ _: {
         hjem.users.${username}.packages = with pkgs; [
           obsidian
           onlyoffice-desktopeditors
+          inputs.pergament.packages.${pkgs.stdenv.hostPlatform.system}.pergament
         ];
       };
     };
