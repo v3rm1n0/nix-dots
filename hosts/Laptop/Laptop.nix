@@ -1,19 +1,32 @@
 { inputs, ... }:
 {
   flake.modules.nixos."host/Laptop" =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       boot.kernelPackages = pkgs.linuxPackages_zen;
 
       userOptions = {
+        browser = "brave-origin";
         colorScheme = "gruvbox-dark-hard";
-        dots = "/etc/dotfiles";
+        dots = "/home/${config.userOptions.username}/dotfiles";
         hostName = "Laptop";
+        username = "v3rm1n";
+        wallpaper = "rocket.png";
       };
 
       mods = {
         apps = {
-          browsing.firefox.package = pkgs.librewolf;
+          browsing = {
+            chromium = {
+              enable = true;
+              package = pkgs.brave-origin;
+            };
+            firefox = {
+              enable = false;
+              package = pkgs.librewolf;
+            };
+            helium.enable = false;
+          };
           dev.optionalPackages = [
             pkgs.zed-editor
           ];
