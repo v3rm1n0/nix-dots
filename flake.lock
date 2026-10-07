@@ -560,16 +560,16 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1791307725,
-        "narHash": "sha256-4Vu5gORcW5x9s6GsdHNcYKOU3bC5nDaD2DnHKuMzNEY=",
+        "lastModified": 1791391877,
+        "narHash": "sha256-u8/Vq0j1KFFS6g9kXBGIydGhHedXFpoAHfi+Q0egQXQ=",
         "owner": "v3rm1n0",
         "repo": "pergament",
-        "rev": "686f52371553f84fb5697c4ca81290d692b50c72",
+        "rev": "e541d872dd52e0d2a95d19dbf13a8c3e6e3cf343",
         "type": "github"
       },
       "original": {
         "owner": "v3rm1n0",
-        "ref": "v1.3.0",
+        "ref": "v1.4.0",
         "repo": "pergament",
         "type": "github"
       }
