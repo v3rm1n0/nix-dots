@@ -4,7 +4,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     claude-code.url = "github:NixOS/nixpkgs/51717fa52b1472ee3fe286e63fe5f70a3d2eff52";
-    pergament.url = "github:v3rm1n0/pergament/v1.4.0";
+    pergament.url = "github:v3rm1n0/pergament/v1.5.0";
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
