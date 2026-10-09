@@ -20,6 +20,7 @@
 
         hjem.users.${username} = {
           packages = with pkgs; [
+            cider-2
             freetube
             gramps
             librepods
