@@ -26,7 +26,10 @@
         apps = {
           ai = {
             enable = true;
-            llama.enable = true;
+            llama = {
+              enable = true;
+              kolibri.enable = true;
+            };
           };
           browsing = {
             chromium = {

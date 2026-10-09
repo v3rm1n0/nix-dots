@@ -12,13 +12,13 @@
       llama = cfg.llama;
 
       llamaCpp = pkgs.llama-cpp.override { cudaSupport = true; };
-      llamaServer = lib.getExe' llamaCpp "llama-server";
+      serverFor = m: lib.getExe' (if m.package == null then llamaCpp else m.package) "llama-server";
 
       mkModelCmd =
         m:
         lib.concatStringsSep " " (
           [
-            llamaServer
+            (serverFor m)
             "--port \${PORT}"
             "-m ${llama.modelDir}/${m.file}"
             "-ngl 99"
@@ -29,6 +29,7 @@
           ]
           ++ lib.optional (m.nCpuMoe > 0) "--n-cpu-moe ${toString m.nCpuMoe}"
           ++ lib.optional (!m.kvOffload) "--no-kv-offload"
+          ++ m.extraArgs
           ++ lib.optionals llama.kvCacheQ8 [
             "-ctk q8_0"
             "-ctv q8_0"
@@ -143,31 +144,34 @@
                       weights plus KV cache exceed the GPU; the cache then lives in system RAM.
                     '';
                   };
+                  extraArgs = lib.mkOption {
+                    type = lib.types.listOf lib.types.str;
+                    default = [ ];
+                    example = [ "--temp 1.0" ];
+                    description = "Extra llama-server arguments for this model (e.g. sampling settings).";
+                  };
+                  env = lib.mkOption {
+                    type = lib.types.listOf lib.types.str;
+                    default = [ ];
+                    example = [ "LLAMA_ARG_CHAT_TEMPLATE_KWARGS={\"reasoning_effort\":\"none\"}" ];
+                    description = "Environment variables (NAME=value) for this model's llama-server process.";
+                  };
+                  filters = lib.mkOption {
+                    type = lib.types.attrs;
+                    default = { };
+                    example = {
+                      stripParams = "reasoning_effort";
+                    };
+                    description = "llama-swap request filters (stripParams, setParams) applied to every request for this model.";
+                  };
+                  package = lib.mkOption {
+                    type = lib.types.nullOr lib.types.package;
+                    default = null;
+                    description = "llama.cpp package serving this model; null uses the shared CUDA build.";
+                  };
                 };
               }
             );
-            default = {
-              coder-next = {
-                repo = "unsloth/Qwen3-Coder-Next-GGUF";
-                file = "Qwen3-Coder-Next-Q4_K_M.gguf";
-                size = 48528320544;
-                # 40 leaves too little VRAM for the compute buffers on a 12 GB GPU; 44 loads (~8.3 GB).
-                nCpuMoe = 44;
-              };
-              coder-fast = {
-                repo = "unsloth/North-Mini-Code-1.0-GGUF";
-                file = "North-Mini-Code-1.0-UD-Q4_K_M.gguf";
-                size = 19203186784;
-                nCpuMoe = 34;
-              };
-              coder-small = {
-                repo = "unsloth/Qwen2.5-Coder-14B-Instruct-GGUF";
-                file = "Qwen2.5-Coder-14B-Instruct-Q4_K_M.gguf";
-                size = 8988110240;
-                # 14B dense: weights (~9 GB) + 32k KV cache do not fit in 12 GB VRAM together.
-                kvOffload = false;
-              };
-            };
           };
         };
       };
@@ -220,6 +224,16 @@
           }
 
           (lib.mkIf llama.enable {
+            mods.apps.ai.llama.models = lib.mapAttrs (_: lib.mapAttrs (_: lib.mkDefault)) {
+              coder-next = {
+                repo = "unsloth/Qwen3-Coder-Next-GGUF";
+                file = "Qwen3-Coder-Next-Q4_K_M.gguf";
+                size = 48528320544;
+                # 40 leaves too little VRAM for the compute buffers on a 12 GB GPU; 44 loads (~8.3 GB).
+                nCpuMoe = 44;
+              };
+            };
+
             nix.settings = {
               extra-substituters = [ "https://cache.nixos-cuda.org" ];
               extra-trusted-public-keys = [
@@ -233,10 +247,15 @@
               inherit (llama) port;
               settings = {
                 healthCheckTimeout = 600;
-                models = lib.mapAttrs (_: m: {
-                  cmd = mkModelCmd m;
-                  inherit (llama) ttl;
-                }) llama.models;
+                models = lib.mapAttrs (
+                  _: m:
+                  {
+                    cmd = mkModelCmd m;
+                    inherit (llama) ttl;
+                  }
+                  // lib.optionalAttrs (m.env != [ ]) { inherit (m) env; }
+                  // lib.optionalAttrs (m.filters != { }) { inherit (m) filters; }
+                ) llama.models;
               };
             };
 
