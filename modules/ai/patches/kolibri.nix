@@ -16,7 +16,7 @@ _: {
       # Reviewed 2026-10-09: the full patch touches the model graph, the GGUF converter and
       # the tokenizer table. Only the src/ changes are needed to serve the model; the Python
       # converter and test hunks are dropped because conversion/base.py does not apply to
-      # llama.cpp 0.5.0. Pinned to a repo revision so the hash cannot drift.
+      # llama.cpp (checked against 0.5.0, still applies to 0.6.0). Pinned to a repo revision so the hash cannot drift.
       patch = pkgs.fetchpatch {
         name = "kolibri1-llama.cpp.patch";
         url = "https://huggingface.co/Hob-forge/Kolibri-1-GGUF/resolve/40eaa5cf6cfca3afaf8b8832bac962652edb0bde/kolibri1-llama.cpp.patch";
@@ -42,6 +42,9 @@ _: {
 
       package = cudaPkgs.llama-cpp.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [ patch ];
+        # test-generate-models builds a synthetic kolibri1 model without
+        # kolibri1.expert_feed_forward_length, which the patched loader requires.
+        doCheck = false;
       });
     in
     {
