@@ -30,6 +30,8 @@
           zenity
         ];
 
+        fonts.packages = [ pkgs.noto-fonts ];
+
         hjem.users.${username}.systemd.services.hyprpolkitagent = {
           description = "Hyprland Polkit Authentication Agent";
           after = [ "graphical-session.target" ];
