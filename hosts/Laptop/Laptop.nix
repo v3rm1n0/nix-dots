@@ -16,6 +16,7 @@
 
       mods = {
         apps = {
+          ai.enable = true;
           browsing = {
             chromium = {
               enable = true;
