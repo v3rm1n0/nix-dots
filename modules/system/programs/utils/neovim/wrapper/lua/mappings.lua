@@ -14,5 +14,4 @@ map("n", "<leader>e", function()
     api.tree.focus()
   end
 end, { desc = "toggle focus nvimtree" })
-
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+map({ "n", "i", "v" }, "<C-s>", "<cmd>w<CR>")
