@@ -138,7 +138,7 @@
               "$mainMod, E, exec, nautilus"
               "$mainMod, V, togglefloating"
               "$mainMod, P, pseudo"
-              "$mainMod SHIFT, L, exec, hyprlock"
+              "CTRL SHIFT, L, exec, hyprlock"
               "$mainMod, SPACE, exec, vicinae toggle"
               "$mainMod, R, exec, ${browser}"
 
