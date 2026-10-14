@@ -132,4 +132,16 @@ return {
       require "configs.zk"
     end,
   },
+
+  {
+    "v3rm1n0/jw-library-linker.nvim",
+    ft = "markdown",
+    cmd = { "JWLink", "JWLinkOpen", "JWOpen" },
+    opts = {
+      target = "pergament",
+      -- Pergament doesn't register as pergament:// handler yet, so open passages on jw.org
+      open_target = "jworg",
+      locale = "X",
+    },
+  },
 }
