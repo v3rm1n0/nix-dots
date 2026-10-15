@@ -6,7 +6,7 @@
       boot.kernelPackages = pkgs.linuxPackages_zen;
 
       userOptions = {
-        browser = "brave-origin";
+        browser = "librewolf";
         colorScheme = "gruvbox-dark-hard";
         dots = "/home/${config.userOptions.username}/dotfiles";
         hostName = "Laptop";
@@ -19,11 +19,11 @@
           ai.enable = true;
           browsing = {
             chromium = {
-              enable = true;
+              enable = false;
               package = pkgs.brave-origin;
             };
             firefox = {
-              enable = false;
+              enable = true;
               package = pkgs.librewolf;
             };
             helium.enable = false;
