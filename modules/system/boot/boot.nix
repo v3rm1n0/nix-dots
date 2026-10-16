@@ -18,7 +18,6 @@ _: {
               '';
               resolution = "1920x1080x32";
               secureBoot.enable = true;
-              maxGenerations = 3;
             };
             efi.canTouchEfiVariables = true;
             timeout = 1;
