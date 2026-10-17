@@ -58,6 +58,7 @@
             brand = "nvidia";
           };
           razer.enable = false;
+          waveDx.enable = true;
         };
       };
 
