@@ -8,7 +8,35 @@ _: {
     }:
     let
       inherit (config.userOptions) username;
-      mountdir = "/home/${username}/ProtonDrive";
+      home = "/home/${username}";
+
+      mkMount =
+        {
+          description,
+          remote,
+          mountdir,
+        }:
+        {
+          inherit description;
+          after = [ "network-online.target" ];
+          wantedBy = [ "default.target" ];
+          unitConfig.Type = "notify";
+          serviceConfig = {
+            Environment = [ "PATH=/run/wrappers/bin/:$PATH" ];
+            ExecStartPre = "${lib.getExe' pkgs.uutils-coreutils-noprefix "mkdir"} -p ${mountdir}";
+            ExecStart = ''
+              ${lib.getExe pkgs.rclone} mount ${remote}: ${mountdir} \
+                --config=${home}/.config/rclone/rclone.conf \
+                --vfs-cache-mode full \
+                --vfs-cache-max-age 1m \
+                --dir-cache-time 30s \
+                --poll-interval 15s
+            '';
+            ExecStop = "${lib.getExe' pkgs.fuse "fusermount"} -u ${mountdir}";
+            Restart = "always";
+            RestartSec = 5;
+          };
+        };
     in
     {
       environment.systemPackages = [ pkgs.rclone ];
@@ -16,25 +44,16 @@ _: {
         user_allow_other
       '';
 
-      hjem.users.${username}.systemd.services.protondrive = {
-        description = "Mount Proton Drive";
-        after = [ "network-online.target" ];
-        wantedBy = [ "default.target" ];
-        unitConfig.Type = "notify";
-        serviceConfig = {
-          Environment = [ "PATH=/run/wrappers/bin/:$PATH" ];
-          ExecStartPre = "${lib.getExe' pkgs.uutils-coreutils-noprefix "mkdir"} -p ${mountdir}";
-          ExecStart = ''
-            ${lib.getExe pkgs.rclone} mount proton: ${mountdir} \
-              --config=/home/${username}/.config/rclone/rclone.conf \
-              --vfs-cache-mode full \
-              --vfs-cache-max-age 1m \
-              --dir-cache-time 30s \
-              --poll-interval 15s
-          '';
-          ExecStop = "${lib.getExe' pkgs.fuse "fusermount"} -u ${mountdir}";
-          Restart = "always";
-          RestartSec = 5;
+      hjem.users.${username}.systemd.services = {
+        protondrive = mkMount {
+          description = "Mount Proton Drive";
+          remote = "proton";
+          mountdir = "${home}/ProtonDrive";
+        };
+        iclouddrive = mkMount {
+          description = "Mount iCloud Drive";
+          remote = "icloud";
+          mountdir = "${home}/iCloudDrive";
         };
       };
     };
