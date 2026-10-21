@@ -11,84 +11,90 @@
       inherit (config.userOptions) username wallpaper;
       cfg = config.mods.desktop.noctalia;
       colors = config.lib.stylix.colors;
+      wallpaperDir = "/home/${username}/.config/backgrounds";
+    in
+    {
+      options.mods.desktop.noctalia = {
+        enable = lib.mkEnableOption "the Noctalia shell";
+        withBattery = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Show the battery widget in the bar.";
+        };
+      };
 
-      mkNoctalia =
-        {
-          withBattery ? false,
-        }:
-        inputs.wrapper-modules.wrappers.noctalia-shell.wrap {
-          inherit pkgs;
-          package = pkgs.noctalia-shell.overrideAttrs {
-            name = "v3noctalia";
-          };
+      config = lib.mkIf cfg.enable {
+        hjem.extraModules = [ inputs.noctalia.hjemModules.default ];
+
+        hjem.users.${username}.programs.noctalia = {
+          enable = true;
           settings = {
-            settingsVersion = 63;
-            bar = {
-              barType = "floating";
-              density = "compact";
+            accessibility.ui_scale = 0.9;
+            shell.shadow.direction = "up_right";
+            location.address = "Viersen, Germany";
+
+            theme = {
+              mode = "dark";
+              source = "custom";
+              custom_palette = "stylix";
+            };
+
+            wallpaper = {
+              directory = wallpaperDir;
+              default.path = "${wallpaperDir}/${wallpaper}";
+            };
+
+            dock.enabled = false;
+
+            bar.main = {
               position = "top";
-              showCapsule = false;
-              widgets = {
-                left = [
-                  {
-                    id = "ControlCenter";
-                    useDistroLogo = true;
-                  }
-                  {
-                    id = "SystemMonitor";
-                    showCpuTemp = false;
-                    showMemoryUsage = true;
-                    showNetworkStats = true;
-                  }
-                  {
-                    id = "Workspace";
-                    labelMode = "index";
-                    showApplications = true;
-                  }
-                  {
-                    id = "AudioVisualizer";
-                    width = 100;
-                    hideWhenIdle = true;
-                  }
-                  { id = "MediaMini"; }
-                ];
-                center = [
-                  { id = "ActiveWindow"; }
-                ];
-                right = [
-                  { id = "Volume"; }
-                  { id = "Network"; }
-                  { id = "Bluetooth"; }
-                ]
-                ++ lib.optional withBattery { id = "Battery"; }
-                ++ [
-                  {
-                    id = "KeyboardLayout";
-                    showIcon = false;
-                  }
-                  { id = "Tray"; }
-                  { id = "NotificationHistory"; }
-                  {
-                    formatHorizontal = "HH:mm";
-                    formatVertical = "HH mm";
-                    id = "Clock";
-                    useMonospacedFont = true;
-                    usePrimaryColor = true;
-                  }
-                ];
+              thickness = 30;
+              margin_ends = 10;
+              margin_edge = 8;
+              capsule = false;
+              start = [
+                "control-center"
+                "cpu"
+                "ram"
+                "net-rx"
+                "net-tx"
+                "workspaces"
+                "audio_visualizer"
+                "media"
+              ];
+              center = [ "active_window" ];
+              end = [
+                "volume"
+                "network"
+                "bluetooth"
+              ]
+              ++ lib.optional cfg.withBattery "battery"
+              ++ [
+                "keyboard_layout"
+                "tray"
+                "notifications"
+                "clock"
+              ];
+            };
+
+            widget = {
+              control-center = {
+                custom_image = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                custom_image_colorize = true;
+              };
+              audio_visualizer.width = 100;
+              media.hide_when_idle = true;
+              keyboard_layout.show_glyph = false;
+              clock = {
+                format = "{:%H:%M}";
+                vertical_format = "{:%H\n%M}";
+                font_family = "monospace";
+                color = "primary";
               };
             };
-            dock.enabled = false;
-            general = {
-              scaleRatio = 0.9;
-              shadowDirection = "top_right";
-            };
-            location = {
-              monthBeforeDay = false;
-              name = "Viersen, Germany";
-            };
           };
-          colors = with colors.withHashtag; {
+
+          customPalettes.stylix.dark = with colors.withHashtag; {
             mPrimary = base0D;
             mOnPrimary = base00;
             mSecondary = base0E;
@@ -105,29 +111,34 @@
             mOnSurfaceVariant = base04;
             mOutline = base03;
             mShadow = base00;
-          };
-        };
-    in
-    {
-      options.mods.desktop.noctalia = {
-        enable = lib.mkEnableOption "the Noctalia shell";
-        withBattery = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-          description = "Show the battery widget in the bar.";
-        };
-      };
-
-      config = lib.mkIf cfg.enable {
-        environment.systemPackages = [
-          (mkNoctalia { withBattery = cfg.withBattery; })
-        ];
-
-        hjem.users.${username} = {
-          files.".cache/noctalia/wallpapers.json" = {
-            text = builtins.toJSON {
-              defaultWallpaper = "/home/${username}/.config/backgrounds/${wallpaper}";
-            };
+            # palettes without a terminal block are rejected and fall back to the builtin theme
+            terminal =
+              let
+                ansi = {
+                  red = base08;
+                  green = base0B;
+                  yellow = base0A;
+                  blue = base0D;
+                  magenta = base0E;
+                  cyan = base0C;
+                };
+              in
+              {
+                background = base00;
+                foreground = base05;
+                cursor = base05;
+                cursorText = base00;
+                selectionBg = base02;
+                selectionFg = base05;
+                normal = ansi // {
+                  black = base00;
+                  white = base05;
+                };
+                bright = ansi // {
+                  black = base03;
+                  white = base07;
+                };
+              };
           };
         };
       };

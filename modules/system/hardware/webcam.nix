@@ -37,7 +37,12 @@ _: {
       boot = {
         kernelModules = [ "v4l2loopback" ];
         extraModulePackages = [
-          config.boot.kernelPackages.v4l2loopback
+          # kbuild's modules_install runs depmod, whose index files collide with the kernel's
+          (config.boot.kernelPackages.v4l2loopback.overrideAttrs (old: {
+            postInstall = (old.postInstall or "") + ''
+              find $out/lib/modules -maxdepth 2 -type f -name 'modules.*' -delete
+            '';
+          }))
         ];
         extraModprobeConfig = ''
           options v4l2loopback devices=1 video_nr=1 card_label="OBS Cam" exclusive_caps=1

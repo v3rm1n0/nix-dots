@@ -45,7 +45,7 @@ _: {
       };
 
       environment.systemPackages = with pkgs; [
-        better-control
+        #better-control
         sbctl
       ];
     };

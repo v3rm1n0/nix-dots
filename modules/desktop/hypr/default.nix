@@ -23,7 +23,15 @@
           networkmanagerapplet
           pavucontrol
           playerctl
-          pywal
+          # nixpkgs passes "--prefix PATH : ..." as a single arg, which breaks makeWrapper under structuredAttrs
+          (pywal.overridePythonAttrs {
+            makeWrapperArgs = [
+              "--prefix"
+              "PATH"
+              ":"
+              (lib.makeBinPath [ imagemagick ])
+            ];
+          })
           satty
           wl-clipboard
           yazi

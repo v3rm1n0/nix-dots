@@ -127,7 +127,7 @@
             ];
 
             exec-once = [
-              "noctalia-shell"
+              "noctalia"
               "equibop"
             ];
 
