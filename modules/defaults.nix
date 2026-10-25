@@ -31,6 +31,7 @@
         ly.enable = lib.mkDefault true;
         noctalia.enable = lib.mkDefault true;
         stylix.enable = lib.mkDefault true;
+        sway.enable = lib.mkDefault false;
         xdg.enable = lib.mkDefault true;
       };
 

@@ -45,6 +45,8 @@
           after = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
           wantedBy = [ "graphical-session.target" ];
+          # graphical-session.target is shared with other sessions (sway), where this aborts.
+          unitConfig.ConditionEnvironment = "XDG_CURRENT_DESKTOP=Hyprland";
           serviceConfig = {
             ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
             Restart = "on-failure";
@@ -62,8 +64,6 @@
             enable = true;
             terminal = "ghostty";
           };
-
-          uwsm.enable = true;
         };
       };
     };

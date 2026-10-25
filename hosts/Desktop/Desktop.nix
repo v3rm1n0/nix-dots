@@ -62,6 +62,7 @@
         };
       };
 
+      mods.desktop.sway.enable = true;
       mods.desktop.monitors = [
         {
           name = "DP-1";
