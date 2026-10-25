@@ -22,7 +22,7 @@
       mods.shell = {
         bash.enable = lib.mkDefault true;
         fish.enable = lib.mkDefault true;
-        zsh.enable = lib.mkDefault true;
+        zsh.enable = lib.mkDefault false;
       };
 
       mods.desktop = {
