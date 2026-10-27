@@ -185,6 +185,13 @@
           '';
         };
 
+        # xdpw's default chooser shells out to wofi/rofi/fuzzel; none are installed,
+        # so screenshare requests fail with "no output found". Pick outputs with slurp.
+        xdg.portal.wlr.settings.screencast = {
+          chooser_type = "simple";
+          chooser_cmd = "${lib.getExe pkgs.slurp} -f 'Monitor: %o' -or";
+        };
+
         environment.systemPackages = with pkgs; [
           autotiling-rs
           brightnessctl

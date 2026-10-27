@@ -54,6 +54,7 @@ _: {
               xdg-desktop-portal-gtk
               xdg-desktop-portal-hyprland
             ];
+            wlr.enable = true;
           };
         };
 
