@@ -1,4 +1,4 @@
-_: {
+{ inputs, ... }: {
   flake.modules.nixos.default =
     {
       config,
@@ -16,6 +16,7 @@ _: {
       config = lib.mkIf config.mods.apps.comms.enable {
         hjem.users.${username} = {
           packages = with pkgs; [
+            inputs.fluxer.legacyPackages.${stdenv.hostPlatform.system}.fluxer-bin
             protonmail-desktop
             sable
             signal-desktop

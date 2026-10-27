@@ -68,22 +68,6 @@
         "type": "github"
       }
     },
-    "claude-code": {
-      "locked": {
-        "lastModified": 1790917713,
-        "narHash": "sha256-7Yks4IPOW4sIuQXxBKSvUCMDTAbaln0aU392hc5V7t0=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "51717fa52b1472ee3fe286e63fe5f70a3d2eff52",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "51717fa52b1472ee3fe286e63fe5f70a3d2eff52",
-        "type": "github"
-      }
-    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -206,6 +190,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "fluxer": {
+      "locked": {
+        "lastModified": 1793096087,
+        "narHash": "sha256-11ooPvklJnPHS0/q3GH857wJ4g0UiAjEVE/Qyf/f+cg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9cadcff1c127dc242d65672dc8d58f5182945810",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "pull/576896/merge",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -575,8 +575,8 @@
     },
     "root": {
       "inputs": {
-        "claude-code": "claude-code",
         "flake-parts": "flake-parts",
+        "fluxer": "fluxer",
         "helium": "helium",
         "hjem": "hjem",
         "hjem-rum": "hjem-rum",
