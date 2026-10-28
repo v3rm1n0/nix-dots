@@ -56,7 +56,7 @@
         in
         [
           "bindsym $mod+${key} workspace number ${toString i}"
-          "bindsym $mod+Shift+${key} move container to workspace number ${toString i}"
+          "bindsym $mod+Shift+${key} move container to workspace number ${toString i}; workspace number ${toString i}"
         ]
       ) (lib.range 1 10);
 
