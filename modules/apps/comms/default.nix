@@ -17,11 +17,10 @@
         hjem.users.${username} = {
           packages = with pkgs; [
             inputs.fluxer.legacyPackages.${stdenv.hostPlatform.system}.fluxer-bin
-            protonmail-desktop
             sable
             signal-desktop
             teamspeak6-client
-            thunderbird
+            tutanota-desktop
             zoom-us
           ];
         };
