@@ -16,7 +16,6 @@
       config = lib.mkIf config.mods.apps.comms.enable {
         hjem.users.${username} = {
           packages = with pkgs; [
-            inputs.fluxer.legacyPackages.${stdenv.hostPlatform.system}.fluxer-bin
             sable
             signal-desktop
             teamspeak6-client

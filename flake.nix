@@ -3,7 +3,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
-    fluxer.url = "github:NixOS/nixpkgs/pull/576896/merge";
     pergament.url = "github:v3rm1n0/pergament";
     hjem = {
       url = "github:feel-co/hjem";

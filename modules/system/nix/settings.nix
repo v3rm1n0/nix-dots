@@ -10,6 +10,7 @@ _: {
         "v3rm1n"
       ];
       extra-substituters = [
+        "https://cache.nixos-cuda.org"
         "https://devenv.cachix.org"
         "https://zed-industries.cachix.org"
         "https://hyprland.cachix.org"
@@ -17,6 +18,7 @@ _: {
         "https://noctalia.cachix.org"
       ];
       extra-trusted-public-keys = [
+        "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
         "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
         "zed-industries.cachix.org-1:QW3RoXK0Lm4ycmU5/3bmYRd3MLf4RbTGPqRulGlX5W0="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="

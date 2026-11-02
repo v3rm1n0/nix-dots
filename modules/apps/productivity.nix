@@ -15,7 +15,7 @@
       config = lib.mkIf config.mods.apps.productivity.enable {
         hjem.users.${username}.packages = with pkgs; [
           obsidian
-          euro-office-desktopeditors
+          #euro-office-desktopeditors
           inputs.pergament.packages.${pkgs.stdenv.hostPlatform.system}.pergament
         ];
       };

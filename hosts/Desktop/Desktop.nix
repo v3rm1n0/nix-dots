@@ -23,13 +23,7 @@
       mods = {
         boot.windowsBoot.enable = true;
         apps = {
-          ai = {
-            enable = true;
-            llama = {
-              enable = true;
-              kolibri.enable = true;
-            };
-          };
+          ai.enable = true;
           browsing = {
             chromium = {
               enable = false;
