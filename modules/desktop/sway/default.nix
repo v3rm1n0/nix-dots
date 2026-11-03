@@ -12,23 +12,6 @@
 
       onOff = b: if b then "on" else "off";
 
-      # noctalia gets its own config home under sway, without the audio
-      # visualizer: it redraws the bar at 60Hz while audio plays, and every
-      # redraw makes swayfx recomposite the output (~25% sway CPU).
-      noctalia = config.hjem.users.${username}.programs.noctalia;
-      noctaliaHome = "/home/${username}/.config/noctalia-sway";
-      noctaliaSettings = lib.recursiveUpdate noctalia.settings {
-        bar.main.start = lib.remove "audio_visualizer" noctalia.settings.bar.main.start;
-      };
-      noctaliaToml =
-        let
-          raw = (pkgs.formats.toml { }).generate "config.toml" noctaliaSettings;
-        in
-        pkgs.runCommand "noctalia-sway-config" { } ''
-          ${lib.getExe noctalia.package} config validate ${raw}
-          cp ${raw} $out
-        '';
-
       # NOTE: hyprland's `cm` (color management preset) has no sway equivalent
       # and is dropped.
       outputs = map (
@@ -116,7 +99,7 @@
           # dwindle-style spiral tiling
           "exec_always autotiling-rs"
 
-          "exec env NOCTALIA_CONFIG_HOME=${noctaliaHome} noctalia"
+          "exec noctalia"
           "exec equibop"
           primaryWorkspaces
 
@@ -202,14 +185,7 @@
         hjem.users.${username} = {
           files = {
             ".config/sway/config".text = lib.concatLines lines;
-            ".config/noctalia-sway/noctalia/config.toml".source = noctaliaToml;
-          }
-          // lib.mapAttrs' (
-            name: palette:
-            lib.nameValuePair ".config/noctalia-sway/noctalia/palettes/${name}.json" {
-              source = (pkgs.formats.json { }).generate "${name}-palette.json" palette;
-            }
-          ) noctalia.customPalettes;
+          };
 
           # hyprpolkitagent only runs under Hyprland.
           systemd.services.polkit-gnome-agent = {
