@@ -11,7 +11,7 @@ _: {
       font = config.stylix.fonts.sansSerif.name;
     in
     {
-      config = lib.mkIf config.mods.desktop.hypr.enable {
+      config = lib.mkIf (config.mods.desktop.hypr.enable || config.mods.desktop.sway.enable) {
         hjem.users.${username}.rum.programs.hyprlock = {
           enable = true;
           settings = {
