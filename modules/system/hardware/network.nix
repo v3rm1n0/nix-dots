@@ -16,6 +16,12 @@ _: {
           dns = lib.mkIf config.services.resolved.enable "systemd-resolved";
           enable = true;
           wifi.powersave = true;
+          settings.connection = {
+            "ipv4.ignore-auto-dns" = true;
+            "ipv6.ignore-auto-dns" = true;
+            "connection.llmnr" = 0;
+            "connection.mdns" = 0;
+          };
         };
         inherit (config.userOptions) hostName;
         firewall = {
@@ -25,12 +31,11 @@ _: {
           allowedUDPPorts = [
             53317 # localsend
           ];
-          checkReversePath = lib.mkIf config.mods.security.vpn.enable false;
         };
       };
 
       services.resolved = {
-        enable = false;
+        enable = true;
         settings = {
           Resolve = {
             DNSSEC = true;
@@ -39,6 +44,10 @@ _: {
               "9.9.9.11"
               "149.112.112.11"
             ];
+            Domains = [ "~." ];
+            FallbackDNS = "";
+            LLMNR = false;
+            MulticastDNS = false;
           };
         };
       };

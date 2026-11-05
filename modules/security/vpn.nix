@@ -15,8 +15,9 @@ _: {
       };
 
       config = lib.mkIf cfg.enable {
+        services.ivpn.enable = true;
         environment.systemPackages = [
-          pkgs.proton-vpn
+          pkgs.ivpn
           pkgs.wireguard-tools
         ];
       };
