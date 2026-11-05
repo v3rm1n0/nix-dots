@@ -62,6 +62,7 @@ _: {
                 -${lib.getExe pkgs.rclone} bisync icloud:KeePassium ${home}/KeePass \
                   --config=${home}/.config/rclone/rclone.conf \
                   --resilient \
+                  --force \
                   --conflict-resolve newer
               '';
             };
