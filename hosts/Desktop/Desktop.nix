@@ -40,7 +40,7 @@
             pkgs.zed-editor
           ];
           gaming.optionalPackages = [
-            pkgs.arnis
+            #pkgs.arnis
             pkgs.edhm-ui
             pkgs.stoat-desktop
           ];

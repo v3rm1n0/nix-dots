@@ -51,21 +51,11 @@ _: {
           mountdir = "${home}/ProtonDrive";
         };
         iclouddrive =
-          lib.recursiveUpdate
-            (mkMount {
-              description = "Mount iCloud Drive";
-              remote = "icloud";
-              mountdir = "${home}/iCloudDrive";
-            })
-            {
-              serviceConfig.ExecStartPost = ''
-                -${lib.getExe pkgs.rclone} bisync icloud:KeePassium ${home}/KeePass \
-                  --config=${home}/.config/rclone/rclone.conf \
-                  --resilient \
-                  --force \
-                  --conflict-resolve newer
-              '';
-            };
+          mkMount {
+            description = "Mount iCloud Drive";
+            remote = "icloud";
+            mountdir = "${home}/iCloudDrive";
+          };
       };
     };
 }

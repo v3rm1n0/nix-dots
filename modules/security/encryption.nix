@@ -14,9 +14,8 @@ _: {
       config = lib.mkIf config.mods.security.encryption.passwords.enable {
         environment = {
           systemPackages = with pkgs; [
-            keepassxc
-            proton-pass
-            proton-pass-cli
+            bitwarden-cli
+            bitwarden-desktop
           ];
         };
       };

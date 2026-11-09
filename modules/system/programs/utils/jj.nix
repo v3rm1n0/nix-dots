@@ -22,7 +22,7 @@ _: {
           key = "04A465051516159B";
         };
 
-        git.sign-on-push = true;
+        revsets.git-sign-on-push = "~signed() & mine()";
       };
     in
     {
