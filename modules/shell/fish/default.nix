@@ -28,7 +28,10 @@
             bass
             fzf-fish
           ]
-          ++ [ pkgs.jj-starship ];
+          ++ [
+            pkgs.jj-starship
+            pkgs.fzf
+          ];
 
         hjem.users.${username}.rum.programs.fish = {
           enable = true;
