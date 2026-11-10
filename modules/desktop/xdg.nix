@@ -46,6 +46,9 @@ _: {
                 "xdph"
                 "gtk"
               ];
+              # xdph advertises Screenshot in its .portal file but doesn't
+              # implement it; flameshot >= 14 captures only via this portal.
+              "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
               "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
               "org.freedesktop.impl.portal.FileChooser" = [ "gnome" ];
             };
