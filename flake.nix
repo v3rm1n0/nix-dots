@@ -8,6 +8,8 @@
       url = "git+https://codeberg.org/wvhulle/bootvine";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # pinned to the last release with the hyprlang config; 0.57+ moved to lua and nixpkgs lacks the parser
+    hyprland.url = "github:hyprwm/Hyprland/v0.56.1";
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";

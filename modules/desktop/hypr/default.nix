@@ -1,3 +1,4 @@
+{ inputs, ... }:
 {
   flake.modules.nixos.default =
     {
@@ -8,6 +9,9 @@
     }:
     let
       inherit (config.userOptions) username;
+      hyprPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+      # mesa must match the nixpkgs the upstream hyprland was built against
+      hyprNixpkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in
     {
       options.mods.desktop.hypr.enable =
@@ -38,6 +42,8 @@
           zenity
         ];
 
+        hardware.graphics.package = hyprNixpkgs.mesa;
+
         fonts.packages = [ pkgs.noto-fonts ];
 
         hjem.users.${username}.systemd.services.hyprpolkitagent = {
@@ -56,6 +62,8 @@
         programs = {
           hyprland = {
             enable = true;
+            package = hyprPkgs.hyprland;
+            portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
             xwayland.enable = true;
             withUWSM = true;
           };
