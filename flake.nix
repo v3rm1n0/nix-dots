@@ -1,6 +1,8 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # open PR adding the omniroute package and NixOS module, drop once merged
+    nixpkgs-omniroute.url = "github:NixOS/nixpkgs?ref=refs/pull/548454/head";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     pergament.url = "github:v3rm1n0/pergament";

@@ -11,6 +11,8 @@
       cfg = config.mods.apps.ai;
     in
     {
+      imports = [ "${inputs.nixpkgs-omniroute}/nixos/modules/services/web-apps/omniroute.nix" ];
+
       options.mods.apps.ai = {
         enable = lib.mkEnableOption "Enables ai module";
       };
@@ -23,8 +25,14 @@
               package = pkgs.ollama-cuda;
             };
 
+            services.omniroute = {
+              enable = false;
+              package = pkgs.callPackage "${inputs.nixpkgs-omniroute}/pkgs/by-name/om/omniroute/package.nix" { };
+            };
+
             hjem.users.${username} = {
               packages = [
+                (pkgs.callPackage "${inputs.nixpkgs-omniroute}/pkgs/by-name/om/omniroute/package.nix" { })
                 pkgs.jq
                 pkgs.sox
                 pkgs.claude-code
