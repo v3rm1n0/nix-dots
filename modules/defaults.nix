@@ -46,6 +46,7 @@
           productivity.enable = lib.mkDefault true;
           terminal.enable = lib.mkDefault true;
           uni.enable = lib.mkDefault true;
+          xtool.enable = lib.mkDefault false;
         };
       };
     };

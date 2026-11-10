@@ -43,6 +43,7 @@ _: {
             pkgs.edhm-ui
             pkgs.stoat-desktop
           ];
+          xtool.enable = true;
         };
         hardware = {
           gpu = {

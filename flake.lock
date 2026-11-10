@@ -856,6 +856,22 @@
         "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.zst"
       }
     },
+    "nixpkgs-xtool": {
+      "locked": {
+        "lastModified": 1794143087,
+        "narHash": "sha256-mzpYQhaEcaqjF/vT4ydgbnoTH9/Uef0smOnkjmjNXWw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "1acbd57769c1cd85e0a861c6708a10a9f7d18492",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "1acbd57769c1cd85e0a861c6708a10a9f7d18492",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1794042290,
@@ -986,6 +1002,7 @@
         "nixcord": "nixcord",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-omniroute": "nixpkgs-omniroute",
+        "nixpkgs-xtool": "nixpkgs-xtool",
         "noctalia": "noctalia",
         "pergament": "pergament",
         "spicetify-nix": "spicetify-nix",

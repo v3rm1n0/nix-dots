@@ -5,6 +5,10 @@
     # Pinned to the commit in flake.lock instead of the mutable PR head ref so
     # evaluation is reproducible and survives the PR branch being rebased.
     nixpkgs-omniroute.url = "github:NixOS/nixpkgs/682096be7038a86337aafa8d213aa3364d204f9f";
+    # open PR adding xtool (+ open-apple-macros, xtoolBuildHook) and the
+    # programs.xtool module, drop once merged. Same pinning rationale as above.
+    # https://github.com/NixOS/nixpkgs/pull/548520
+    nixpkgs-xtool.url = "github:NixOS/nixpkgs/1acbd57769c1cd85e0a861c6708a10a9f7d18492";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     pergament.url = "github:v3rm1n0/pergament";
