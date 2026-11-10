@@ -56,8 +56,7 @@
       };
 
       mods.desktop = {
-        hypr.enable = false;
-        sway.enable = true;
+        hypr.enable = true;
         monitors = [
           {
             name = "DP-1";
