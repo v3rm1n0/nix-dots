@@ -1,7 +1,9 @@
-_: {
+{ inputs, ... }: {
   flake.modules.nixos.default =
     { lib, config, ... }:
     {
+      imports = [ inputs.bootvine.nixosModules.default ];
+
       options.mods.boot.windowsBoot = {
         enable = lib.mkEnableOption "Windows dual-boot entry in the bootloader";
       };
@@ -24,6 +26,8 @@ _: {
           };
         };
         boot.tmp.cleanOnBoot = true;
+
+        services.bootvine.enable = true;
       };
     };
 }
