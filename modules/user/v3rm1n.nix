@@ -12,18 +12,23 @@
     {
       imports = [ inputs.hjem.nixosModules.hjem ];
 
+      # No password hash is stored in the tree. `users.mutableUsers` is on, so
+      # the password is set once after install (`passwd <user>` as root from the
+      # installer or a root shell). A committed SHA-512 crypt hash is offline
+      # crackable, and this repository is public.
       programs.zsh.enable = false;
-      users.mutableUsers = true;
-      users.defaultUserShell = pkgs.fish;
-      users.users.${username} = {
-        shell = config.users.defaultUserShell;
-        isNormalUser = true;
-        hashedPassword = "$6$TSeuDdaiycwV2p9R$SfYPYi5lKha0PLWOqoCXTJW8/SthhJ3R99Hfvo8g5AT5hR3BZIUTmXNmxU03DyJNrSu/yh6SDwkbEXIOOlETO.";
-        extraGroups = [
-          "docker"
-          "wheel"
-          "openrazer"
-        ];
+      users = {
+        mutableUsers = true;
+        defaultUserShell = pkgs.fish;
+        users.${username} = {
+          shell = config.users.defaultUserShell;
+          isNormalUser = true;
+          # "docker" is granted by the emulators module that enables docker.
+          extraGroups = [
+            "wheel"
+            "openrazer"
+          ];
+        };
       };
 
       hjem = {

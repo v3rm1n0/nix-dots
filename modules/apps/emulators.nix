@@ -22,7 +22,11 @@ _: {
         ];
 
         programs.virt-manager.enable = true;
-        users.users.${username}.extraGroups = [ "libvirtd" ];
+        users.users.${username}.extraGroups = [
+          "libvirtd"
+          # root-equivalent; only granted where docker is actually enabled
+          "docker"
+        ];
         virtualisation = {
           docker = {
             enable = true;
