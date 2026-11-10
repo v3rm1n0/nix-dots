@@ -50,12 +50,11 @@ _: {
           remote = "proton";
           mountdir = "${home}/ProtonDrive";
         };
-        iclouddrive =
-          mkMount {
-            description = "Mount iCloud Drive";
-            remote = "icloud";
-            mountdir = "${home}/iCloudDrive";
-          };
+        iclouddrive = mkMount {
+          description = "Mount iCloud Drive";
+          remote = "icloud";
+          mountdir = "${home}/iCloudDrive";
+        };
       };
     };
 }

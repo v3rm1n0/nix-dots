@@ -3,7 +3,6 @@ _: {
     {
       config,
       lib,
-      pkgs,
       ...
     }:
     let
@@ -27,7 +26,7 @@ _: {
       config = lib.mkIf cfg.enable {
         security.apparmor = {
           enable = true;
-          killUnconfinedConfinables = cfg.killUnconfinedConfinables;
+          inherit (cfg) killUnconfinedConfinables;
 
           includes."abstractions/desktop-app" = ''
             include <abstractions/base>
