@@ -26,7 +26,7 @@
             };
 
             services.omniroute = {
-              enable = false;
+              enable = true;
               package = pkgs.callPackage "${inputs.nixpkgs-omniroute}/pkgs/by-name/om/omniroute/package.nix" { };
             };
 
