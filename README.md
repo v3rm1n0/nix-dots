@@ -17,7 +17,7 @@ A modular NixOS configuration featuring Hyprland, hjem, and comprehensive system
 
 - 🎨 **Unified Theming** with Stylix
 - 🔒 **Secure Boot** via Limine
-- 🪟 **Hyprland** window manager
+- 🪟 **Hyprland** (desktop) and **Sway** (laptop) window managers
 - 🏠 **hjem** for declarative user file management
 - 📦 **Modular Architecture** with flake-parts + import-tree
 - 🗄️ **Btrfs** with automatic maintenance
@@ -31,12 +31,12 @@ A modular NixOS configuration featuring Hyprland, hjem, and comprehensive system
 | ------------------ | ------------------------------------- |
 | **OS**             | NixOS Unstable                        |
 | **Display Server** | Wayland                               |
-| **Window Manager** | Hyprland                              |
+| **Window Manager** | Hyprland (Desktop) / Sway (Laptop)    |
 | **Panel**          | noctalia-shell                        |
 | **Terminal**       | Ghostty                               |
-| **Shell**          | Zsh with Powerlevel10k                |
+| **Shell**          | Fish (bash and zsh modules optional)  |
 | **Editor**         | Neovim + VSCode                       |
-| **Browser**        | Librewolf (Desktop) / Helium (Laptop) |
+| **Browser**        | Librewolf (both hosts)                |
 | **File Manager**   | Nautilus                              |
 | **Theme**          | Stylix (gruvbox-dark-hard)            |
 | **Filesystem**     | Btrfs with auto-scrub                 |
