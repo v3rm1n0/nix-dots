@@ -13,6 +13,8 @@ in
   flake.nixosConfigurations = {
     Desktop = mkHost "Desktop";
     Laptop = mkHost "Laptop";
-    Template = mkHost "Template";
+    # Template is a scaffold to copy, not a buildable host: it has no hardware
+    # configuration and leaves required userOptions unset, so instantiating it
+    # here would make `nix flake check` fail. Register it once it's fleshed out.
   };
 }
