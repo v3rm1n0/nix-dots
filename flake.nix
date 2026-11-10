@@ -1,8 +1,10 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # open PR adding the omniroute package and NixOS module, drop once merged
-    nixpkgs-omniroute.url = "github:NixOS/nixpkgs?ref=refs/pull/548454/head";
+    # open PR adding the omniroute package and NixOS module, drop once merged.
+    # Pinned to the commit in flake.lock instead of the mutable PR head ref so
+    # evaluation is reproducible and survives the PR branch being rebased.
+    nixpkgs-omniroute.url = "github:NixOS/nixpkgs/682096be7038a86337aafa8d213aa3364d204f9f";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     pergament.url = "github:v3rm1n0/pergament";
@@ -25,7 +27,10 @@
       url = "github:AlvaroParker/helium-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixcord.url = "github:FlameFlag/nixcord";
+    nixcord = {
+      url = "github:FlameFlag/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,8 +47,14 @@
       url = "git+https://github.com/nealfennimore/wazuh-agent-nixos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    wrappers.url = "github:Lassulus/wrappers";
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+    wrappers = {
+      url = "github:Lassulus/wrappers";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    wrapper-modules = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
