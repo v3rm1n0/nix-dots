@@ -18,6 +18,7 @@ _: {
           packages = with pkgs; [
             sable
             signal-desktop
+            simplex-chat-desktop
             teamspeak6-client
             tutanota-desktop
             zoom-us
