@@ -10,33 +10,36 @@
       inherit (config.userOptions) username browser;
       inherit (config.lib.stylix) colors;
 
-      monitor = map (
+      monitorsLua = lib.concatMapStrings (
         m:
         if m.enabled then
-          "${m.name}, ${toString m.width}x${toString m.height}@${toString m.refreshRate}, ${toString m.x}x${toString m.y}, ${toString m.scale}, vrr, ${toString m.vrr}, bitdepth, ${toString m.bitdepth}, cm, ${toString m.cm}"
+          ''
+            hl.monitor({
+              output = "${m.name}",
+              mode = "${toString m.width}x${toString m.height}@${toString m.refreshRate}",
+              position = "${toString m.x}x${toString m.y}",
+              scale = ${toString m.scale},
+              vrr = ${toString m.vrr},
+              bitdepth = ${toString m.bitdepth},
+              cm = "${m.cm}",
+            })
+          ''
         else
-          "${m.name}, disable"
+          ''
+            hl.monitor({ output = "${m.name}", disabled = true })
+          ''
       ) config.mods.desktop.monitors;
 
-      workspace = lib.concatMap (
-        m:
-        map (
-          ws:
-          "${toString ws}, monitor:${m.name}${lib.optionalString (ws == m.workspacePrimary) ", default:true"}"
-        ) m.workspaces
-      ) config.mods.desktop.monitors;
-
-      # $mainMod .. key focus/move bindings for workspaces 1-10 (key 0 for 10).
-      workspaceBinds = lib.concatMap (
-        i:
-        let
-          key = if i == 10 then "0" else toString i;
-        in
-        [
-          "$mainMod, ${key}, workspace, ${toString i}"
-          "SHIFT $mainMod, ${key}, movetoworkspace, ${toString i}"
-        ]
-      ) (lib.range 1 10);
+      workspacesLua = lib.concatStrings (
+        lib.concatMap (
+          m:
+          map (ws: ''
+            hl.workspace_rule({ workspace = "${toString ws}", monitor = "${m.name}"${
+              lib.optionalString (ws == m.workspacePrimary) ", default = true"
+            } })
+          '') m.workspaces
+        ) config.mods.desktop.monitors
+      );
 
       # See scripts/flameshot-select.sh for why this exists.
       flameshotSelect = pkgs.writeShellApplication {
@@ -58,168 +61,148 @@
 
         environment.systemPackages = [ flameshotSelect ];
 
-        hjem.users.${username}.rum.desktops.hyprland = {
-          enable = true;
-          settings = {
-            "$mainMod" = "SUPER";
+        hjem.users.${username}.xdg.config.files."hypr/hyprland.lua".text = ''
+          local mainMod = "SUPER"
 
-            inherit monitor workspace;
-            # NOTE: the old Lua config also forced a vertical split on workspace 2
-            # (layout_opts.split = "v"); dwindle has no per-workspace split rule in
-            # hyprland.conf, so that micro-tweak is intentionally dropped.
+          ${monitorsLua}
+          ${workspacesLua}
+          hl.workspace_rule({ workspace = "2", layout_opts = { split = "v" } })
 
+          hl.config({
             general = {
-              gaps_in = 5;
-              gaps_out = 10;
-              border_size = 2;
-              layout = "dwindle";
-              "col.active_border" = "rgb(${colors.base0D})";
-              "col.inactive_border" = "rgb(${colors.base03})";
-            };
-
+              gaps_in = 5,
+              gaps_out = 10,
+              border_size = 2,
+              layout = "dwindle",
+              col = {
+                active_border = "rgb(${colors.base0D})",
+                inactive_border = "rgb(${colors.base03})",
+              },
+            },
             decoration = {
-              rounding = 20;
-              rounding_power = 2;
+              rounding = 20,
+              rounding_power = 2,
               blur = {
-                enabled = true;
-                size = 3;
-                passes = 2;
-                vibrancy = "0.1696";
-              };
+                enabled = true,
+                size = 3,
+                passes = 2,
+                vibrancy = 0.1696,
+              },
               shadow = {
-                enabled = true;
-                range = 4;
-                render_power = 3;
-              };
-            };
-
-            animations.enabled = false;
-
+                enabled = true,
+                range = 4,
+                render_power = 3,
+              },
+            },
+            animations = { enabled = false },
             input = {
-              kb_layout = "us, de";
-              follow_mouse = 1;
-              numlock_by_default = true;
-              touchpad.natural_scroll = false;
-            };
-
-            misc = {
-              disable_hyprland_logo = true;
-            };
-
+              kb_layout = "us, de",
+              follow_mouse = 1,
+              numlock_by_default = true,
+              touchpad = { natural_scroll = false },
+            },
+            misc = { disable_hyprland_logo = true },
             cursor = {
-              no_hardware_cursors = true;
-              no_break_fs_vrr = true;
-            };
+              no_hardware_cursors = 1,
+              no_break_fs_vrr = 1,
+            },
+            dwindle = { split_width_multiplier = 1.35 },
+            ecosystem = { no_update_news = true },
+          })
 
-            dwindle.split_width_multiplier = "1.35";
+          hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
 
-            ecosystem.no_update_news = true;
+          hl.animation({ leaf = "windows",     enabled = true, speed = 7,  bezier = "myBezier" })
+          hl.animation({ leaf = "windowsOut",  enabled = true, speed = 7,  bezier = "default", style = "popin 80%" })
+          hl.animation({ leaf = "border",      enabled = true, speed = 10, bezier = "default" })
+          hl.animation({ leaf = "borderangle", enabled = true, speed = 8,  bezier = "default" })
+          hl.animation({ leaf = "fade",        enabled = true, speed = 7,  bezier = "default" })
+          hl.animation({ leaf = "workspaces",  enabled = true, speed = 6,  bezier = "default" })
 
-            bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+          hl.on("hyprland.start", function()
+            hl.exec_cmd("noctalia")
+            hl.exec_cmd("equibop")
+          end)
 
-            animation = [
-              "windows, 1, 7, myBezier"
-              "windowsOut, 1, 7, default, popin 80%"
-              "border, 1, 10, default"
-              "borderangle, 1, 8, default"
-              "fade, 1, 7, default"
-              "workspaces, 1, 6, default"
-            ];
+          hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("ghostty"))
+          hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
+          hl.bind(mainMod .. " + M", hl.dsp.exit())
+          hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
+          hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+          hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+          hl.bind("CTRL + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
+          hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
+          hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("${browser}"))
 
-            exec-once = [
-              "noctalia"
-              "equibop"
-            ];
+          local dirs = { h = "left", l = "right", k = "up", j = "down" }
+          local resize = {
+            h = { x = -50, y = 0 },
+            l = { x = 50, y = 0 },
+            k = { x = 0, y = -50 },
+            j = { x = 0, y = 50 },
+          }
+          for key, dir in pairs(dirs) do
+            hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ direction = dir }))
+            hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = dir }))
+            hl.bind(mainMod .. " + CTRL + " .. key,
+              hl.dsp.window.resize({ x = resize[key].x, y = resize[key].y, relative = true }))
+          end
 
-            bind = [
-              "$mainMod, T, exec, ghostty"
-              "$mainMod SHIFT, Q, killactive"
-              "$mainMod, M, exit"
-              "$mainMod, E, exec, nautilus"
-              "$mainMod, V, togglefloating"
-              "$mainMod, P, pseudo"
-              "CTRL SHIFT, L, exec, hyprlock"
-              "$mainMod, SPACE, exec, vicinae toggle"
-              "$mainMod, R, exec, ${browser}"
+          for i = 1, 10 do
+            local key = i % 10
+            hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+            hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+          end
 
-              "$mainMod, h, movefocus, l"
-              "$mainMod, l, movefocus, r"
-              "$mainMod, k, movefocus, u"
-              "$mainMod, j, movefocus, d"
+          hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+          hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 
-              "$mainMod SHIFT , h, movewindow, l"
-              "$mainMod SHIFT , l, movewindow, r"
-              "$mainMod SHIFT , k, movewindow, u"
-              "$mainMod SHIFT , j, movewindow, d"
+          hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+          hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
-              "$mainMod CTRL , h, resizeactive, -50 0"
-              "$mainMod CTRL , l, resizeactive, 50 0"
-              "$mainMod CTRL , k, resizeactive, 0 -50"
-              "$mainMod CTRL , j, resizeactive, 0 50"
+          -- flameshot: selection editor / monitor under the cursor; both save to
+          -- ~/Pictures and copy to the clipboard. flameshot-select wraps
+          -- `flameshot gui` to fix its capture overlay position (see flameshotSelect).
+          hl.bind(mainMod .. " + SHIFT + s", hl.dsp.exec_cmd("flameshot-select"))
+          hl.bind(mainMod .. " + SHIFT + Home", hl.dsp.exec_cmd("flameshot screen -c -p ~/Pictures"))
 
-              "$mainMod, mouse_down, workspace, e+1"
-              "$mainMod, mouse_up, workspace, e-1"
-            ]
-            ++ workspaceBinds
-            ++ [
-              # flameshot: selection editor / monitor under the cursor; both
-              # save to ~/Pictures and copy to the clipboard. flameshot-select
-              # wraps `flameshot gui` to fix its capture overlay position
-              # (see flameshotSelect above).
-              "$mainMod SHIFT , s, exec, flameshot-select"
-              "$mainMod SHIFT , Home, exec, flameshot screen -c -p ~/Pictures"
-            ];
+          hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+          hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
+          hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true })
+          hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true })
+          hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s +5%"), { locked = true })
+          hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"), { locked = true })
 
-            bindm = [
-              "$mainMod, mouse:272, movewindow"
-              "$mainMod, mouse:273, resizewindow"
-            ];
-
-            bindel = [
-              ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
-              ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
-            ];
-
-            bindl = [
-              ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-              ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-              ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
-              ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
-            ];
-
-            windowrule = [
-              {
-                name = "teamspeak-ws-2";
-                workspace = "2 silent";
-                tile = "on";
-                "match:initial_class" = "^(teamspeak-client)";
-              }
-              {
-                name = "discord-ws-2";
-                workspace = "2 silent";
-                tile = "on";
-                "match:initial_class" = "^(equibop)$";
-              }
-              {
-                name = "spotify-ws-2";
-                workspace = "2 silent";
-                tile = "on";
-                "match:initial_class" = "^(spotify)";
-              }
-              {
-                name = "steam-ws-8";
-                workspace = "8 silent";
-                "match:initial_class" = "^(steam)";
-              }
-              {
-                name = "flameshot-float-top";
-                float = "on";
-                pin = "on";
-                "match:title" = "^(flameshot)$";
-              }
-            ];
-          };
-        };
+          hl.window_rule({
+            name = "teamspeak-ws-2",
+            match = { initial_class = "^(teamspeak-client)" },
+            workspace = "2 silent",
+            tile = true,
+          })
+          hl.window_rule({
+            name = "discord-ws-2",
+            match = { initial_class = "^(equibop)$" },
+            workspace = "2 silent",
+            tile = true,
+          })
+          hl.window_rule({
+            name = "spotify-ws-2",
+            match = { initial_class = "^(spotify)" },
+            workspace = "2 silent",
+            tile = true,
+          })
+          hl.window_rule({
+            name = "steam-ws-8",
+            match = { initial_class = "^(steam)" },
+            workspace = "8 silent",
+          })
+          hl.window_rule({
+            name = "flameshot-float-top",
+            match = { title = "^(flameshot)$" },
+            float = true,
+            pin = true,
+          })
+        '';
       };
     };
 }

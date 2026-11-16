@@ -35,7 +35,7 @@ for _ in $(seq 1 300); do
 
   if [ "$win_w" = "$mon_w" ] && [ "$win_h" = "$mon_h" ] \
     && { [ "$win_x" != "$mon_x" ] || [ "$win_y" != "$mon_y" ]; }; then
-    hyprctl dispatch movewindowpixel "exact $mon_x $mon_y,address:$addr"
+    hyprctl dispatch "hl.dsp.window.move({ x = $mon_x, y = $mon_y, window = \"address:$addr\" })"
     exit 0
   fi
 done
