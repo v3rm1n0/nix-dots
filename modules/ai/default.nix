@@ -28,14 +28,19 @@
             services.omniroute = {
               enable = true;
               package = pkgs.callPackage "${inputs.nixpkgs-omniroute}/pkgs/by-name/om/omniroute/package.nix" { };
+              settings = {
+                # dist/server.js reads HOSTNAME and defaults to 0.0.0.0; there is no login set
+                HOSTNAME = "127.0.0.1";
+              };
             };
 
             hjem.users.${username} = {
               packages = [
-                (pkgs.callPackage "${inputs.nixpkgs-omniroute}/pkgs/by-name/om/omniroute/package.nix" { })
+                config.services.omniroute.package
                 pkgs.jq
                 pkgs.sox
                 pkgs.claude-code
+                pkgs.opencode
                 # (import inputs.claude-code {
                 #   inherit (pkgs.stdenv.hostPlatform) system;
                 #   config.allowUnfree = true;
@@ -47,6 +52,12 @@
                 value = {
                   "$schema" = "https://json.schemastore.org/claude-code-settings.json";
                   extraKnownMarketplaces = {
+                    claude-code-delegate = {
+                      source = {
+                        source = "github";
+                        repo = "NightZpy/claude-code-delegate";
+                      };
+                    };
                     superpowers-marketplace = {
                       source = {
                         source = "github";
@@ -55,6 +66,7 @@
                     };
                   };
                   enabledPlugins = {
+                    "cc-delegate@claude-code-delegate" = true;
                     "superpowers@claude-plugins-official" = true;
                   };
                   statusLine = {
