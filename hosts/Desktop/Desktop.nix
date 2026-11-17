@@ -36,6 +36,7 @@ _: {
           };
           content.enable = true;
           dev.optionalPackages = [
+            pkgs.nodejs_latest
             pkgs.zed-editor
           ];
           gaming.optionalPackages = [
