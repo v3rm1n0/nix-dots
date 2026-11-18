@@ -121,7 +121,7 @@
 
           hl.on("hyprland.start", function()
             hl.exec_cmd("noctalia")
-            hl.exec_cmd("equibop")
+            hl.exec_cmd("discord")
           end)
 
           hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("ghostty"))
@@ -181,7 +181,7 @@
           })
           hl.window_rule({
             name = "discord-ws-2",
-            match = { initial_class = "^(equibop)$" },
+            match = { initial_class = "^(discord)$" },
             workspace = "2 silent",
             tile = true,
           })

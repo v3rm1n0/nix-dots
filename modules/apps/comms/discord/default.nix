@@ -13,8 +13,11 @@
           enable = true;
           user = username;
           homeDirectory = "/home/${username}";
-          discord.enable = lib.mkDefault false;
-          equibop.enable = lib.mkDefault true;
+          discord = {
+            enable = lib.mkDefault true;
+            equicord.enable = true;
+          };
+          equibop.enable = lib.mkDefault false;
           config = {
             plugins = {
               betterFolders = {
