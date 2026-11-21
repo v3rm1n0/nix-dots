@@ -18,6 +18,8 @@ _: {
         services.ivpn.enable = true;
         environment.systemPackages = [
           pkgs.ivpn
+          pkgs.ivpn-ui
+          pkgs.proton-vpn
           pkgs.wireguard-tools
         ];
       };

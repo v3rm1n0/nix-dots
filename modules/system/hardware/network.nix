@@ -41,8 +41,7 @@ _: {
             DNSSEC = true;
             DNSOverTLS = true;
             DNS = [
-              "9.9.9.11"
-              "149.112.112.11"
+              "1.1.1.1"
             ];
             Domains = [ "~." ];
             FallbackDNS = "";
