@@ -61,9 +61,10 @@ _: {
             ];
           };
           extensions = [
+            "nngceckbapebfimnlniiiahkandclblb" # Bitwarden
             "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
             "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
-            "ghmbeldphafepmbegfdlkpapadhbakde" # Proton Pass
+            #"ghmbeldphafepmbegfdlkpapadhbakde" # Proton Pass
             #"cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
             "ponfpcnoihfmfllpaingbgckeeldkhle" # YouTube Enhancer
             "pjgickchbiikhdfpmecaabkphmofpdce" # Knock Off
