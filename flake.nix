@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-xtool.url = "github:NixOS/nixpkgs/1acbd57769c1cd85e0a861c6708a10a9f7d18492";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     pergament.url = "github:v3rm1n0/pergament";

@@ -9,7 +9,7 @@
     }:
     let
       cfg = config.mods.apps.xtool;
-      pr = inputs.nixpkgs-xtool;
+      pr = inputs.nixpkgs;
       xtoolOverlay = final: _prev: {
         open-apple-macros = final.callPackage "${pr}/pkgs/by-name/op/open-apple-macros/package.nix" { };
         xtool =
@@ -44,8 +44,6 @@
       });
     in
     {
-      imports = [ "${pr}/nixos/modules/programs/xtool.nix" ];
-
       options.mods.apps.xtool = {
         enable = lib.mkEnableOption "xtool (cross-platform Xcode replacement) with usbmuxd and the Swift toolchain";
 
