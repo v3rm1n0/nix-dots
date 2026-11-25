@@ -45,7 +45,6 @@
               showHiddenChannels.enable = true;
               showHiddenThings.enable = true;
               showMeYourName.enable = true;
-              youtubeAdblock.enable = true;
             };
             enabledThemeLinks = [
               "https://raw.githubusercontent.com/shvedes/discord-gruvbox/refs/heads/main/gruvbox-dark.theme.css"
