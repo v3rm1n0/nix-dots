@@ -17,7 +17,7 @@
         services = {
           blueman.enable = lib.mkDefault true;
           flatpak.enable = lib.mkDefault true;
-          i2pd.enable = lib.mkDefault true;
+          i2pd.enable = lib.mkDefault false;
           vicinae.enable = lib.mkDefault true;
         };
 

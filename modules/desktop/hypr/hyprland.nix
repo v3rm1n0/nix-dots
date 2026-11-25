@@ -202,6 +202,12 @@
             float = true,
             pin = true,
           })
+          hl.window_rule({
+            name = "cider-ws-2",
+            match = { initial_class = "^(cider)" },
+            workspace = "2 silent",
+            tile = true,
+          })
         '';
       };
     };
