@@ -38,9 +38,7 @@ _: {
       };
 
       mods.desktop = {
-        hypr.enable = false;
-        hypr.hypridle.enable = true;
-        sway.enable = true;
+        hypr.enable = true;
         noctalia.withBattery = true;
         monitors = [
           {
